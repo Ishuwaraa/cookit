@@ -1,3 +1,4 @@
+import 'package:cookit/Components/bottom_nav_bar.dart';
 import 'package:cookit/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  
+
   runApp(const MyApp());
 }
 
@@ -28,12 +29,7 @@ class Sandbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('COOKIT'),
-        ),
-        body: const Text('Hello World!'),
-      ),
+      home: BottomNavBar(),
     );
   }
 }
