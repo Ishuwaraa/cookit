@@ -1,8 +1,8 @@
-import 'package:cookit/Screens/add_post_page.dart';
-import 'package:cookit/Screens/home_page.dart';
-import 'package:cookit/Screens/profile_page.dart';
-import 'package:cookit/Screens/recipe_details.dart';
-import 'package:cookit/Screens/search_page.dart';
+import 'package:cookit/screens/add_post.dart';
+import 'package:cookit/screens/home.dart';
+import 'package:cookit/screens/profile.dart';
+import 'package:cookit/screens/recipe_details.dart';
+import 'package:cookit/screens/search.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -25,7 +25,7 @@ class _HomePageState extends State<BottomNavBar> {
     const HomePage(),
     const SearchPage(),
     const AddPostPage(),
-    const ProfilePage(),
+    const Profile(),
     const RecipeDetailsPage(),
   ];
 

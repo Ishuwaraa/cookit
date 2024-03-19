@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class MyButton extends StatelessWidget {
+class SubmitButton extends StatelessWidget {
   final Function()? onTap;
   final String text;
 
-  const MyButton({
+  const SubmitButton({
     super.key,
     required this.onTap,
     required this.text,

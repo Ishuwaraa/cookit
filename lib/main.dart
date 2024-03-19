@@ -1,4 +1,6 @@
-import 'package:cookit/Components/bottom_nav_bar.dart';
+import 'package:cookit/Screens/home.dart';
+import 'package:cookit/components/bottom_nav_bar.dart';
+import 'package:cookit/screens/wrapper.dart';
 import 'package:cookit/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +21,22 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const Sandbox();
+    //if not using MaterialApp gott use the Directionality stuff LTR or RTL
+    //default in MaterialApp is LTR
+    return const MaterialApp(
+      home: HomePage(),
+    );
+  }
+}
+
+class TestNavbar extends StatelessWidget {
+  const TestNavbar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: BottomNavBar(),
+    );
   }
 }
 
@@ -28,8 +45,11 @@ class Sandbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: BottomNavBar(),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('COOKIT'),
+      ),
+      body: const Text('Hello World!'),
     );
   }
 }

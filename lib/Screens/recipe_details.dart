@@ -19,13 +19,11 @@ class RecipeDetailsPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Image.asset(
-                          'lib/images/r1.png', // Replace this with your image asset path
+                          'assets/r1.png', // Replace this with your image asset path
                           width: double.infinity,
                           fit: BoxFit.cover,
                         ),
-                        SizedBox(
-                            height:
-                                10), // Add some spacing between image and ship up container
+                        const SizedBox(height: 10), // Add some spacing between image and ship up container
                         _buildShipUpContainer(), // Add the ship up container
                       ],
                     ),
