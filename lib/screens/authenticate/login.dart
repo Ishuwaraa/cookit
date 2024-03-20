@@ -1,21 +1,30 @@
-import 'package:cookit/Components/my_button.dart';
-import 'package:cookit/Components/my_textfield.dart';
+import 'package:cookit/components/submit_button.dart';
+import 'package:cookit/components/styled_textfield.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
+class Login extends StatefulWidget {
   final Function()? onTap;
   // ignore: prefer_const_constructors_in_immutables
-  LoginPage({super.key, required this.onTap});
+  Login({super.key, required this.onTap});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<Login> createState() => _LoginState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginState extends State<Login> {
   //text editing controllers
   final emailController = TextEditingController();
 
   final passwordController = TextEditingController();
+
+  void checkEmailPass(){
+    // if(emailController.is )
+    if(emailController.text.isNotEmpty && passwordController.text.isNotEmpty){
+      print('email: ${emailController.text}, pass: ${passwordController.text}');
+    }else{
+      print('email or password is empty');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,25 +43,25 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(
                         width:
                             10), // Adjust the spacing between the icon and the image
-                    // Image.asset(
-                    //   'lib/images/Subject 16.png',
-                    //   width: 200, // Adjust the width of the image as needed
-                    //   height: 200, // Adjust the height of the image as needed
-                    // ),
+                    Image.asset(
+                      'assets/cookit-logo.png',
+                      width: 200, // Adjust the width of the image as needed
+                      height: 200, // Adjust the height of the image as needed
+                    ),
                   ],
                 ),
 
                 const SizedBox(height: 50),
 
                 //email textfield
-                MytextField(
+                StyledTextfield(
                     controller: emailController,
                     hintText: 'Email',
                     obscureText: false),
                 const SizedBox(height: 10),
 
                 //password textfield
-                MytextField(
+                StyledTextfield(
                     controller: passwordController,
                     hintText: 'Password',
                     obscureText: true),
@@ -73,54 +82,12 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 25),
                 //sign in button
-                const MyButton(
+                SubmitButton(
                   text: "Sign In",
-                  onTap: null,
+                  onTap: checkEmailPass,
                 ),
-                const SizedBox(height: 50),
 
-                //or continue with
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Divider(
-                          thickness: 0.5,
-                          color: Colors.grey[400],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Text(
-                          'Or Continue With',
-                          style: TextStyle(color: Colors.grey[700]),
-                        ),
-                      ),
-                      Expanded(
-                        child: Divider(
-                          thickness: 0.5,
-                          color: Colors.grey[400],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 50),
-                //google or apple id
-
-                // const Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     //google button
-
-                //     SquareTile(imagepath: 'lib/images/google.png'),
-                //     SizedBox(width: 25),
-
-                //     //apple button
-                //     SquareTile(imagepath: 'lib/images/apple.png'),
-                //   ],
-                // ),
+                
 
                 const SizedBox(height: 50),
                 //not a member? register now

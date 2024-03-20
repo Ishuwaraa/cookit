@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class MytextField extends StatelessWidget {
+class StyledTextfield extends StatelessWidget {
   // ignore: prefer_typing_uninitialized_variables
   final controller;
   final String hintText;
   final bool obscureText;
 
-  const MytextField({
+  const StyledTextfield({
     super.key,
     required this.controller,
     required this.hintText,

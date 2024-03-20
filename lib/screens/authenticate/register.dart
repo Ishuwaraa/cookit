@@ -1,22 +1,33 @@
-// ignore_for_file: prefer_const_constructors
-
-import 'package:cookit/Components/my_button.dart';
-import 'package:cookit/Components/my_textfield.dart';
+import 'package:cookit/components/submit_button.dart';
+import 'package:cookit/components/styled_textfield.dart';
 import 'package:flutter/material.dart';
 
-class RegisterPage extends StatefulWidget {
+class Register extends StatefulWidget {
   final Function()? onTap;
-  const RegisterPage({super.key, required this.onTap});
+  const Register({super.key, required this.onTap});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _RegisterState extends State<Register> {
   //text editing controllers
+  final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmpasswordController = TextEditingController();
+
+  void registerUser(){
+    if(nameController.text.isNotEmpty && emailController.text.isNotEmpty && passwordController.text.isNotEmpty && confirmpasswordController.text.isNotEmpty){
+      if(passwordController.text == confirmpasswordController.text){
+        print('user registered successfully');
+      }else{
+        print('Passwords do not match');
+      }
+    }else{
+      print('All field should be filled');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +48,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         width:
                             10), // Adjust the spacing between the icon and the image
                     Image.asset(
-                      'lib/images/Subject 16.png',
+                      'assets/cookit-logo.png',
                       width: 200, // Adjust the width of the image as needed
                       height: 200, // Adjust the height of the image as needed
                     ),
@@ -46,7 +57,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 25),
 
                 //Let\'s create an account for you!
-
                 Text(
                   'Let\'s create an account for you!',
                   style: TextStyle(
@@ -56,83 +66,39 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 const SizedBox(height: 25),
                 //Name textfield
-                MytextField(
-                    controller: emailController,
+                StyledTextfield(
+                    controller: nameController,
                     hintText: 'Full name',
                     obscureText: false),
                 const SizedBox(height: 10),
 
                 //email textfield
-                MytextField(
+                StyledTextfield(
                     controller: emailController,
                     hintText: 'Email',
                     obscureText: false),
                 const SizedBox(height: 10),
 
                 //password textfield
-                MytextField(
+                StyledTextfield(
                     controller: passwordController,
                     hintText: 'Password',
                     obscureText: true),
                 const SizedBox(height: 10),
 
                 //Confirm password textfield
-                MytextField(
+                StyledTextfield(
                     controller: confirmpasswordController,
-                    hintText: 'Confirm Password',
+                    hintText: 'Confirm password',
                     obscureText: true),
 
                 const SizedBox(height: 25),
                 //sign in button
-                MyButton(
+                SubmitButton(
                   text: "Sign Up",
-                  onTap: null,
+                  onTap: registerUser,
                 ),
-                const SizedBox(height: 50),
-
-                //or continue with
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Divider(
-                          thickness: 0.5,
-                          color: Colors.grey[400],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Text(
-                          'Or Continue With',
-                          style: TextStyle(color: Colors.grey[700]),
-                        ),
-                      ),
-                      Expanded(
-                        child: Divider(
-                          thickness: 0.5,
-                          color: Colors.grey[400],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 50),
-                //google or apple id
-
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: const [
-                //     //google button
-
-                //     SquareTile(imagepath: 'lib/images/google.png'),
-                //     SizedBox(width: 25),
-
-                //     //apple button
-                //     SquareTile(imagepath: 'lib/images/apple.png'),
-                //   ],
-                // ),
-
+                
                 const SizedBox(height: 50),
                 //not a member? register now
                 Row(
@@ -155,6 +121,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ],
                 )
+
               ],
             ),
           ),

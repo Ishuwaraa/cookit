@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class PopularRecipeCard extends StatelessWidget {
-  const PopularRecipeCard({super.key});
+  const PopularRecipeCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +20,9 @@ class PopularRecipeCard extends StatelessWidget {
             height: 150,
             child: Image.asset(
               'assets/r1.png',
-              // Ensure the image covers the container
             ),
           ),
-          const SizedBox(
-            height: 10,
-          ), // Add some space between the image and title
+          const SizedBox(height: 10,), 
           const Text(
             'Title',
             style: TextStyle(
@@ -34,28 +31,21 @@ class PopularRecipeCard extends StatelessWidget {
               color: Colors.black,
             ),
           ),
-          const SizedBox(
-              height: 10), // Add some space between the title and the row
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
+          const SizedBox(height: 10), 
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Row(
               children: [
-                Icon(
-                  Icons.dinner_dining,
-                  color: Color(0xFF86BF3E),
-                ),
-                SizedBox(width: 5),
+                const Icon(Icons.dinner_dining, color: Color(0xFF86BF3E),),
+                const SizedBox(width: 5),
                 Expanded(
                   child: Text(
                     'Dessert',
                     style: TextStyle(color: Color(0xFF86BF3E)),
                   ),
                 ),
-                Icon(
-                  Icons.access_time,
-                  color: Color(0xFF86BF3E),
-                ),
-                SizedBox(width: 5),
+                const Icon(Icons.access_time,color: Color(0xFF86BF3E),),
+                const SizedBox(width: 5),
                 Expanded(
                   child: Text(
                     '25 mins',
@@ -68,24 +58,22 @@ class PopularRecipeCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
-          const Center(
-            child: Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.room_service,
+          Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Icon(
+                  Icons.room_service,
+                  color: Color(0xFF86BF3E),
+                ),
+                SizedBox(width: 5),
+                Text(
+                  '2 servings',
+                  style: TextStyle(
                     color: Color(0xFF86BF3E),
                   ),
-                  SizedBox(width: 5),
-                  Text(
-                    '2 servings',
-                    style: TextStyle(
-                      color: Color(0xFF86BF3E),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],
