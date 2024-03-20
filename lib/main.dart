@@ -1,9 +1,11 @@
-import 'package:cookit/Screens/home.dart';
-import 'package:cookit/components/bottom_nav_bar.dart';
+import 'package:cookit/components/bottom_navbar.dart';
+import 'package:cookit/models/user_model.dart';
 import 'package:cookit/screens/wrapper.dart';
 import 'package:cookit/firebase_options.dart';
+import 'package:cookit/services/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,10 +23,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    //if not using MaterialApp gott use the Directionality stuff LTR or RTL
-    //default in MaterialApp is LTR
-    return const MaterialApp(
-      home: HomePage(),
+
+    return StreamProvider<UserModel?>.value(
+      catchError: (_, __) => null,
+      initialData: null,  //sets the initial value provided by the StreamProvider before the actual stream emits any data
+      value: AuthService().currUser,
+      child: const MaterialApp(
+        home: Wrapper(),
+      ),
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:cookit/screens/add_post.dart';
 import 'package:cookit/screens/home.dart';
-import 'package:cookit/screens/profile.dart';
+import 'package:cookit/screens/profile/profile.dart';
 import 'package:cookit/screens/recipe_details.dart';
 import 'package:cookit/screens/search.dart';
 import 'package:flutter/material.dart';
@@ -25,8 +25,8 @@ class _HomePageState extends State<BottomNavBar> {
     const HomePage(),
     const SearchPage(),
     const AddPostPage(),
-    const Profile(),
     const RecipeDetailsPage(),
+    const Profile(),
   ];
 
   @override
