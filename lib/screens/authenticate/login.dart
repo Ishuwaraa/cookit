@@ -1,5 +1,7 @@
+import 'package:cookit/components/loading.dart';
 import 'package:cookit/components/submit_button.dart';
 import 'package:cookit/components/styled_textfield.dart';
+import 'package:cookit/services/auth.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
@@ -12,23 +14,43 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
+  final AuthService _auth = AuthService();
+  bool loading = false;
+
   //text editing controllers
   final emailController = TextEditingController();
 
   final passwordController = TextEditingController();
 
-  void checkEmailPass(){
-    // if(emailController.is )
+  void checkEmailPass() async {
     if(emailController.text.isNotEmpty && passwordController.text.isNotEmpty){
-      print('email: ${emailController.text}, pass: ${passwordController.text}');
+      setState(() => loading = true);
+      dynamic result = await _auth.signinWithEmailAndPassword(emailController.text.trim(), passwordController.text.trim());
+
+      if(result == null){
+        setState(() {
+          loading = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Could not sign in with those credentials.'),
+          duration: Duration(seconds: 2),
+          backgroundColor: Color(0xFF86BF3E),
+        ));
+      }
+      // print('email: ${emailController.text}, pass: ${passwordController.text}');
     }else{
-      print('email or password is empty');
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Email or password is empty.'),
+        duration: Duration(seconds: 2),
+        backgroundColor: Color(0xFF86BF3E),
+      ));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading? const Loading() : Scaffold(
       backgroundColor: Colors.grey[300],
       body: SafeArea(
         child: Center(

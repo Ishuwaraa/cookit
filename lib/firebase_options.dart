@@ -50,19 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyChHYaF_MRV6oER64sSZYQ0P_jlYft2EVM',
-    appId: '1:478587745821:android:74d0d0c42e3ab38d87b8f4',
-    messagingSenderId: '478587745821',
-    projectId: 'cookit-5b06f',
-    storageBucket: 'cookit-5b06f.appspot.com',
+    apiKey: 'AIzaSyBKFrTyL7RGHZlpD5ZcGisPnFMH4jL12mw',
+    appId: '1:252242170259:android:af270ccac7cf57002a1866',
+    messagingSenderId: '252242170259',
+    projectId: 'cookit-10505',
+    storageBucket: 'cookit-10505.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDnhagLDm8lQG1VT0HZ4upRmRFiKpJMeYM',
-    appId: '1:478587745821:ios:c80d9e2d5a5fa2ea87b8f4',
-    messagingSenderId: '478587745821',
-    projectId: 'cookit-5b06f',
-    storageBucket: 'cookit-5b06f.appspot.com',
+    apiKey: 'AIzaSyCC1nJluF5fTvZGB5YtaTUKtBIhB2ufj7Y',
+    appId: '1:252242170259:ios:d9c04387d06051732a1866',
+    messagingSenderId: '252242170259',
+    projectId: 'cookit-10505',
+    storageBucket: 'cookit-10505.appspot.com',
     iosBundleId: 'com.example.cookit',
   );
 }

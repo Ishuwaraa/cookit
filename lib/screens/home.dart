@@ -64,9 +64,7 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(fontSize: 20),
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20,),
             SizedBox(
               height: 270.0,
               child: ListView(
@@ -81,9 +79,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20,),
             const Padding(
               padding: EdgeInsets.only(left: 35.0),
               child: Text(
@@ -91,35 +87,20 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(fontSize: 20),
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10,),
             const SizedBoxListView(),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20,),
             const Padding(
               padding: EdgeInsets.only(left: 35.0),
-              child: Text(
-                "Recipes",
-                style: TextStyle(fontSize: 20),
-              ),
+              child: Text("Recipes", style: TextStyle(fontSize: 20),),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20,),
             FoodCard(),
-            const SizedBox(
-              height: 30,
-            ),
+            const SizedBox(height: 30,),
             FoodCard(),
-            const SizedBox(
-              height: 30,
-            ),
+            const SizedBox(height: 30,),
             FoodCard(),
-            const SizedBox(
-              height: 30,
-            ),
+            const SizedBox(height: 30,),
             FoodCard(),
           ],
         ),

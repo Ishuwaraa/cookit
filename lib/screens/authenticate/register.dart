@@ -1,5 +1,7 @@
+import 'package:cookit/components/loading.dart';
 import 'package:cookit/components/submit_button.dart';
 import 'package:cookit/components/styled_textfield.dart';
+import 'package:cookit/services/auth.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
@@ -11,27 +13,49 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+
+  final AuthService _auth = AuthService();
+  bool loading = false;
+
   //text editing controllers
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmpasswordController = TextEditingController();
 
-  void registerUser(){
+  void registerUser() async {
     if(nameController.text.isNotEmpty && emailController.text.isNotEmpty && passwordController.text.isNotEmpty && confirmpasswordController.text.isNotEmpty){
       if(passwordController.text == confirmpasswordController.text){
-        print('user registered successfully');
+        setState(() => loading = true);
+        dynamic result = await _auth.registerWithEmailAndPassword(nameController.text.trim(), emailController.text.trim(), passwordController.text.trim());
+
+        if(result == null){
+          setState(() {
+            loading = false;
+          });
+        }
+        // print('user registered successfully');
       }else{
-        print('Passwords do not match');
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Passwords do not match.'),
+          duration: Duration(seconds: 2),
+          backgroundColor: Color(0xFF86BF3E),
+        ));
+        // print('Passwords do not match');
       }
     }else{
-      print('All field should be filled');
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Please fill out all the fields.'),
+          duration: Duration(seconds: 2),
+          backgroundColor: Color(0xFF86BF3E),
+        ));
+      // print('All field should be filled');
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading? const Loading() : Scaffold(
       backgroundColor: Colors.grey[300],
       body: SafeArea(
         child: Center(
