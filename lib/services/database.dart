@@ -28,4 +28,18 @@ class DatabaseService {
   Stream<UserData> get userData {
     return userCollection.doc(userId).snapshots().map(_userDataFromSnapshot);
   }
+
+  //update user name
+  Future updateUserName(String name, String profilePicUrl) async {
+    try{
+      await userCollection.doc(userId).update({
+        'name': name,
+        'profilePic': profilePicUrl,
+      });
+      return true;
+    }catch(e) {
+      print(e.toString());
+      return false;
+    }
+  }
 }

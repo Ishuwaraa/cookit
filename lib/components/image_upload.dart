@@ -19,7 +19,8 @@ class _ImageUploadState extends State<ImageUpload> {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return IconButton(
+      icon: const Icon(Icons.camera_alt_outlined),
       onPressed: () async {
         ImagePicker imagePicker = ImagePicker();
         XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
@@ -45,14 +46,13 @@ class _ImageUploadState extends State<ImageUpload> {
 
           //download url
           imageUrl = await refImageToUpload.getDownloadURL();
-          print(imageUrl);
+          // print(imageUrl);
           widget.onImageUrlChange(imageUrl);
 
         }catch(e) {
           print(e.toString());
         }
       },
-      child: const Text('Upload image'),
     );
   }
 }
