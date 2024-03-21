@@ -20,8 +20,10 @@ class AuthService {
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
 
-      //creating a new doc for the usergs:
-      await DatabaseService(userId: user!.uid).updateUserData(name, email, 'gs://cookit-10505.appspot.com/users/userprofile.jpg');
+      String url = 'https://firebasestorage.googleapis.com/v0/b/cookit-10505.appspot.com/o/users%2F20240320194419867618?alt=media&token=4e3196fb-bca8-4af9-b424-3aa78e865606';
+
+      //creating a new doc for the user:
+      await DatabaseService(userId: user!.uid).updateUserData(name, email, url);
 
       return _userFromFirebaseUser(user);
     }catch (e) {
