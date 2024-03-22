@@ -1,6 +1,7 @@
 import 'package:cookit/components/loading.dart';
 import 'package:cookit/components/submit_button.dart';
 import 'package:cookit/components/styled_textfield.dart';
+import 'package:cookit/screens/authenticate/forgot_password.dart';
 import 'package:cookit/services/auth.dart';
 import 'package:flutter/material.dart';
 
@@ -19,14 +20,21 @@ class _LoginState extends State<Login> {
   bool loading = false;
 
   //text editing controllers
-  final emailController = TextEditingController();
+  final _emailController = TextEditingController();
 
-  final passwordController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   void checkEmailPass() async {
-    if(emailController.text.isNotEmpty && passwordController.text.isNotEmpty){
+    if(_emailController.text.isNotEmpty && _passwordController.text.isNotEmpty){
       setState(() => loading = true);
-      dynamic result = await _auth.signinWithEmailAndPassword(emailController.text.trim(), passwordController.text.trim());
+      dynamic result = await _auth.signinWithEmailAndPassword(_emailController.text.trim(), _passwordController.text.trim());
 
       if(result == null){
         setState(() {
@@ -77,14 +85,14 @@ class _LoginState extends State<Login> {
 
                 //email textfield
                 StyledTextfield(
-                    controller: emailController,
+                    controller: _emailController,
                     hintText: 'Email',
                     obscureText: false),
                 const SizedBox(height: 10),
 
                 //password textfield
                 StyledTextfield(
-                    controller: passwordController,
+                    controller: _passwordController,
                     hintText: 'Password',
                     obscureText: true),
                 const SizedBox(height: 10),
@@ -95,9 +103,14 @@ class _LoginState extends State<Login> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(
-                        'Forgot Password?',
-                        style: TextStyle(color: Colors.grey[600]),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgotPassword()));
+                        },
+                        child: Text(
+                          'Forgot Password?',
+                          style: TextStyle(color: Colors.grey[600]),
+                        ),
                       ),
                     ],
                   ),

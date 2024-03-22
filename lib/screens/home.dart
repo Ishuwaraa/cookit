@@ -1,3 +1,4 @@
+import 'package:cookit/components/appbar_title.dart';
 import 'package:cookit/components/card.dart';
 import 'package:cookit/components/category_list.dart';
 import 'package:cookit/components/popular_recipe_card.dart';
@@ -15,7 +16,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('COOKIT'),
+        title: const AppbarTitle(title: 'COOKIT'),
       ),
       body: SingleChildScrollView(
         child: Column(
