@@ -1,3 +1,4 @@
+import 'package:cookit/components/appbar_title.dart';
 import 'package:cookit/components/image_upload.dart';
 import 'package:cookit/components/loading.dart';
 import 'package:cookit/components/submit_button.dart';
@@ -16,8 +17,14 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
 
   bool loading = false;
-  TextEditingController editNameController = TextEditingController();
+  TextEditingController _editNameController = TextEditingController();
   String imageUrl = '';
+
+  @override
+  void dispose() {
+    _editNameController.dispose();
+    super.dispose();
+  }
 
   void updateImageUrl(String newUrl) {
     setState(() {
@@ -32,7 +39,7 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   void updateName(userId, name, image) async {
-    if(editNameController.text.isNotEmpty) {
+    if(_editNameController.text.isNotEmpty) {
       setState(() => loading = true);
       bool result = await DatabaseService(userId: userId).updateUserName(name, image);
       print('id: $userId, name: $name, url: $imageUrl');
@@ -70,12 +77,12 @@ class _EditProfileState extends State<EditProfile> {
         }
         if(snapshot.hasData){
           UserData userData = snapshot.data!;
-          editNameController = TextEditingController(text: userData.name);
+          _editNameController = TextEditingController(text: userData.name);
           // imageUrl = userData.profilePicUrl;
 
           return loading? const Loading() : Scaffold(
             appBar: AppBar(
-              title: const Text('Edit Profile'),
+              title: const AppbarTitle(title: 'Edit Profile'),
             ),
             body: SingleChildScrollView(
               child: Column(
@@ -98,7 +105,7 @@ class _EditProfileState extends State<EditProfile> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
                     child: TextField(
-                      controller: editNameController,                      
+                      controller: _editNameController,                      
                       obscureText: false,
                       decoration: InputDecoration(
                           enabledBorder: const OutlineInputBorder(
@@ -122,7 +129,7 @@ class _EditProfileState extends State<EditProfile> {
                     padding: const EdgeInsets.symmetric(horizontal: 50.0),
                     child: SubmitButton(
                       onTap: () {
-                        updateName(userData.userId, editNameController.text.trim(), imageUrl);
+                        updateName(userData.userId, _editNameController.text.trim(), imageUrl);
                         // print('name: ${editNameController.text}');
                       },
                       text: 'Save Changes',

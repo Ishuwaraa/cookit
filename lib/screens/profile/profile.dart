@@ -1,3 +1,4 @@
+import 'package:cookit/components/appbar_title.dart';
 import 'package:cookit/components/card.dart';
 import 'package:cookit/components/loading.dart';
 import 'package:cookit/models/user_model.dart';
@@ -44,23 +45,24 @@ class _ProfileState extends State<Profile> {
             length: 3,
             child: Scaffold(
               appBar: AppBar(
-                title: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    children: [
-                      // Profile text with larger size
-                      Text('Profile',
-                        style: TextStyle(
-                          fontSize: 32, // Increase the font size
-                          fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                ),
+                // title: const Padding(
+                //   padding: EdgeInsets.symmetric(horizontal: 20),
+                //   child: Row(
+                //     children: [
+                //       // Profile text with larger size
+                //       Text('Profile',
+                //         style: TextStyle(
+                //           fontSize: 32, // Increase the font size
+                //           fontWeight: FontWeight.bold),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                title: const AppbarTitle(title: 'Profile'),
                 actions: [
                   // Settings icon
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                    padding: const EdgeInsets.only(right: 5.0),
                     child: IconButton(
                       icon: const Icon(
                         Icons.settings,
@@ -112,11 +114,29 @@ class _ProfileState extends State<Profile> {
                                 ),
                               ),
                               const SizedBox(height: 5.0,),
-                              ElevatedButton(
-                                onPressed: () {
+                              // ElevatedButton(
+                              //   onPressed: () {
+                              //     Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfile()));
+                              //   }, 
+                              //   child: const Text('Edit profile')
+                              // ),
+                              GestureDetector(
+                                onTap: () {
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfile()));
-                                }, 
-                                child: const Text('Edit profile')
+                                },
+                                child: Container(
+                                  width: 100,
+                                  padding: const EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                      color: const Color(0xFF86BF3E),
+                                      borderRadius: BorderRadius.circular(50)),
+                                  child: const Center(
+                                    child: Text(
+                                      'Edit Profile',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                ),
                               ),
                               const SizedBox(height: 5.0,),
                               ElevatedButton(
@@ -131,39 +151,6 @@ class _ProfileState extends State<Profile> {
                       ],
                     ),
                   ),
-
-                  // Buttons
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(horizontal: 120.0),
-                  //   child: Row(
-                  //     children: [
-                  //       const SizedBox(width: 5),
-                  //       // Edit Profile
-                  //       GestureDetector(
-                  //         onTap: () {
-                  //           Navigator.push(
-                  //             context,
-                  //             MaterialPageRoute(
-                  //                 builder: (context) => EditProfil()),
-                  //           );
-                  //         },
-                  //         child: Container(
-                  //           width: 150,
-                  //           padding: const EdgeInsets.all(5),
-                  //           decoration: BoxDecoration(
-                  //               color: const Color(0xFF86BF3E),
-                  //               borderRadius: BorderRadius.circular(50)),
-                  //           child: const Center(
-                  //             child: Text(
-                  //               'Edit Profile',
-                  //               style: TextStyle(color: Colors.white),
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
 
                   const SizedBox(height: 20),
                   // recipe section

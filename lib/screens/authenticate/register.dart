@@ -18,16 +18,25 @@ class _RegisterState extends State<Register> {
   bool loading = false;
 
   //text editing controllers
-  final nameController = TextEditingController();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final confirmpasswordController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmpasswordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmpasswordController.dispose();
+    super.dispose();
+  }
 
   void registerUser() async {
-    if(nameController.text.isNotEmpty && emailController.text.isNotEmpty && passwordController.text.isNotEmpty && confirmpasswordController.text.isNotEmpty){
-      if(passwordController.text == confirmpasswordController.text){
+    if(_nameController.text.isNotEmpty && _emailController.text.isNotEmpty && _passwordController.text.isNotEmpty && _confirmpasswordController.text.isNotEmpty){
+      if(_passwordController.text == _confirmpasswordController.text){
         setState(() => loading = true);
-        dynamic result = await _auth.registerWithEmailAndPassword(nameController.text.trim(), emailController.text.trim(), passwordController.text.trim());
+        dynamic result = await _auth.registerWithEmailAndPassword(_nameController.text.trim(), _emailController.text.trim(), _passwordController.text.trim());
 
         if(result == null){
           setState(() {
@@ -91,28 +100,28 @@ class _RegisterState extends State<Register> {
                 const SizedBox(height: 25),
                 //Name textfield
                 StyledTextfield(
-                    controller: nameController,
+                    controller: _nameController,
                     hintText: 'Full name',
                     obscureText: false),
                 const SizedBox(height: 10),
 
                 //email textfield
                 StyledTextfield(
-                    controller: emailController,
+                    controller: _emailController,
                     hintText: 'Email',
                     obscureText: false),
                 const SizedBox(height: 10),
 
                 //password textfield
                 StyledTextfield(
-                    controller: passwordController,
+                    controller: _passwordController,
                     hintText: 'Password',
                     obscureText: true),
                 const SizedBox(height: 10),
 
                 //Confirm password textfield
                 StyledTextfield(
-                    controller: confirmpasswordController,
+                    controller: _confirmpasswordController,
                     hintText: 'Confirm password',
                     obscureText: true),
 
