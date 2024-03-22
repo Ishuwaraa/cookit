@@ -23,13 +23,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     return StreamProvider<UserModel?>.value(
       catchError: (_, __) => null,
-      initialData: null,  //sets the initial value provided by the StreamProvider before the actual stream emits any data
+      initialData:
+          null, //sets the initial value provided by the StreamProvider before the actual stream emits any data
       value: AuthService().currUser,
+
       child: const MaterialApp(
         home: Wrapper(),
+        debugShowCheckedModeBanner: false,
       ),
     );
   }
