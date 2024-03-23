@@ -10,7 +10,7 @@ class DatabaseService {
 
   //db collection ref
   final CollectionReference userCollection = FirebaseFirestore.instance.collection('users');
-  final CollectionReference recipeCollection = FirebaseFirestore.instance.collection('recipes');
+  static final CollectionReference recipeCollection = FirebaseFirestore.instance.collection('recipes');
 
   //create user document when registering
   Future updateUserData(String name, String email, String profilePicUrl) async {
@@ -48,7 +48,7 @@ class DatabaseService {
   //add recipe
   Future addRecipe(String recipe, String ingredients, String time, String serving, String category, String description, String photoUrl, String userId) async {
     try{
-      await recipeCollection.doc().set({
+      await recipeCollection.add({
         'userId': userId,
         'recipe': recipe,
         'ingredients': ingredients,
@@ -57,6 +57,23 @@ class DatabaseService {
         'category': category,
         'description': description,
         'photoUrl': photoUrl,
+      });
+    }catch (e) {
+      print(e.toString());
+    }
+  }
+
+  static Future<bool> addRecipeUsingModel(Recipe recipe) async {
+    try{
+      await recipeCollection.add({
+        'userId': recipe.userId,
+        'recipe': recipe.recipe,
+        'ingredients': recipe.ingredients,
+        'time': recipe.time,
+        'serving': recipe.servings,
+        'category': recipe.category,
+        'description': recipe.description,
+        'photoUrl': recipe.photoUrl,
       });
       return true;
     }catch (e) {

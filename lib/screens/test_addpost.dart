@@ -2,7 +2,7 @@ import 'package:cookit/components/appbar_title.dart';
 import 'package:cookit/components/image_upload.dart';
 import 'package:cookit/models/recipe_model.dart';
 import 'package:cookit/models/user_model.dart';
-import 'package:cookit/services/database.dart';
+import 'package:cookit/services/recipe_store.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -40,11 +40,61 @@ class _TestAddRecipeState extends State<TestAddRecipe> {
     });
   }
 
-  void addRecipe() {
+  @override
+  void dispose() {
+    _recipeNameController.dispose();
+    _ingredientsController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
+
+  void addRecipe(String userId) async {
     if(_recipeNameController.text.isNotEmpty && _ingredientsController.text.isNotEmpty && _descriptionController.text.isNotEmpty){
       print('${_recipeNameController.text.trim()}, ${_ingredientsController.text.trim()}, $selectedTime, $selectedServing, $selectedCategory, ${_descriptionController.text.trim()}');
-      print(imageUrl);
+
+      if(imageUrl.isNotEmpty) {
+        bool isSuccess = await Provider.of<RecipeStore>(context, listen: false).addRecipe(
+          Recipe(
+            userId: userId, 
+            recipe: _recipeNameController.text.trim(), 
+            ingredients: _ingredientsController.text.trim(), 
+            time: selectedTime, 
+            servings: selectedServing, 
+            category: selectedCategory, 
+            description: _descriptionController.text.trim(), 
+            photoUrl: imageUrl,
+          )
+        );
+        if(isSuccess){
+          print('recipe added');
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Recipe added.'),
+            duration: Duration(seconds: 2),
+            backgroundColor: Color(0xFF86BF3E),
+          ));
+          _recipeNameController.clear();
+          _ingredientsController.clear();
+          _descriptionController.clear();
+          selectedTime = '30min';
+          selectedServing = '1';
+          selectedCategory = 'breakfast';
+          setState(() => imageUrl = '');
+        }else{
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Sorry we had trouble uploading your recipe. Try again later.'),
+          duration: Duration(seconds: 2),
+          backgroundColor: Color(0xFF86BF3E),
+        ));
+        }
+      }else{
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Add an image to upload your recipe.'),
+          duration: Duration(seconds: 2),
+          backgroundColor: Color(0xFF86BF3E),
+        ));
+      }
       
+
     }else{
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Please fill all the fields.'),
@@ -137,7 +187,7 @@ class _TestAddRecipeState extends State<TestAddRecipe> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 50.0),
                     child: ElevatedButton(
-                      onPressed: addRecipe,
+                      onPressed: () {addRecipe(user.userId);},
                       child: const Text('Add recipe'),
                     ),
                   ),
