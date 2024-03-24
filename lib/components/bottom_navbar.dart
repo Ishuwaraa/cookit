@@ -3,6 +3,7 @@ import 'package:cookit/screens/home.dart';
 import 'package:cookit/screens/profile/profile.dart';
 import 'package:cookit/screens/recipe_details.dart';
 import 'package:cookit/screens/search.dart';
+import 'package:cookit/screens/testHome.dart';
 import 'package:cookit/screens/test_addpost.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,8 @@ class _HomePageState extends State<BottomNavBar> {
   }
 
   final List<Widget> _pages = [
-    const HomePage(),
+    // const HomePage(),
+    const TestHome(),
     const SearchPage(),
     // const AddPostPage(),
     const TestAddRecipe(),

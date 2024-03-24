@@ -81,10 +81,10 @@ class _TestAddRecipeState extends State<TestAddRecipe> {
           setState(() => imageUrl = '');
         }else{
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Sorry we had trouble uploading your recipe. Try again later.'),
-          duration: Duration(seconds: 2),
-          backgroundColor: Color(0xFF86BF3E),
-        ));
+            content: Text('Sorry we had trouble uploading your recipe. Try again later.'),
+            duration: Duration(seconds: 2),
+            backgroundColor: Color(0xFF86BF3E),
+          ));
         }
       }else{
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

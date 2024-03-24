@@ -82,8 +82,13 @@ class DatabaseService {
     }
   }
 
+  //get recipes once
+  static Future<QuerySnapshot<Recipe>> getRecipeOnce() {
+    return recipeCollection.get().then((snapshot) => snapshot as QuerySnapshot<Recipe>);
+  }
+
   //recipe list from snapshot
-  List<Recipe> _recipeListFromSnapshot(QuerySnapshot snapshot) {
+  static List<Recipe> _recipeListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return Recipe(
         userId: doc.get('userId'),
@@ -99,7 +104,7 @@ class DatabaseService {
   }
 
   //get recipe list stream
-  Stream<List<Recipe>> get recipes {
+  static Stream<List<Recipe>> get recipes {
     return recipeCollection.snapshots().map(_recipeListFromSnapshot);
   }
 }
