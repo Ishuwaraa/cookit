@@ -92,7 +92,7 @@ class _EditProfileState extends State<EditProfile> {
                   Center(
                     child: CircleAvatar(
                       radius: 90, // Adjust the size as needed
-                      backgroundImage: NetworkImage(userData.profilePicUrl),
+                      backgroundImage: (imageUrl.isEmpty)? NetworkImage(userData.profilePicUrl) : NetworkImage(imageUrl),
                     ),
                   ),
                   Center(

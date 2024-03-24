@@ -3,6 +3,7 @@ import 'package:cookit/models/user_model.dart';
 import 'package:cookit/screens/wrapper.dart';
 import 'package:cookit/firebase_options.dart';
 import 'package:cookit/services/auth.dart';
+import 'package:cookit/services/recipe_store.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +15,10 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => RecipeStore(),
+    child: const MyApp()
+  ));
 }
 
 class MyApp extends StatelessWidget {

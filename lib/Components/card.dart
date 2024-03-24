@@ -1,7 +1,13 @@
+import 'package:cookit/models/recipe_model.dart';
 import 'package:flutter/material.dart';
 
 // ignore: use_key_in_widget_constructors
 class FoodCard extends StatelessWidget {
+
+  const FoodCard(this.recipe, {super.key});
+
+  final Recipe recipe;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,72 +31,73 @@ class FoodCard extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: Image.asset(
-              'assets/r1.png',
-              width: 180.0,
-            ),
+            // child: Image.asset(
+            //   'assets/r1.png',
+            //   width: 180.0,
+            // ),
+            child: Image.network(recipe.photoUrl, width: 180.0, height: 180.0,),
           ),
           Expanded(
             flex: 2,
             child: Container(
               padding: const EdgeInsets.all(10),
-              child: const Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Title ',
-                    style: TextStyle(
+                    recipe.recipe,
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                     ),
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.dinner_dining,
                         color: Color(0xFF86BF3E),
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Expanded(
                         child: Text(
-                          'Dessert',
-                          style: TextStyle(color: Color(0xFF86BF3E)),
+                          recipe.category,
+                          style: const TextStyle(color: Color(0xFF86BF3E)),
                         ),
                       ),
-                      Icon(
+                      const Icon(
                         Icons.access_time,
                         color: Color(0xFF86BF3E),
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Expanded(
                         child: Text(
-                          '25 mins',
-                          style: TextStyle(
+                          recipe.time,
+                          style: const TextStyle(
                             color: Color(0xFF86BF3E),
                           ),
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.room_service,
                         color: Color(0xFF86BF3E),
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Text(
-                        '2 servings',
-                        style: TextStyle(
+                        recipe.servings,
+                        style: const TextStyle(
                           color: Color(0xFF86BF3E),
                         ),
                       ),
                     ],
                   ),
-                  Spacer(),
-                  Align(
+                  const Spacer(),
+                  const Align(
                     alignment: Alignment.bottomRight,
                     child: Icon(
                       Icons.favorite_border,

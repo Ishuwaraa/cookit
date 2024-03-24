@@ -166,22 +166,22 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                    child: Column(
-                      children: [
-                        FoodCard(),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        FoodCard(),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        FoodCard(),
-                      ],
-                    ),
-                  ), // Include FoodCard widget here
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  //   child: Column(
+                  //     children: [
+                  //       FoodCard(),
+                  //       const SizedBox(
+                  //         height: 30,
+                  //       ),
+                  //       FoodCard(),
+                  //       const SizedBox(
+                  //         height: 30,
+                  //       ),
+                  //       FoodCard(),
+                  //     ],
+                  //   ),
+                  // ), // Include FoodCard widget here
                 ],
               ),
             ),
