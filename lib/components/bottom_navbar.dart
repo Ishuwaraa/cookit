@@ -1,6 +1,7 @@
 import 'package:cookit/screens/add_post.dart';
 import 'package:cookit/screens/home.dart';
 import 'package:cookit/screens/profile/profile.dart';
+import 'package:cookit/screens/profile/test_profile.dart';
 import 'package:cookit/screens/recipe_details.dart';
 import 'package:cookit/screens/search.dart';
 import 'package:cookit/screens/testHome.dart';
@@ -30,7 +31,8 @@ class _HomePageState extends State<BottomNavBar> {
     // const AddPostPage(),
     const TestAddRecipe(),
     const RecipeDetailsPage(),
-    const Profile(),
+    // const Profile(),
+    const TestProfile(),
   ];
 
   @override
@@ -47,35 +49,35 @@ class _HomePageState extends State<BottomNavBar> {
         items: const [
           BottomNavigationBarItem(
             icon: Padding(
-              padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0), // Add padding here
+              padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
               child: Icon(Icons.home_outlined),
             ),
             label: '',
           ),
           BottomNavigationBarItem(
             icon: Padding(
-              padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0), // Add padding here
+              padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
               child: Icon(Icons.search),
             ),
             label: '',
           ),
           BottomNavigationBarItem(
             icon: Padding(
-              padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0), // Add padding here
+              padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0), 
               child: Icon(Icons.add),
             ),
             label: '',
           ),
           BottomNavigationBarItem(
             icon: Padding(
-              padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0), // Add padding here
+              padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
               child: Icon(Icons.favorite_border),
             ),
             label: '',
           ),
           BottomNavigationBarItem(
             icon: Padding(
-              padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0), // Add padding here
+              padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0), 
               child: Icon(Icons.person_outline),
             ),
             label: '',

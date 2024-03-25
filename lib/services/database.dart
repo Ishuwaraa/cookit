@@ -74,6 +74,7 @@ class DatabaseService {
         'category': recipe.category,
         'description': recipe.description,
         'photoUrl': recipe.photoUrl,
+        'createAt': FieldValue.serverTimestamp(),
       });
       return true;
     }catch (e) {
@@ -85,6 +86,18 @@ class DatabaseService {
   //get recipes once
   static Future<QuerySnapshot<Recipe>> getRecipeOnce() {
     return recipeCollection.get().then((snapshot) => snapshot as QuerySnapshot<Recipe>);
+  }
+
+  //get recipe list stream
+  static Stream<List<Recipe>> get recipes {
+    return recipeCollection.snapshots().map(_recipeListFromSnapshot);
+  }
+
+  //get recipe created by curruser
+  static Stream<List<Recipe>> getuserRecipes(String userId) {
+    return recipeCollection
+      .where('userId', isEqualTo: userId)
+      .snapshots().map(_recipeListFromSnapshot);
   }
 
   //recipe list from snapshot
@@ -103,8 +116,4 @@ class DatabaseService {
     }).toList();
   }
 
-  //get recipe list stream
-  static Stream<List<Recipe>> get recipes {
-    return recipeCollection.snapshots().map(_recipeListFromSnapshot);
-  }
 }

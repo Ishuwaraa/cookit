@@ -19,11 +19,11 @@ class _TestAddRecipeState extends State<TestAddRecipe> {
   final _ingredientsController = TextEditingController();
   final _descriptionController = TextEditingController();
 
-  final List<String> times = ['30min', '1h', '2h'];
+  final List<String> times = ['15min', '30min', '45min', '60min'];
   final List<String> servings = ['1', '2', '3', '4',];
   final List<String> categories = ['breakfast', 'lunch', 'dinner', 'snack', 'dessert', 'soup'];
 
-  String selectedTime = '30min';
+  String selectedTime = '15min';
   String selectedServing = '1';
   String selectedCategory = 'breakfast';
   String imageUrl = '';
@@ -75,7 +75,7 @@ class _TestAddRecipeState extends State<TestAddRecipe> {
           _recipeNameController.clear();
           _ingredientsController.clear();
           _descriptionController.clear();
-          selectedTime = '30min';
+          selectedTime = '15min';
           selectedServing = '1';
           selectedCategory = 'breakfast';
           setState(() => imageUrl = '');
@@ -152,7 +152,7 @@ class _TestAddRecipeState extends State<TestAddRecipe> {
                     items: times.map(
                       (time) => DropdownMenuItem(
                         value: time,
-                        child: Text(time),
+                        child: Text('under $time'),
                       )
                       ).toList(), 
                     onChanged: (time) => setState(() => selectedTime = time!),
