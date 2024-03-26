@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 // ignore: use_key_in_widget_constructors
 class FoodCard extends StatelessWidget {
-
   const FoodCard(this.recipe, {super.key});
 
   final Recipe recipe;
@@ -35,7 +34,18 @@ class FoodCard extends StatelessWidget {
             //   'assets/r1.png',
             //   width: 180.0,
             // ),
-            child: Image.network(recipe.photoUrl, width: 180.0, height: 180.0,),
+            child: CircleAvatar(
+              radius: 90.0,
+              child: ClipOval(
+                child: Image.network(
+                  recipe.photoUrl,
+                  width: 180.0,
+                  height: 180.0,
+                  fit: BoxFit
+                      .cover, // You might want to adjust the fit based on your requirement
+                ),
+              ),
+            ),
           ),
           Expanded(
             flex: 2,
@@ -65,6 +75,11 @@ class FoodCard extends StatelessWidget {
                           style: const TextStyle(color: Color(0xFF86BF3E)),
                         ),
                       ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
                       const Icon(
                         Icons.access_time,
                         color: Color(0xFF86BF3E),
@@ -89,7 +104,7 @@ class FoodCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 5),
                       Text(
-                        recipe.servings,
+                        'Serves ${recipe.servings}',
                         style: const TextStyle(
                           color: Color(0xFF86BF3E),
                         ),
