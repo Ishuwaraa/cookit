@@ -6,6 +6,7 @@ import 'package:cookit/screens/profile/edit_profile.dart';
 import 'package:cookit/screens/profile/profile_settings.dart';
 import 'package:cookit/services/auth.dart';
 import 'package:cookit/services/database.dart';
+import 'package:cookit/services/recipe_store.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,7 @@ class _ProfileState extends State<Profile> {
 
   final AuthService _auth = AuthService();
   String imageUrl = '';
+  // late UserModel _user;
 
   void updateImageUrl(String newUrl){
     setState(() {
@@ -27,10 +29,23 @@ class _ProfileState extends State<Profile> {
     });
   }
 
+  // @override
+  // void initState() {    
+  //   super.initState();
+  // }
+
+  // @override
+  // void didChangeDependencies() {
+  //   _user = Provider.of<UserModel>(context, listen: false);
+  //   Provider.of<RecipeStore>(context, listen: false).fetchUserRecipes(_user.userId);
+  //   super.didChangeDependencies();
+  // }
+
   @override
   Widget build(BuildContext context) {
 
     final user = Provider.of<UserModel>(context);
+    // Provider.of<RecipeStore>(context, listen: false).fetchUserRecipes(user.userId);
 
     return StreamBuilder<UserData>(
       stream: DatabaseService(userId: user.userId).userData,
@@ -40,24 +55,12 @@ class _ProfileState extends State<Profile> {
         }
         if(snapshot.hasData){
           UserData userData = snapshot.data!;
+          Provider.of<RecipeStore>(context, listen: false).fetchUserRecipes(user.userId);
 
           return DefaultTabController(
             length: 3,
             child: Scaffold(
               appBar: AppBar(
-                // title: const Padding(
-                //   padding: EdgeInsets.symmetric(horizontal: 20),
-                //   child: Row(
-                //     children: [
-                //       // Profile text with larger size
-                //       Text('Profile',
-                //         style: TextStyle(
-                //           fontSize: 32, // Increase the font size
-                //           fontWeight: FontWeight.bold),
-                //       ),
-                //     ],
-                //   ),
-                // ),
                 title: const AppbarTitle(title: 'Profile'),
                 actions: [
                   // Settings icon
@@ -78,19 +81,34 @@ class _ProfileState extends State<Profile> {
               ),
               body: ListView(
                 children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20,),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Row(
                       children: [
-                        CircleAvatar(
-                          radius: 60,
-                          backgroundImage: 
-                              NetworkImage(userData.profilePicUrl),
-                              // NetworkImage('https://images.unsplash.com/photo-1622244099803-75318348305a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80'),
-                        ),                        
+                        // CircleAvatar(
+                        //   radius: 60,
+                        //   backgroundImage: 
+                        //       NetworkImage(userData.profilePicUrl),
+                        // ),
+                        ClipOval(
+                          child: FadeInImage(
+                            placeholder: const AssetImage('assets/cookit-logo.png'),
+                            image: NetworkImage(userData.profilePicUrl),
+                            width: 120.0,
+                            height: 120.0,
+                            fit: BoxFit.cover,
+                            alignment: Alignment.center,
+                            imageErrorBuilder: (context, error, stackTrace) {
+                              return Container(
+                                width: 120.0,
+                                height: 120.0,
+                                color: Colors.grey,
+                                child: const Center(child: Icon(Icons.error)),
+                              );
+                            },
+                          ),
+                        ),
                         const SizedBox(width: 20), // Add spacing between avatar and text
                         Expanded(
                           child: Column(
@@ -114,12 +132,6 @@ class _ProfileState extends State<Profile> {
                                 ),
                               ),
                               const SizedBox(height: 5.0,),
-                              // ElevatedButton(
-                              //   onPressed: () {
-                              //     Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfile()));
-                              //   }, 
-                              //   child: const Text('Edit profile')
-                              // ),
                               GestureDetector(
                                 onTap: () {
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfile()));
@@ -182,6 +194,32 @@ class _ProfileState extends State<Profile> {
                   //     ],
                   //   ),
                   // ), // Include FoodCard widget here
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  //   child: Column(
+                  //     children: [
+                  //       Consumer<RecipeStore>(
+                  //         builder: (context, value, child) {
+                  //           return ListView.separated(
+                  //             separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 30),
+                  //             itemCount: value.userRecipes.length,
+                  //             // itemCount: 1,
+                  //             itemBuilder: (_, index) {
+                  //               // return Column(
+                  //               //   children: [
+                  //               //     // const SizedBox(height: 30,),
+                  //               //     FoodCard(value.userRecipes[index]),
+                  //               //   ],
+                  //               // );
+                  //               return FoodCard(value.userRecipes[index]);
+                            
+                  //             },
+                  //           );
+                  //         },
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               ),
             ),

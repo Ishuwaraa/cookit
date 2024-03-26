@@ -56,6 +56,7 @@ class _TestAddRecipeState extends State<TestAddRecipe> {
         bool isSuccess = await Provider.of<RecipeStore>(context, listen: false).addRecipe(
           Recipe(
             userId: userId, 
+            recipeId: '',
             recipe: _recipeNameController.text.trim(), 
             ingredients: _ingredientsController.text.trim(), 
             time: selectedTime, 

@@ -105,6 +105,7 @@ class DatabaseService {
     return snapshot.docs.map((doc) {
       return Recipe(
         userId: doc.get('userId'),
+        recipeId: doc.id,
         recipe: doc.get('recipe'), 
         ingredients: doc.get('ingredients'), 
         time: doc.get('time'), 
@@ -114,6 +115,25 @@ class DatabaseService {
         photoUrl: doc.get('photoUrl')
       );
     }).toList();
+  }
+
+  static Future getRecipeDetails(String id) async {
+    DocumentSnapshot snapshot = await recipeCollection.doc(id).get();
+    if (snapshot.exists) {
+      return Recipe(
+        userId: snapshot.get('userId'),
+        recipeId: snapshot.id,
+        recipe: snapshot.get('recipe'),
+        ingredients: snapshot.get('ingredients'),
+        time: snapshot.get('time'),
+        servings: snapshot.get('serving'),
+        category: snapshot.get('category'),
+        description: snapshot.get('description'),
+        photoUrl: snapshot.get('photoUrl'),
+      );
+    } else {
+      return null;
+    }
   }
 
 }

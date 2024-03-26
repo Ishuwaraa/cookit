@@ -1,6 +1,7 @@
 class Recipe {
 
   final String userId;
+  final String recipeId;
   final String recipe;
   final String ingredients;
   final String time;
@@ -9,9 +10,11 @@ class Recipe {
   final String description;
   final String photoUrl;
   // final String isFav;
+  static bool addedToFav = false;
 
   Recipe({
     required this.userId,
+    required this.recipeId,
     required this.recipe, 
     required this.ingredients, 
     required this.time, 
@@ -21,6 +24,10 @@ class Recipe {
     required this.photoUrl,
     // required this.isFav,
   });
+
+  static void addOrRemoveFav()  {
+    addedToFav = !addedToFav;
+  }
 
 }
 
