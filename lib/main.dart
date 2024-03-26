@@ -15,10 +15,19 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(ChangeNotifierProvider(
-    create: (context) => RecipeStore(),
-    child: const MyApp()
-  ));
+  runApp(
+    MultiProvider(
+      providers: [
+        StreamProvider<UserModel?>.value(
+          catchError: (_, __) => null,
+          initialData: null,
+          value: AuthService().currUser,
+        ),
+        ChangeNotifierProvider(create: (_) => RecipeStore()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -27,16 +36,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<UserModel?>.value(
-      catchError: (_, __) => null,
-      initialData:
-          null, //sets the initial value provided by the StreamProvider before the actual stream emits any data
-      value: AuthService().currUser,
-
-      child: const MaterialApp(
-        home: Wrapper(),
-        debugShowCheckedModeBanner: false,
-      ),
+    return const MaterialApp(
+      home: Wrapper(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

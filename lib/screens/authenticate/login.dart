@@ -4,6 +4,7 @@ import 'package:cookit/components/styled_textfield.dart';
 import 'package:cookit/screens/authenticate/forgot_password.dart';
 import 'package:cookit/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   final Function()? onTap;
@@ -35,6 +36,7 @@ class _LoginState extends State<Login> {
     if(_emailController.text.isNotEmpty && _passwordController.text.isNotEmpty){
       setState(() => loading = true);
       dynamic result = await _auth.signinWithEmailAndPassword(_emailController.text.trim(), _passwordController.text.trim());
+      // dynamic result = await Provider.of<AuthService>(context, listen: false).signinWithEmailAndPassword(_emailController.text.trim(), _passwordController.text.trim());
 
       if(result == null){
         setState(() {
