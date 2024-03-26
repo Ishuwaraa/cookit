@@ -1,9 +1,11 @@
-import 'package:cookit/components/image_upload.dart';
+import 'package:cookit/components/appbar_title.dart';
+import 'package:cookit/components/card.dart';
 import 'package:cookit/components/loading.dart';
 import 'package:cookit/models/user_model.dart';
-import 'package:cookit/screens/profile/profile_settings.dart';
+import 'package:cookit/screens/profile/edit_profile.dart';
 import 'package:cookit/services/auth.dart';
 import 'package:cookit/services/database.dart';
+import 'package:cookit/services/recipe_store.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,69 +19,127 @@ class TestProfile extends StatefulWidget {
 class _TestProfileState extends State<TestProfile> {
 
   final AuthService _auth = AuthService();
-  String imageUrl = '';
-
-  void updateImageUrl(String newUrl) {
-    setState(() {
-      imageUrl = newUrl; 
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
 
     final user = Provider.of<UserModel>(context);
+    Provider.of<RecipeStore>(context, listen: true).fetchUserRecipes(user.userId);
 
     return StreamBuilder<UserData>(
       stream: DatabaseService(userId: user.userId).userData,
       builder: (context, AsyncSnapshot<UserData> snapshot) {
         if(snapshot.hasError){
-          return Center(child: Text('Sorry, an error occured. ${snapshot.error}'),);
+          return Center(child: Text('Sorry, an error occured, ${snapshot.error}',));
         }
         if(snapshot.hasData){
           UserData userData = snapshot.data!;
+          // Provider.of<RecipeStore>(context, listen: false).fetchUserRecipes(user.userId);
 
           return Scaffold(
             appBar: AppBar(
-              title: const Text('COOKIT'),
+              title: const AppbarTitle(title: 'Profile'),
             ),
-            body: Column(
-              children: [
-                Text(userData.userId),
-                Text(userData.name),
-                Text(userData.email),
-                Text(userData.profilePicUrl),
-                Text('imageUrl: $imageUrl'),
-                const SizedBox(height: 20.0,),
-                Container(
-                  width: 200.0,
-                  height: 200.0,
-                  child: (imageUrl.isNotEmpty)? Image.network(imageUrl) : const Text('no image uploaded'),
-                ),
-                const SizedBox(height: 20.0,),
-                ImageUpload(onImageUrlChange: (newUrl) {
-                  updateImageUrl(newUrl);
-                }),
-                const SizedBox(height: 20.0,),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileSettings()));
-                  },
-                  child: const Text('Settings page')
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    await _auth.signOutUser();
-                  }, 
-                  child: const Text('Log out')),
-              ],
+            body: Container(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      ClipOval(
+                        child: FadeInImage(
+                          placeholder: const AssetImage('assets/cookit-logo.png'),
+                          image: NetworkImage(userData.profilePicUrl),
+                          width: 120.0,
+                          height: 120.0,
+                          fit: BoxFit.cover,
+                          alignment: Alignment.center,
+                          imageErrorBuilder: (context, error, stackTrace) {
+                            return Container(
+                              width: 120.0,
+                              height: 120.0,
+                              color: Colors.grey,
+                              child: const Center(child: Icon(Icons.error)),
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 20), // Add spacing between avatar and text
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(userData.name,
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              // Set maxLines to null to allow text to wrap to multiple lines
+                              maxLines: null,
+                            ),
+                            const SizedBox(height: 5), // Add spacing between name and email
+                            Text(userData.email,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            const SizedBox(height: 5.0,),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfile()));
+                              },
+                              child: Container(
+                                width: 100,
+                                padding: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                    color: const Color(0xFF86BF3E),
+                                    borderRadius: BorderRadius.circular(50)),
+                                child: const Center(
+                                  child: Text(
+                                    'Edit Profile',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 5.0,),
+                            ElevatedButton(
+                              onPressed: () async {
+                                await _auth.signOutUser();
+                              }, 
+                              child: const Text('Log out')
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                    child: Consumer<RecipeStore>(
+                    builder: (context, value, child) {
+                      return ListView.builder(
+                        itemCount: value.userRecipes.length,
+                        itemBuilder: (_, index) {
+                          return Column(
+                            children: [
+                              const SizedBox(height: 30,),
+                              FoodCard(value.userRecipes[index]),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  ),
+                ],
+              ),
             ),
           );
         }else{
           return const Loading();
         }
-      }
+      },
     );
-    
   }
 }
