@@ -8,22 +8,6 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  List<bool> _isSelectedList = [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,13 +35,132 @@ class _SearchPageState extends State<SearchPage> {
                 spacing: 8.0,
                 runSpacing: 15.0,
                 children: [
-                  _buildChip('Breakfast', 0),
-                  _buildChip('Brunch', 1),
-                  _buildChip('Lunch', 2),
-                  _buildChip('Snack', 3),
-                  _buildChip('Dessert', 4),
-                  _buildChip('Dinner', 5),
-                  _buildChip('Soup', 6),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Chip(
+                      label: const Padding(
+                        padding: EdgeInsets.all(3.0),
+                        child: Text(
+                          'Breakfast',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      backgroundColor: const Color(0xFF86BF3E),
+                      labelStyle: const TextStyle(color: Colors.white),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        side: const BorderSide(color: Color(0xFF86BF3E)),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Chip(
+                      label: const Padding(
+                        padding: EdgeInsets.all(3.0),
+                        child: Text(
+                          'Brunch',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      backgroundColor: const Color(0xFF86BF3E),
+                      labelStyle: const TextStyle(color: Colors.white),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        side: const BorderSide(color: Color(0xFF86BF3E)),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Chip(
+                      label: const Padding(
+                        padding: EdgeInsets.all(3.0),
+                        child: Text(
+                          'Lunch',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      backgroundColor: const Color(0xFF86BF3E),
+                      labelStyle: const TextStyle(color: Colors.white),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        side: const BorderSide(color: Color(0xFF86BF3E)),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Chip(
+                      label: const Padding(
+                        padding: EdgeInsets.all(3.0),
+                        child: Text(
+                          'Snack',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      backgroundColor: const Color(0xFF86BF3E),
+                      labelStyle: const TextStyle(color: Colors.white),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        side: const BorderSide(color: Color(0xFF86BF3E)),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Chip(
+                      label: const Padding(
+                        padding: EdgeInsets.all(3.0),
+                        child: Text(
+                          'Dessert',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      backgroundColor: const Color(0xFF86BF3E),
+                      labelStyle: const TextStyle(color: Colors.white),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        side: const BorderSide(color: Color(0xFF86BF3E)),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Chip(
+                      label: const Padding(
+                        padding: EdgeInsets.all(3.0),
+                        child: Text(
+                          'Dinner',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      backgroundColor: const Color(0xFF86BF3E),
+                      labelStyle: const TextStyle(color: Colors.white),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        side: const BorderSide(color: Color(0xFF86BF3E)),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Chip(
+                      label: const Padding(
+                        padding: EdgeInsets.all(3.0),
+                        child: Text(
+                          'Soup',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      backgroundColor: const Color(0xFF86BF3E),
+                      labelStyle: const TextStyle(color: Colors.white),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        side: const BorderSide(color: Color(0xFF86BF3E)),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -77,9 +180,60 @@ class _SearchPageState extends State<SearchPage> {
                 spacing: 8.0,
                 runSpacing: 15.0,
                 children: [
-                  _buildChip('1 Servings', 10),
-                  _buildChip('2 Servings', 11),
-                  _buildChip('3 Servings', 12),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Chip(
+                      label: const Padding(
+                        padding: EdgeInsets.all(3.0),
+                        child: Text(
+                          '1 Servings',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      backgroundColor: const Color(0xFF86BF3E),
+                      labelStyle: const TextStyle(color: Colors.white),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        side: const BorderSide(color: Color(0xFF86BF3E)),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Chip(
+                      label: const Padding(
+                        padding: EdgeInsets.all(3.0),
+                        child: Text(
+                          '2 Servings',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      backgroundColor: const Color(0xFF86BF3E),
+                      labelStyle: const TextStyle(color: Colors.white),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        side: const BorderSide(color: Color(0xFF86BF3E)),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Chip(
+                      label: const Padding(
+                        padding: EdgeInsets.all(3.0),
+                        child: Text(
+                          '3 Servings',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      backgroundColor: const Color(0xFF86BF3E),
+                      labelStyle: const TextStyle(color: Colors.white),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        side: const BorderSide(color: Color(0xFF86BF3E)),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -99,74 +253,83 @@ class _SearchPageState extends State<SearchPage> {
                 spacing: 8.0,
                 runSpacing: 15.0,
                 children: [
-                  _buildChip('Under 15 mins', 7),
-                  _buildChip('Under 30 mins', 8),
-                  _buildChip('Under 60 mins', 9),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Chip(
+                      label: const Padding(
+                        padding: EdgeInsets.all(3.0),
+                        child: Text(
+                          'Under 15 mins',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      backgroundColor: const Color(0xFF86BF3E),
+                      labelStyle: const TextStyle(color: Colors.white),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        side: const BorderSide(color: Color(0xFF86BF3E)),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Chip(
+                      label: const Padding(
+                        padding: EdgeInsets.all(3.0),
+                        child: Text(
+                          'Under 30 mins',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      backgroundColor: const Color(0xFF86BF3E),
+                      labelStyle: const TextStyle(color: Colors.white),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        side: const BorderSide(color: Color(0xFF86BF3E)),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Chip(
+                      label: const Padding(
+                        padding: EdgeInsets.all(3.0),
+                        child: Text(
+                          'Under 45 mins',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      backgroundColor: const Color(0xFF86BF3E),
+                      labelStyle: const TextStyle(color: Colors.white),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        side: const BorderSide(color: Color(0xFF86BF3E)),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Chip(
+                      label: const Padding(
+                        padding: EdgeInsets.all(3.0),
+                        child: Text(
+                          'Under 60 mins',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      backgroundColor: const Color(0xFF86BF3E),
+                      labelStyle: const TextStyle(color: Colors.white),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        side: const BorderSide(color: Color(0xFF86BF3E)),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildChip(String label, int index) {
-    return Focus(
-      autofocus: false, // Prevent the chip from receiving focus
-      child: GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  SecondPage(label), // Pass label to the second page
-            ),
-          );
-        },
-        child: Chip(
-          label: Padding(
-            padding: const EdgeInsets.all(3.0), // Increase padding
-            child: Text(
-              label,
-              style: TextStyle(fontSize: 18), // Increase font size
-            ),
-          ),
-          backgroundColor: _isSelectedList[index]
-              ? const Color(0xFF86BF3E)
-              : const Color(0xFF86BF3E),
-          labelStyle: const TextStyle(color: Colors.white),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0), // Increase border radius
-            side:
-                BorderSide(color: const Color(0xFF86BF3E)), // Set border color
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class SecondPage extends StatelessWidget {
-  final String dishType;
-
-  SecondPage(this.dishType);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(dishType),
-      ),
-      body: Column(
-        children: [
-          Center(
-            child: Text(
-              'You selected $dishType',
-              style: const TextStyle(fontSize: 24),
-            ),
-          ),
-        ],
       ),
     );
   }
