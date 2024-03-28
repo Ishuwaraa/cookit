@@ -24,7 +24,7 @@ class _TestProfileState extends State<TestProfile> {
   Widget build(BuildContext context) {
 
     final user = Provider.of<UserModel>(context);
-    Provider.of<RecipeStore>(context, listen: true).fetchUserRecipes(user.userId);
+    Provider.of<RecipeStore>(context, listen: false).fetchUserRecipes(user.userId);
 
     return StreamBuilder<UserData>(
       stream: DatabaseService(userId: user.userId).userData,

@@ -6,9 +6,11 @@ class RecipeStore extends ChangeNotifier {
   
   final List<Recipe> _recipes = [];
   final List<Recipe> _userRecipes = [];
+  final List<Recipe> _filteredRecipes = [];
 
   get recipes => _recipes;
   get userRecipes => _userRecipes;
+  get filteredRecipes => _filteredRecipes;
 
   //add recipe
   Future<bool> addRecipe(Recipe recipe) async {
@@ -46,5 +48,23 @@ class RecipeStore extends ChangeNotifier {
         print(e.toString());
       }
     }
+  }
+
+  Future<bool> fetchFilteredRecipes(String type, String dish) async {
+    bool isSuccess = false;
+
+    if(_filteredRecipes.isEmpty){
+      try{
+        List<Recipe> fetchedFilteredRecipes = await DatabaseService.getFilteredRecipes(type, dish).first;
+        _filteredRecipes.addAll(fetchedFilteredRecipes);
+        notifyListeners();
+        if(fetchedFilteredRecipes.isNotEmpty){
+          isSuccess = true;
+        }
+      }catch (e) {
+        print(e.toString());
+      }
+    }
+    return isSuccess;
   }
 }

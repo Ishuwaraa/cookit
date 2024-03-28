@@ -100,6 +100,13 @@ class DatabaseService {
       .snapshots().map(_recipeListFromSnapshot);
   }
 
+  //filtered recipe - dish type
+  static Stream<List<Recipe>> getFilteredRecipes(String type, String dish) {
+    return recipeCollection
+    .where(type, isEqualTo: dish)
+    .snapshots().map(_recipeListFromSnapshot);
+  }
+
   //recipe list from snapshot
   static List<Recipe> _recipeListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
