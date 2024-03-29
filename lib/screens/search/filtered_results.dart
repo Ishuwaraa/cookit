@@ -61,7 +61,7 @@ class _FilteredResultState extends State<FilteredResult> {
                       itemBuilder: (_, index) {
                         return Column(
                           children: [
-                            FoodCard(value.filteredRecipes[index]),
+                            FoodCard(value.filteredRecipes[index], type: 'detail',),
                             const SizedBox(height: 30.0,)
                           ],
                         );

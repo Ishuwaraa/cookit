@@ -129,7 +129,7 @@ class _EditProfileState extends State<EditProfile> {
                     padding: const EdgeInsets.symmetric(horizontal: 50.0),
                     child: SubmitButton(
                       onTap: () {
-                        updateName(userData.userId, _editNameController.text.trim(), imageUrl);
+                        updateName(userData.userId, _editNameController.text.trim(), (imageUrl.isEmpty)? userData.profilePicUrl : imageUrl);
                         // print('name: ${editNameController.text}');
                       },
                       text: 'Save Changes',

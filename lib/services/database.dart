@@ -83,6 +83,35 @@ class DatabaseService {
     }
   }
 
+  static Future<bool> updateRecipe(Recipe recipe) async {
+    try{
+      await recipeCollection.doc(recipe.recipeId).update({
+        'userId': recipe.userId,
+        'recipe': recipe.recipe,
+        'ingredients': recipe.ingredients,
+        'time': recipe.time,
+        'serving': recipe.servings,
+        'category': recipe.category,
+        'description': recipe.description,
+        'photoUrl': recipe.photoUrl,
+      });
+      return true;
+    }catch(e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
+  static Future<bool> deleteRecipe(String recipeId) async {
+    try{
+      await recipeCollection.doc(recipeId).delete();
+      return true;
+    }catch(e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
   //get recipes once
   static Future<QuerySnapshot<Recipe>> getRecipeOnce() {
     return recipeCollection.get().then((snapshot) => snapshot as QuerySnapshot<Recipe>);

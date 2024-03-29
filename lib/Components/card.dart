@@ -1,10 +1,14 @@
 import 'package:cookit/models/recipe_model.dart';
+import 'package:cookit/screens/profile/test_edit_recipe.dart';
 import 'package:cookit/screens/test_recipe_details.dart';
 import 'package:flutter/material.dart';
 
 // ignore: use_key_in_widget_constructors
 class FoodCard extends StatefulWidget {
-  const FoodCard(this.recipe, {super.key});
+
+  // final Function()? onTap;
+  final String type;
+  const FoodCard(this.recipe, {required this.type, super.key});
 
   final Recipe recipe;
 
@@ -20,7 +24,11 @@ class _FoodCardState extends State<FoodCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => TestRecipeDetails(recipeId: widget.recipe.recipeId)));
+        if(widget.type == 'detail'){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => TestRecipeDetails(recipeId: widget.recipe.recipeId)));
+        }else {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => TestEditRecipe(recipeId: widget.recipe.recipeId)));
+        }
       },
       child: Container(
         width: 500.0,

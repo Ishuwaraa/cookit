@@ -67,4 +67,30 @@ class RecipeStore extends ChangeNotifier {
     }
     return isSuccess;
   }
+
+  Future<bool> updateRecipe(Recipe recipe) async {
+    bool isSuccess = false;
+
+    try{
+      isSuccess = await DatabaseService.updateRecipe(recipe);
+      notifyListeners();
+    }catch (e) {
+      print(e.toString());
+    }
+
+    return isSuccess;
+  }
+
+  Future<bool> deleteRecipe(String recipeId) async {
+    bool isSuccess = false;
+
+    try{
+      isSuccess = await DatabaseService.deleteRecipe(recipeId);
+      notifyListeners();
+    }catch (e) {
+      print(e.toString());
+    }
+
+    return isSuccess;
+  }
 }

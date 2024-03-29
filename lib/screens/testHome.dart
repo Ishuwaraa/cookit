@@ -106,7 +106,7 @@ class _TestHomeState extends State<TestHome> {
                           const SizedBox(
                             height: 30,
                           ),
-                          FoodCard(value.recipes[index]),
+                          FoodCard(value.recipes[index], type: 'detail',),
                         ],
                       );
                       // return FoodCard(value.recipes[index]);
