@@ -32,34 +32,44 @@ class _TestSearchPageState extends State<TestSearchPage> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'category', filter: 'breakfast')));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'category', filter: 'breakfast', title: 'Breakfast',)));
                     },
                     child: const StyledChipButton(text: 'Breakfast'),
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'category', filter: 'lunch')));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'category', filter: 'lunch', title: 'Lunch')));
                     },
                     child: const StyledChipButton(text: 'Lunch'),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'category', filter: 'brunch', title: 'Brunch')));
+                    },
                     child: const StyledChipButton(text: 'Brunch'),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'category', filter: 'dinner', title: 'Dinner')));
+                    },
                     child: const StyledChipButton(text: 'Dinner'),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'category', filter: 'dessert', title: 'Dessert')));
+                    },
                     child: const StyledChipButton(text: 'Dessert'),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'category', filter: 'snack', title: 'Snack')));
+                    },
                     child: const StyledChipButton(text: 'Snack'),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'category', filter: 'soup', title: 'Soup')));
+                    },
                     child: const StyledChipButton(text: 'Soup'),
                   ),
                 ],
@@ -73,15 +83,21 @@ class _TestSearchPageState extends State<TestSearchPage> {
                 runSpacing: 15.0,
                 children: [
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'serving', filter: '1', title: '1 Servings')));
+                    },
                     child: const StyledChipButton(text: '1 Servings'),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'serving', filter: '2', title: '2 Servings')));
+                    },
                     child: const StyledChipButton(text: '2 Servings'),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'serving', filter: '3', title: '3 Servings')));
+                    },
                     child: const StyledChipButton(text: '3 Servings'),
                   ),
                 ],
@@ -95,19 +111,27 @@ class _TestSearchPageState extends State<TestSearchPage> {
                 runSpacing: 15.0,
                 children: [
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'time', filter: '15min', title: 'Under 15min')));
+                    },
                     child: const StyledChipButton(text: 'Under 15 mins'),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'time', filter: '30min', title: 'Under 30min')));
+                    },
                     child: const StyledChipButton(text: 'Under 30 mins'),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'time', filter: '45min', title: 'Under 45min')));
+                    },
                     child: const StyledChipButton(text: 'Under 45 mins'),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'time', filter: '60min', title: 'Under 60min')));
+                    },
                     child: const StyledChipButton(text: 'Under 60 mins'),
                   ),
                 ],

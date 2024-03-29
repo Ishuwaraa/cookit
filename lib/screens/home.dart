@@ -71,12 +71,12 @@ class _HomePageState extends State<HomePage> {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: const [
-                  PopularRecipeCard(),
-                  PopularRecipeCard(),
-                  PopularRecipeCard(),
-                  PopularRecipeCard(),
-                  PopularRecipeCard(),
-                  PopularRecipeCard(),
+                  // PopularRecipeCard(),
+                  // PopularRecipeCard(),
+                  // PopularRecipeCard(),
+                  // PopularRecipeCard(),
+                  // PopularRecipeCard(),
+                  // PopularRecipeCard(),
                 ],
               ),
             ),

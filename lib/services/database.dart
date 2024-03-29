@@ -23,7 +23,12 @@ class DatabaseService {
 
   //userData from snapshot
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
-    return UserData(userId: userId, name: snapshot.get('name'), email: snapshot.get('email'), profilePicUrl: snapshot.get('profilePic'));
+    return UserData(
+      userId: userId, 
+      name: snapshot.get('name'), 
+      email: snapshot.get('email'), 
+      profilePicUrl: snapshot.get('profilePic')
+    );
   }
 
   //get user doc stream
@@ -75,6 +80,7 @@ class DatabaseService {
         'description': recipe.description,
         'photoUrl': recipe.photoUrl,
         'createAt': FieldValue.serverTimestamp(),
+        'comments': [],
       });
       return true;
     }catch (e) {
