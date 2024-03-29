@@ -10,6 +10,8 @@ import 'package:provider/provider.dart';
 class TestEditRecipe extends StatefulWidget {
 
   final String recipeId;
+  // final VoidCallback refreshData;
+
   const TestEditRecipe({required this.recipeId, super.key});
 
   @override
@@ -85,7 +87,8 @@ class _TestEditRecipeState extends State<TestEditRecipe> {
       );
 
       if(isSuccess){
-        Navigator.pop(context);
+        // Navigator.pop(context);
+        // widget.refreshData();
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('Recipe updated'),
           duration: Duration(seconds: 2),
@@ -218,7 +221,7 @@ class _TestEditRecipeState extends State<TestEditRecipe> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      updateRecipeDetails(_recipe.recipeId);
+                      updateRecipeDetails(_recipe.recipeId);                        
                     },
                     child: const Text('Edit recipe'),
                   ),

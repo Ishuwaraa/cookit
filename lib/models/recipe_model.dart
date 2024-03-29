@@ -9,6 +9,7 @@ class Recipe {
   final String category;
   final String description;
   final String photoUrl;
+  List? comments;
   // final String isFav;
   static bool addedToFav = false;
 
@@ -22,6 +23,7 @@ class Recipe {
     required this.category,
     required this.description, 
     required this.photoUrl,
+    this.comments,
     // required this.isFav,
   });
 

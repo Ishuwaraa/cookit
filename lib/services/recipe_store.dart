@@ -93,4 +93,16 @@ class RecipeStore extends ChangeNotifier {
 
     return isSuccess;
   }
+
+  Future<bool> addComment(String recipeId, String comment) async {
+    bool isSuccess = false;
+
+    try{
+      isSuccess = await DatabaseService.addComment(recipeId, comment);
+      notifyListeners();
+    }catch (e) {
+      print(e.toString());
+    }
+    return isSuccess;
+  }
 }

@@ -19,6 +19,7 @@ class TestProfile extends StatefulWidget {
 class _TestProfileState extends State<TestProfile> {
 
   final AuthService _auth = AuthService();
+  bool _reload = false;
 
   @override
   Widget build(BuildContext context) {
@@ -104,11 +105,24 @@ class _TestProfileState extends State<TestProfile> {
                               ),
                             ),
                             const SizedBox(height: 5.0,),
-                            ElevatedButton(
-                              onPressed: () async {
-                                await _auth.signOutUser();
-                              }, 
-                              child: const Text('Log out')
+                            Row(
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    await _auth.signOutUser();
+                                  }, 
+                                  child: const Text('Log out')
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      _reload = !_reload;
+                                      print(_reload);
+                                    });
+                                  }, 
+                                  icon: const Icon(Icons.refresh)
+                                )
+                              ],
                             ),
                           ],
                         ),
@@ -130,7 +144,7 @@ class _TestProfileState extends State<TestProfile> {
                         },
                       );
                     },
-                  ),
+                    ),
                   ),
                 ],
               ),

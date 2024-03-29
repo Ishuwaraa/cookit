@@ -112,6 +112,18 @@ class DatabaseService {
     }
   }
 
+  static Future<bool> addComment(String recipeId, String comment) async {
+    try{
+      await recipeCollection.doc(recipeId).update({
+        'comments': FieldValue.arrayUnion([comment]),
+      });
+      return true;
+    }catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
   //get recipes once
   static Future<QuerySnapshot<Recipe>> getRecipeOnce() {
     return recipeCollection.get().then((snapshot) => snapshot as QuerySnapshot<Recipe>);
@@ -148,7 +160,8 @@ class DatabaseService {
         servings: doc.get('serving'), 
         category: doc.get('category'), 
         description: doc.get('description'), 
-        photoUrl: doc.get('photoUrl')
+        photoUrl: doc.get('photoUrl'),
+        comments: doc.get('comments'),
       );
     }).toList();
   }
@@ -166,6 +179,7 @@ class DatabaseService {
         category: snapshot.get('category'),
         description: snapshot.get('description'),
         photoUrl: snapshot.get('photoUrl'),
+        comments: snapshot.get('comments'),
       );
     } else {
       return null;
