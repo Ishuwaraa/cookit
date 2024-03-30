@@ -4,7 +4,6 @@ import 'package:cookit/components/styled_textfield.dart';
 import 'package:cookit/screens/authenticate/forgot_password.dart';
 import 'package:cookit/services/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   final Function()? onTap;

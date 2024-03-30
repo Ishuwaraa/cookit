@@ -3,7 +3,6 @@ import 'package:cookit/screens/profile/test_edit_recipe.dart';
 import 'package:cookit/screens/test_recipe_details.dart';
 import 'package:cookit/services/recipe_store.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 // ignore: use_key_in_widget_constructors
 class FoodCard extends StatefulWidget {

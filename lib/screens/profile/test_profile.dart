@@ -6,7 +6,7 @@ import 'package:cookit/models/user_model.dart';
 import 'package:cookit/screens/profile/edit_profile.dart';
 import 'package:cookit/services/auth.dart';
 import 'package:cookit/services/database.dart';
-import 'package:cookit/services/recipe_store.dart';
+// import 'package:cookit/services/recipe_store.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +20,6 @@ class TestProfile extends StatefulWidget {
 class _TestProfileState extends State<TestProfile> {
 
   final AuthService _auth = AuthService();
-  bool _reload = false;
 
   @override
   Widget build(BuildContext context) {
@@ -149,7 +148,98 @@ class _TestProfileState extends State<TestProfile> {
                 );
               }else{
                 // return const Center(child: Text('Sorry we have trouble getting data'),);
-                return const Loading();
+                return Scaffold(
+                  appBar: AppBar(
+                    title: const AppbarTitle(title: 'Profile'),
+                  ),
+                  body: Container(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            ClipOval(
+                              child: FadeInImage(
+                                placeholder: const AssetImage('assets/cookit-logo.png'),
+                                image: NetworkImage(userData.profilePicUrl),
+                                width: 120.0,
+                                height: 120.0,
+                                fit: BoxFit.cover,
+                                alignment: Alignment.center,
+                                imageErrorBuilder: (context, error, stackTrace) {
+                                  return Container(
+                                    width: 120.0,
+                                    height: 120.0,
+                                    color: Colors.grey,
+                                    child: const Center(child: Icon(Icons.error)),
+                                  );
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 20), 
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(userData.name,
+                                    style: const TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    maxLines: null,
+                                  ),
+                                  const SizedBox(height: 5), 
+                                  Text(userData.email,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 5.0,),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfile()));
+                                    },
+                                    child: Container(
+                                      width: 100,
+                                      padding: const EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                          color: const Color(0xFF86BF3E),
+                                          borderRadius: BorderRadius.circular(50)),
+                                      child: const Center(
+                                        child: Text(
+                                          'Edit Profile',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 5.0,),
+                                  ElevatedButton(
+                                    onPressed: () async {
+                                      await _auth.signOutUser();
+                                    }, 
+                                    child: const Text('Log out')
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text('Hmm such emptyness... ', style: TextStyle(fontSize: 20.0),),
+                              Text('Add your special recipes to share with others.', style: TextStyle(fontSize: 18.0),),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                );
               }
             },
           );
