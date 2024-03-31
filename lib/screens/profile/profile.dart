@@ -91,8 +91,8 @@ class _ProfileState extends State<Profile> {
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold,
                                     ),
-                                    
-                                    maxLines: null,
+                                    overflow: TextOverflow.fade,
+                                    maxLines: 2,
                                   ),
                                   const SizedBox(height: 5), 
                                   Text(userData.email,
@@ -100,6 +100,8 @@ class _ProfileState extends State<Profile> {
                                       fontSize: 16,
                                       color: Colors.grey,
                                     ),
+                                    overflow: TextOverflow.fade,
+                                    maxLines: 2,
                                   ),
                                   const SizedBox(height: 5.0,),
                                   GestureDetector(
@@ -139,7 +141,7 @@ class _ProfileState extends State<Profile> {
                               return Column(
                                 children: [
                                   const SizedBox(height: 30,),
-                                  FoodCard(recipes[index], type: 'profile',),
+                                  FoodCard(recipes[index], type: 'profile', userId: user.userId,),
                                 ],
                               );
                             },

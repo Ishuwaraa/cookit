@@ -65,7 +65,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Forgot Password?',
+                'Forgot Your Password?',
                 style: TextStyle(
                   fontSize: 36,
                   color: Color(0xFF86BF3E),

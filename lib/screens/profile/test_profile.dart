@@ -136,7 +136,7 @@ class _TestProfileState extends State<TestProfile> {
                               return Column(
                                 children: [
                                   const SizedBox(height: 30,),
-                                  FoodCard(recipes[index], type: 'profile',),
+                                  FoodCard(recipes[index], type: 'profile', userId: user.userId,),
                                 ],
                               );
                             },

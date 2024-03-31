@@ -1,6 +1,7 @@
 import 'package:cookit/components/appbar_title.dart';
 import 'package:cookit/components/loading.dart';
 import 'package:cookit/models/recipe_model.dart';
+import 'package:cookit/models/user_model.dart';
 import 'package:cookit/services/database.dart';
 import 'package:cookit/services/recipe_store.dart';
 import 'package:flutter/material.dart';
@@ -49,10 +50,27 @@ class _TestRecipeDetailsState extends State<TestRecipeDetails> {
       }
     }else{
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Please write your comment'),
-          duration: Duration(seconds: 2),
-          backgroundColor: Color(0xFF86BF3E),
-        ));
+        content: Text('Please write your comment'),
+        duration: Duration(seconds: 2),
+        backgroundColor: Color(0xFF86BF3E),
+      ));
+    }
+  }
+
+  void addToFavourite(String userId, String recipeId) async {
+    bool isSuccess = await DatabaseService.addToFavourite(userId, recipeId);
+    if(isSuccess){
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Recipe added to favourites'),
+        duration: Duration(seconds: 2),
+        backgroundColor: Color(0xFF86BF3E),
+      ));
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Sorry, an error occured while adding to favourites'),
+        duration: Duration(seconds: 2),
+        backgroundColor: Color(0xFF86BF3E),
+      ));
     }
   }
 
@@ -70,6 +88,9 @@ class _TestRecipeDetailsState extends State<TestRecipeDetails> {
 
   @override
   Widget build(BuildContext context) {
+
+    final user = Provider.of<UserModel>(context);
+
     return loading? const Loading() : Scaffold(
       appBar: AppBar(title: AppbarTitle(title: _recipe.recipe,)),
       body: Column(
@@ -93,7 +114,18 @@ class _TestRecipeDetailsState extends State<TestRecipeDetails> {
               },
             ),
           ),
-          Text('id: ${_recipe.recipeId}'),
+          Row(
+            children: [
+              Text('id: ${_recipe.recipeId}'),
+              const SizedBox(width: 20.0,),
+              GestureDetector(
+                onTap: () {
+                  addToFavourite(user.userId, _recipe.recipeId);
+                },
+                child: const Icon(Icons.favorite_outline)
+              ),
+            ],
+          ),          
           Text('category: ${_recipe.category}'),
           const Text('ingredients:'),
           Column(
@@ -107,7 +139,7 @@ class _TestRecipeDetailsState extends State<TestRecipeDetails> {
             ],
           ),
           Text('servings: ${_recipe.servings}'),
-          Text('time: ${_recipe.time}'),
+          Text('time: under ${_recipe.time}'),
           Text('description: ${_recipe.description}'),
           const SizedBox(height: 20.0,),
           Expanded(

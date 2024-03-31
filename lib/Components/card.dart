@@ -9,7 +9,8 @@ class FoodCard extends StatefulWidget {
 
   // final Function()? onTap;
   final String type;
-  const FoodCard(this.recipe, {required this.type, super.key});
+  final String userId;
+  const FoodCard(this.recipe, {required this.type, required this.userId, super.key});
 
   final Recipe recipe;
 
@@ -20,6 +21,10 @@ class FoodCard extends StatefulWidget {
 class _FoodCardState extends State<FoodCard> {
 
   bool addedToFav = false;
+
+  // void addToFavourite(String userId, String recipeId) async {
+  //   bool isSuccess = await DatabaseService.addToFavourite(userId, recipeId);
+  // }
 
   void refreshData() {
     // Provider.of<RecipeStore>(context, listen: false).fetchRecipesOnce();
@@ -85,12 +90,15 @@ class _FoodCardState extends State<FoodCard> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // Text(widget.userId),
                     Text(
                       widget.recipe.recipe,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
                     ),
                     // Text(recipe.recipeId),
                     const SizedBox(height: 30),
@@ -143,25 +151,26 @@ class _FoodCardState extends State<FoodCard> {
                         ),
                       ],
                     ),
-                    const Spacer(),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            addedToFav = !addedToFav;
-                            // Recipe.addOrRemoveFav();
-                          });
-                          print(addedToFav);
-                        },
-                        child: Icon(
-                          addedToFav? Icons.favorite_outlined : Icons.favorite_border,
-                          // Recipe.addedToFav? Icons.favorite_outlined : Icons.favorite_border,
-                          size: 24,
-                          color: const Color(0xFF86BF3E),
-                        ),
-                      ),
-                    ),
+                    // const Spacer(),
+                    // Align(
+                    //   alignment: Alignment.bottomRight,
+                    //   child: GestureDetector(
+                    //     onTap: () {
+                    //       // setState(() {
+                    //       //   addedToFav = !addedToFav;
+                    //       //   // Recipe.addOrRemoveFav();
+                    //       // });
+                    //       addToFavourite(widget.userId, widget.recipe.recipeId);
+                    //       // print(addedToFav);
+                    //     },
+                    //     child: Icon(
+                    //       addedToFav? Icons.favorite_outlined : Icons.favorite_border,
+                    //       // Recipe.addedToFav? Icons.favorite_outlined : Icons.favorite_border,
+                    //       size: 24,
+                    //       color: const Color(0xFF86BF3E),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

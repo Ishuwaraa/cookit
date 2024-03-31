@@ -24,7 +24,6 @@ class PopularRecipeCard extends StatelessWidget {
             SizedBox(
               width: 150,
               height: 150,
-              // child: Image.network(recipe.photoUrl, width: 180.0, height: 180.0,),
               child: ClipOval(
                 child: FadeInImage(
                   placeholder: const AssetImage('assets/cookit-logo.png'),
@@ -45,55 +44,55 @@ class PopularRecipeCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10,), 
-            Text(
-              recipe.recipe,
-              style: const TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Text(
+                recipe.recipe,
+                style: const TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
               ),
             ),
             const SizedBox(height: 10), 
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            Center(
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Icon(Icons.dinner_dining, color: Color(0xFF86BF3E),),
                   const SizedBox(width: 5),
-                  Expanded(
-                    child: Text(
-                      recipe.category,
-                      style: const TextStyle(color: Color(0xFF86BF3E)),
-                    ),
-                  ),
-                  const Icon(Icons.access_time,color: Color(0xFF86BF3E),),
-                  const SizedBox(width: 5),
-                  Expanded(
-                    child: Text(
-                      recipe.time,
-                      style: const TextStyle(
-                        color: Color(0xFF86BF3E),
-                      ),
+                  Text(
+                    recipe.category,
+                    style: const TextStyle(
+                      color: Color(0xFF86BF3E),
                     ),
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 10),
-            Center(
+            
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(
-                    Icons.room_service,
-                    color: Color(0xFF86BF3E),
-                  ),
+                  const Icon(Icons.access_time,color: Color(0xFF86BF3E),),
                   const SizedBox(width: 5),
                   Text(
-                    recipe.servings,
+                    recipe.time,
                     style: const TextStyle(
                       color: Color(0xFF86BF3E),
                     ),
+                  ),
+                  const Expanded(child: SizedBox()),
+                  const Icon(Icons.room_service,color: Color(0xFF86BF3E),),
+                  const SizedBox(width: 5),
+                  Text(
+                    recipe.servings,
+                    style: const TextStyle(color: Color(0xFF86BF3E)),
                   ),
                 ],
               ),

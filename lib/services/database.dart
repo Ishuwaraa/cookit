@@ -18,6 +18,7 @@ class DatabaseService {
       'name': name,
       'email': email,
       'profilePic': profilePicUrl,
+      'favourites': [],
     });
   }
 
@@ -27,7 +28,8 @@ class DatabaseService {
       userId: userId, 
       name: snapshot.get('name'), 
       email: snapshot.get('email'), 
-      profilePicUrl: snapshot.get('profilePic')
+      profilePicUrl: snapshot.get('profilePic'),
+      favourites: snapshot.get('favourites'),
     );
   }
 
@@ -129,6 +131,25 @@ class DatabaseService {
       return false;
     }
   }
+
+  static Future<bool> addToFavourite(String userId, String recipeId) async {
+    try{
+      DatabaseService db = DatabaseService(userId: userId);
+      await db.userCollection.doc(userId).update({
+        'favourites': FieldValue.arrayUnion([recipeId]),
+      });
+      return true;
+    }catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
+  // static Future<List<Recipe>> getFavouritesRecipes(String userId) async {
+  //   try{
+      
+  //   }
+  // }
 
   //get recipes once
   static Future<QuerySnapshot<Recipe>> getRecipeOnce() {
