@@ -94,11 +94,11 @@ class RecipeStore extends ChangeNotifier {
     return isSuccess;
   }
 
-  Future<bool> addComment(String recipeId, String comment) async {
+  Future<bool> addComment(String recipeId, String comment, name) async {
     bool isSuccess = false;
 
     try{
-      isSuccess = await DatabaseService.addComment(recipeId, comment);
+      isSuccess = await DatabaseService.addComment(recipeId, comment, name);
       notifyListeners();
     }catch (e) {
       print(e.toString());

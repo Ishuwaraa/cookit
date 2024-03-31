@@ -120,10 +120,13 @@ class DatabaseService {
     }
   }
 
-  static Future<bool> addComment(String recipeId, String comment) async {
+  static Future<bool> addComment(String recipeId, String comment, String name) async {
     try{
       await recipeCollection.doc(recipeId).update({
-        'comments': FieldValue.arrayUnion([comment]),
+        'comments': FieldValue.arrayUnion([{
+          'comment': comment, 
+          'name': name,
+        }]),
       });
       return true;
     }catch (e) {
@@ -178,6 +181,16 @@ class DatabaseService {
   //recipe list from snapshot
   static List<Recipe> _recipeListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
+      List<dynamic>? commentData = doc.get('comments');
+      List<dynamic> comments = [];
+
+      if(commentData != null){
+        comments = commentData.map((comment) => {           
+          'comment': comment['comment'],
+          'name': comment['name'],          
+        }).toList();
+      }
+
       return Recipe(
         userId: doc.get('userId'),
         recipeId: doc.id,
@@ -188,7 +201,7 @@ class DatabaseService {
         category: doc.get('category'), 
         description: doc.get('description'), 
         photoUrl: doc.get('photoUrl'),
-        comments: doc.get('comments'),
+        comments: comments,
       );
     }).toList();
   }
@@ -196,6 +209,16 @@ class DatabaseService {
   static Future getRecipeDetails(String id) async {
     DocumentSnapshot snapshot = await recipeCollection.doc(id).get();
     if (snapshot.exists) {
+      List<dynamic>? commentData = snapshot.get('comments');
+      List<dynamic> comments = [];
+
+      if(commentData != null){
+        comments = commentData.map((comment) => {           
+          'comment': comment['comment'],
+          'name': comment['name'],          
+        }).toList();
+      }
+
       return Recipe(
         userId: snapshot.get('userId'),
         recipeId: snapshot.id,
@@ -206,7 +229,8 @@ class DatabaseService {
         category: snapshot.get('category'),
         description: snapshot.get('description'),
         photoUrl: snapshot.get('photoUrl'),
-        comments: snapshot.get('comments'),
+        // comments: snapshot.get('comments'),
+        comments: comments,
       );
     } else {
       return null;

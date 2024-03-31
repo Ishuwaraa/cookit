@@ -35,9 +35,9 @@ class _TestRecipeDetailsState extends State<TestRecipeDetails> {
     }    
   }
 
-  void addComment (String recipeId, String comment) async {
+  void addComment (String recipeId, String comment, String name) async {
     if(_commentController.text.isNotEmpty){
-      bool isSuccess = await Provider.of<RecipeStore>(context, listen: false).addComment(recipeId, comment);
+      bool isSuccess = await Provider.of<RecipeStore>(context, listen: false).addComment(recipeId, comment, name);
 
       if(isSuccess) {
         getRecipeDetails(recipeId);
@@ -91,80 +91,100 @@ class _TestRecipeDetailsState extends State<TestRecipeDetails> {
 
     final user = Provider.of<UserModel>(context);
 
-    return loading? const Loading() : Scaffold(
-      appBar: AppBar(title: AppbarTitle(title: _recipe.recipe,)),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipOval(
-            child: FadeInImage(
-              placeholder: const AssetImage('assets/cookit-logo.png'),
-              image: NetworkImage(_recipe.photoUrl),
-              width: 180.0,
-              height: 180.0,
-              fit: BoxFit.cover,
-              alignment: Alignment.center,
-              imageErrorBuilder: (context, error, stackTrace) {
-                return Container(
-                  width: 180.0,
-                  height: 180.0,
-                  color: Colors.grey,
-                  child: const Center(child: Icon(Icons.error)),
-                );
-              },
+    return StreamBuilder<UserData>(
+      stream: DatabaseService(userId: user.userId).userData,
+      builder: (context, AsyncSnapshot<UserData> snapshot) {    
+        if(snapshot.hasData){
+          UserData userData = snapshot.data!;
+
+          return loading? const Loading() : Scaffold(
+            appBar: AppBar(title: AppbarTitle(title: _recipe.recipe,)),
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipOval(
+                  child: FadeInImage(
+                    placeholder: const AssetImage('assets/cookit-logo.png'),
+                    image: NetworkImage(_recipe.photoUrl),
+                    width: 180.0,
+                    height: 180.0,
+                    fit: BoxFit.cover,
+                    alignment: Alignment.center,
+                    imageErrorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        width: 180.0,
+                        height: 180.0,
+                        color: Colors.grey,
+                        child: const Center(child: Icon(Icons.error)),
+                      );
+                    },
+                  ),
+                ),
+                Row(
+                  children: [
+                    Text('id: ${_recipe.recipeId}'),
+                    const SizedBox(width: 20.0,),
+                    GestureDetector(
+                      onTap: () {
+                        addToFavourite(user.userId, _recipe.recipeId);
+                      },
+                      child: const Icon(Icons.favorite_outline)
+                    ),
+                  ],
+                ),          
+                Text('category: ${_recipe.category}'),
+                const Text('ingredients:'),
+                Column(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: _recipe.ingredients.split(',').map((ingredient) {
+                        return Text(ingredient.trim());
+                      }).toList(),
+                    ),
+                  ],
+                ),
+                Text('servings: ${_recipe.servings}'),
+                Text('time: under ${_recipe.time}'),
+                Text('description: ${_recipe.description}'),
+                const Text('comments:'),
+                const SizedBox(height: 20.0,),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: _recipe.comments!.length,
+                    itemBuilder: (context, index) {
+                      List<String> comment = [];
+                      List<String> name = [];
+                      if(_recipe.comments != null){
+                        _recipe.comments!.forEach((data) => {
+                          comment.add(data['comment']),
+                          name.add(data['name']),
+                        });
+                      }
+                      return Text('${comment[index]}: ${name[index]}');
+                    }
+                  ),
+                ),
+                const SizedBox(height: 20.0,),
+                TextField(
+                  controller: _commentController,                      
+                  obscureText: false,
+                ),
+                const SizedBox(height: 20.0,),
+                ElevatedButton(
+                  onPressed: () {
+                    print(_commentController.text.trim());
+                    addComment(_recipe.recipeId, _commentController.text.trim(), userData.name);
+                  }, 
+                  child: const Text('add comment'),
+                )
+              ]
             ),
-          ),
-          Row(
-            children: [
-              Text('id: ${_recipe.recipeId}'),
-              const SizedBox(width: 20.0,),
-              GestureDetector(
-                onTap: () {
-                  addToFavourite(user.userId, _recipe.recipeId);
-                },
-                child: const Icon(Icons.favorite_outline)
-              ),
-            ],
-          ),          
-          Text('category: ${_recipe.category}'),
-          const Text('ingredients:'),
-          Column(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: _recipe.ingredients.split(',').map((ingredient) {
-                  return Text(ingredient.trim());
-                }).toList(),
-              ),
-            ],
-          ),
-          Text('servings: ${_recipe.servings}'),
-          Text('time: under ${_recipe.time}'),
-          Text('description: ${_recipe.description}'),
-          const SizedBox(height: 20.0,),
-          Expanded(
-            child: ListView.builder(
-              itemCount: _recipe.comments!.length,
-              itemBuilder: (context, index) {
-                return Text(_recipe.comments![index]);
-              }
-            ),
-          ),
-          const SizedBox(height: 20.0,),
-          TextField(
-            controller: _commentController,                      
-            obscureText: false,
-          ),
-          const SizedBox(height: 20.0,),
-          ElevatedButton(
-            onPressed: () {
-              print(_commentController.text.trim());
-              addComment(_recipe.recipeId, _commentController.text.trim());
-            }, 
-            child: const Text('add comment'),
-          )
-        ]
-      ),
-    );
+          );
+        }else{
+          return const Loading();
+        }
+      },
+    );    
   }
 }
