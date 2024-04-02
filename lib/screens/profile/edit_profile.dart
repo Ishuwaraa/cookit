@@ -95,10 +95,16 @@ class _EditProfileState extends State<EditProfile> {
                       backgroundImage: (imageUrl.isEmpty)? NetworkImage(userData.profilePicUrl) : NetworkImage(imageUrl),
                     ),
                   ),
-                  Center(
-                    child: ImageUpload(onImageUrlChange: (newUrl) {
-                      updateImageUrl(newUrl);
-                    }),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ImageUpload(type: 'camera', onImageUrlChange: (newUrl) {
+                        updateImageUrl(newUrl);
+                      }),
+                      ImageUpload(type: 'gallery', onImageUrlChange: (newUrl) {
+                        updateImageUrl(newUrl);
+                      }),
+                    ]
                   ),
                   const SizedBox(
                       height: 20), // Add spacing between CircleAvatar and TextField

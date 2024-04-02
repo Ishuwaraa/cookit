@@ -6,6 +6,7 @@ import 'package:cookit/services/database.dart';
 import 'package:cookit/services/recipe_store.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 class TestRecipeDetails extends StatefulWidget {
 
@@ -74,6 +75,15 @@ class _TestRecipeDetailsState extends State<TestRecipeDetails> {
     }
   }
 
+  void shareRecipe (String recipe, String ingredients, String time, String desc, String serving){
+    String msg = '''$recipe \n\n
+      ingredients: $ingredients 
+      time: $time 
+      serving size: $serving \n
+      $desc''';
+    Share.share(msg);
+  }
+
   @override
   void dispose() {
     _commentController.dispose();
@@ -129,6 +139,13 @@ class _TestRecipeDetailsState extends State<TestRecipeDetails> {
                         addToFavourite(user.userId, _recipe.recipeId);
                       },
                       child: const Icon(Icons.favorite_outline)
+                    ),
+                    const SizedBox(width: 20.0,),
+                    GestureDetector(
+                      onTap: () {
+                        shareRecipe(_recipe.recipe, _recipe.ingredients, _recipe.time, _recipe.description, _recipe.servings);
+                      },
+                      child: const Icon(Icons.share)
                     ),
                   ],
                 ),          

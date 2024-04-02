@@ -65,7 +65,7 @@ class _ProfileState extends State<Profile> {
                           children: [
                             ClipOval(
                               child: FadeInImage(
-                                placeholder: const AssetImage('assets/cookit-logo.png'),
+                                placeholder: const AssetImage('assets/avatar.png'),
                                 image: NetworkImage(userData.profilePicUrl),
                                 width: 120.0,
                                 height: 120.0,

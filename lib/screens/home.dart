@@ -1,10 +1,11 @@
-import 'package:cookit/Components/category_list.dart';
 import 'package:cookit/components/appbar_title.dart';
 import 'package:cookit/components/card.dart';
+import 'package:cookit/components/category_list.dart';
 import 'package:cookit/components/loading.dart';
 import 'package:cookit/components/popular_recipe_card.dart';
 import 'package:cookit/models/recipe_model.dart';
 import 'package:cookit/models/user_model.dart';
+import 'package:cookit/screens/search/filtered_results.dart';
 import 'package:cookit/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -84,7 +85,28 @@ class _HomeState extends State<Home> {
                       ],
                     ),
                     const SizedBox(height: 10,),
-                    const SizedBoxListView(),
+                    SizedBox(
+                      height: 50.0,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'category', filter: 'soup', title: 'Soup')));
+                            },
+                            child: const SizedBoxListView(title: "🍲 Soup"),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'category', filter: 'snack', title: 'Snack')));
+                            },
+                            child: const SizedBoxListView(title: "🍿 Snacks"),
+                          ),
+                          const SizedBoxListView(title: "🥦 Healthy"),
+                          const SizedBoxListView(title: "🔥 Popular"),                          
+                        ],
+                      ),
+                    ),
                     const SizedBox(height: 30,),
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.start,
