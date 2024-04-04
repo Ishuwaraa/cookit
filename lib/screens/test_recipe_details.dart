@@ -11,7 +11,8 @@ import 'package:share_plus/share_plus.dart';
 class TestRecipeDetails extends StatefulWidget {
 
   final String recipeId;
-  const TestRecipeDetails({required this.recipeId, super.key});
+  final bool addToFav;
+  const TestRecipeDetails({required this.recipeId, required this.addToFav, super.key});
 
   @override
   State<TestRecipeDetails> createState() => _TestRecipeDetailsState();
@@ -59,20 +60,76 @@ class _TestRecipeDetailsState extends State<TestRecipeDetails> {
   }
 
   void addToFavourite(String userId, String recipeId) async {
-    bool isSuccess = await DatabaseService.addToFavourite(userId, recipeId);
+    List<dynamic> recipeIds = await DatabaseService.getFavRecipeIds(userId);
+
+    if(recipeIds.isEmpty){
+      bool isSuccess = await DatabaseService.addToFavourite(userId, recipeId);
+      if(isSuccess){
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Recipe added to favourites'),
+          duration: Duration(seconds: 2),
+          backgroundColor: Color(0xFF86BF3E),
+        ));
+      }else{
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Sorry, an error occured while adding to favourites'),
+          duration: Duration(seconds: 2),
+          backgroundColor: Color(0xFF86BF3E),
+        ));
+      }
+    }else{
+      bool valid = true;
+      for(int i = 0; i < recipeIds.length; i++){
+        if(recipeId == recipeIds[i]){
+          valid = false;
+          break;
+        }
+      }
+
+      if(valid){
+        bool isSuccess = await DatabaseService.addToFavourite(userId, recipeId);
+        if(isSuccess){
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Recipe added to favourites'),
+            duration: Duration(seconds: 2),
+            backgroundColor: Color(0xFF86BF3E),
+          ));
+        }else{
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Sorry, an error occured while adding to favourites'),
+            duration: Duration(seconds: 2),
+            backgroundColor: Color(0xFF86BF3E),
+          ));
+        }
+      }else{
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Recipe is already in your favourites'),
+          duration: Duration(seconds: 2),
+          backgroundColor: Color(0xFF86BF3E),
+        ));
+      }
+    }
+  }
+
+  void deleteFromFav(String userId, String recipeId) async {
+    // setState(() => loading = true);
+    bool isSuccess = await DatabaseService.deleteFromFav(userId, recipeId);
+    // setState(() => loading = false);
     if(isSuccess){
+      Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Recipe added to favourites'),
+        content: Text('Recipe removed'),
         duration: Duration(seconds: 2),
         backgroundColor: Color(0xFF86BF3E),
       ));
     }else{
+      Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Sorry, an error occured while adding to favourites'),
+        content: Text('Sorry, an error occured'),
         duration: Duration(seconds: 2),
         backgroundColor: Color(0xFF86BF3E),
       ));
-    }
+    }  
   }
 
   void shareRecipe (String recipe, String ingredients, String time, String desc, String serving){
@@ -108,7 +165,17 @@ class _TestRecipeDetailsState extends State<TestRecipeDetails> {
           UserData userData = snapshot.data!;
 
           return loading? const Loading() : Scaffold(
-            appBar: AppBar(title: AppbarTitle(title: _recipe.recipe,)),
+            appBar: AppBar(
+              title: AppbarTitle(title: _recipe.recipe,),
+              actions: [
+                GestureDetector(
+                  onTap: () {
+                    shareRecipe(_recipe.recipe, _recipe.ingredients, _recipe.time, _recipe.description, _recipe.servings);
+                  },
+                  child: const Icon(Icons.share)
+                ),
+              ],
+            ),
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -136,17 +203,21 @@ class _TestRecipeDetailsState extends State<TestRecipeDetails> {
                     const SizedBox(width: 20.0,),
                     GestureDetector(
                       onTap: () {
-                        addToFavourite(user.userId, _recipe.recipeId);
+                        if(widget.addToFav){
+                          addToFavourite(user.userId, _recipe.recipeId);
+                        }else{
+                          deleteFromFav(user.userId, _recipe.recipeId);
+                        }
                       },
-                      child: const Icon(Icons.favorite_outline)
+                      child: (widget.addToFav)? const Icon(Icons.add_circle_outline) : const Icon(Icons.remove_circle_outline),
                     ),
-                    const SizedBox(width: 20.0,),
-                    GestureDetector(
-                      onTap: () {
-                        shareRecipe(_recipe.recipe, _recipe.ingredients, _recipe.time, _recipe.description, _recipe.servings);
-                      },
-                      child: const Icon(Icons.share)
-                    ),
+                    // const SizedBox(width: 20.0,),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     shareRecipe(_recipe.recipe, _recipe.ingredients, _recipe.time, _recipe.description, _recipe.servings);
+                    //   },
+                    //   child: const Icon(Icons.share)
+                    // ),
                   ],
                 ),          
                 Text('category: ${_recipe.category}'),

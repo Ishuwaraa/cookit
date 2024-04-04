@@ -38,7 +38,7 @@ class DatabaseService {
     return userCollection.doc(userId).snapshots().map(_userDataFromSnapshot);
   }
 
-  //update user name
+  //update user data
   Future updateUserName(String name, String profilePicUrl) async {
     try{
       await userCollection.doc(userId).update({
@@ -148,11 +148,81 @@ class DatabaseService {
     }
   }
 
-  // static Future<List<Recipe>> getFavouritesRecipes(String userId) async {
-  //   try{
-      
-  //   }
-  // }
+  static Future<bool> deleteFromFav(String userId, String recipeId) async {
+    try{
+      DatabaseService db = DatabaseService(userId: userId);
+      await db.userCollection.doc(userId).update({
+        'favourites': FieldValue.arrayRemove([recipeId]),
+      });
+      return true;
+    }catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
+  static Future<List<dynamic>> getFavRecipeIds(String userId) async {
+    try{
+      DatabaseService db = DatabaseService(userId: userId);
+      DocumentSnapshot userSnapshot = await db.userCollection.doc(userId).get();
+
+      List<dynamic> favRecipeIds = userSnapshot.get('favourites');
+      return favRecipeIds;
+    }catch (e) {
+      print(e.toString());
+      return [];
+    }
+  }
+
+  static Future<List<Recipe>> getFavouriteRecipes(String userId) async {
+    try{
+      DatabaseService db = DatabaseService(userId: userId);
+      DocumentSnapshot userSnapshot = await db.userCollection.doc(userId).get();
+
+      List<dynamic>? favouriteRecipeIds = userSnapshot.get('favourites');
+
+      if(favouriteRecipeIds != null && favouriteRecipeIds.isNotEmpty){
+        List<Recipe> favouritesRecipes = [];
+        
+        for(String recipeId in favouriteRecipeIds){
+          DocumentSnapshot recipeSnapshot = await recipeCollection.doc(recipeId).get();
+          
+          if(recipeSnapshot.exists){
+            List<dynamic>? commentData = recipeSnapshot.get('comments');
+            List<dynamic> comments = [];
+
+            if(commentData != null){
+              comments = commentData.map((comment) => {           
+                'comment': comment['comment'],
+                'name': comment['name'],          
+              }).toList();
+            }
+
+            Recipe recipe = Recipe(
+              userId: recipeSnapshot.get('userId'), 
+              recipeId: recipeSnapshot.id, 
+              recipe: recipeSnapshot.get('recipe'), 
+              ingredients: recipeSnapshot.get('ingredients'), 
+              time: recipeSnapshot.get('time'), 
+              servings: recipeSnapshot.get('serving'), 
+              category: recipeSnapshot.get('category'), 
+              description: recipeSnapshot.get('description'), 
+              photoUrl: recipeSnapshot.get('photoUrl'),
+              comments: comments,
+            );
+
+            favouritesRecipes.add(recipe);
+          }
+        }
+        return favouritesRecipes;
+      }else{
+        return [];
+      }
+    }catch (e) {
+      print(e.toString());
+      return [];
+    }
+  }
 
   //get recipes once
   static Future<QuerySnapshot<Recipe>> getRecipeOnce() {

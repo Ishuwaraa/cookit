@@ -10,7 +10,7 @@ class PopularRecipeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TestRecipeDetails(recipeId: recipe.recipeId))),
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TestRecipeDetails(recipeId: recipe.recipeId, addToFav: true,))),
       child: Container(
         width: 200.0,
         margin: const EdgeInsets.symmetric(horizontal: 8.0),

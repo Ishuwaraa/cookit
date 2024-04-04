@@ -2,11 +2,10 @@ import 'package:cookit/components/appbar_title.dart';
 import 'package:cookit/components/card.dart';
 import 'package:cookit/components/loading.dart';
 import 'package:cookit/models/recipe_model.dart';
-import 'package:cookit/models/user_model.dart';
+// import 'package:cookit/models/user_model.dart';
 import 'package:cookit/services/database.dart';
 // import 'package:cookit/services/recipe_store.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 // import 'package:provider/provider.dart';
 
 class FilteredResult extends StatefulWidget {
@@ -86,7 +85,7 @@ class _FilteredResultState extends State<FilteredResult> {
     //   )
     // );
 
-    final user = Provider.of<UserModel>(context);
+    // final user = Provider.of<UserModel>(context);
 
     return StreamBuilder<List<Recipe>> (
       stream: DatabaseService.getFilteredRecipes(widget.type, widget.filter),
@@ -115,7 +114,7 @@ class _FilteredResultState extends State<FilteredResult> {
                       itemBuilder: (_, index) {
                         return Column(
                           children: [
-                            FoodCard(recipes[index], type: 'detail', userId: user.userId,),
+                            FoodCard(recipes[index], type: 'detail'),
                             const SizedBox(height: 30.0,)
                           ],
                         );

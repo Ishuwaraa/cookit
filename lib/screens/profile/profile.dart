@@ -141,7 +141,7 @@ class _ProfileState extends State<Profile> {
                               return Column(
                                 children: [
                                   const SizedBox(height: 30,),
-                                  FoodCard(recipes[index], type: 'profile', userId: user.userId,),
+                                  FoodCard(recipes[index], type: 'profile'),
                                 ],
                               );
                             },

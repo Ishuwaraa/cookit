@@ -1,7 +1,6 @@
 import 'package:cookit/models/recipe_model.dart';
 import 'package:cookit/screens/profile/test_edit_recipe.dart';
 import 'package:cookit/screens/test_recipe_details.dart';
-import 'package:cookit/services/recipe_store.dart';
 import 'package:flutter/material.dart';
 
 // ignore: use_key_in_widget_constructors
@@ -9,8 +8,7 @@ class FoodCard extends StatefulWidget {
 
   // final Function()? onTap;
   final String type;
-  final String userId;
-  const FoodCard(this.recipe, {required this.type, required this.userId, super.key});
+  const FoodCard(this.recipe, {required this.type, super.key});
 
   final Recipe recipe;
 
@@ -22,23 +20,14 @@ class _FoodCardState extends State<FoodCard> {
 
   bool addedToFav = false;
 
-  // void addToFavourite(String userId, String recipeId) async {
-  //   bool isSuccess = await DatabaseService.addToFavourite(userId, recipeId);
-  // }
-
-  void refreshData() {
-    // Provider.of<RecipeStore>(context, listen: false).fetchRecipesOnce();
-    RecipeStore store = RecipeStore();
-    store.fetchRecipesOnce();
-    print('fetched');
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         if(widget.type == 'detail'){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => TestRecipeDetails(recipeId: widget.recipe.recipeId)));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => TestRecipeDetails(recipeId: widget.recipe.recipeId, addToFav: true,)));
+        }else if(widget.type == 'fav'){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => TestRecipeDetails(recipeId: widget.recipe.recipeId, addToFav: false,)));
         }else {
           Navigator.push(context, MaterialPageRoute(builder: (context) => TestEditRecipe(recipeId: widget.recipe.recipeId)));
         }
@@ -151,26 +140,6 @@ class _FoodCardState extends State<FoodCard> {
                         ),
                       ],
                     ),
-                    // const Spacer(),
-                    // Align(
-                    //   alignment: Alignment.bottomRight,
-                    //   child: GestureDetector(
-                    //     onTap: () {
-                    //       // setState(() {
-                    //       //   addedToFav = !addedToFav;
-                    //       //   // Recipe.addOrRemoveFav();
-                    //       // });
-                    //       addToFavourite(widget.userId, widget.recipe.recipeId);
-                    //       // print(addedToFav);
-                    //     },
-                    //     child: Icon(
-                    //       addedToFav? Icons.favorite_outlined : Icons.favorite_border,
-                    //       // Recipe.addedToFav? Icons.favorite_outlined : Icons.favorite_border,
-                    //       size: 24,
-                    //       color: const Color(0xFF86BF3E),
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 ),
               ),

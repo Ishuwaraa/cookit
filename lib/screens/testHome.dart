@@ -1,13 +1,12 @@
-import 'package:cookit/Components/category_list.dart';
 import 'package:cookit/components/appbar_title.dart';
 import 'package:cookit/components/card.dart';
 import 'package:cookit/components/loading.dart';
 import 'package:cookit/components/popular_recipe_card.dart';
 import 'package:cookit/models/recipe_model.dart';
-import 'package:cookit/models/user_model.dart';
+// import 'package:cookit/models/user_model.dart';
 import 'package:cookit/services/database.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 
 class TestHome extends StatefulWidget {
   const TestHome({super.key});
@@ -26,7 +25,7 @@ class _TestHomeState extends State<TestHome> {
   @override
   Widget build(BuildContext context) {
 
-    final user = Provider.of<UserModel>(context);
+    // final user = Provider.of<UserModel>(context);
 
     return StreamBuilder<List<Recipe>> (
       stream: DatabaseService.recipes,
@@ -86,7 +85,6 @@ class _TestHomeState extends State<TestHome> {
                       ],
                     ),
                     const SizedBox(height: 10,),
-                    const SizedBoxListView(),
                     const SizedBox(height: 10,),
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -110,7 +108,7 @@ class _TestHomeState extends State<TestHome> {
                             const SizedBox(
                               height: 30,
                             ),
-                            FoodCard(recipes[index], type: 'detail', userId: user.userId,),
+                            FoodCard(recipes[index], type: 'detail'),
                           ],
                         );
                         // return FoodCard(value.recipes[index]);
