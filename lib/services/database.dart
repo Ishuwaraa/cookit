@@ -18,12 +18,19 @@ class DatabaseService {
       'name': name,
       'email': email,
       'profilePic': profilePicUrl,
+      'favourites': [],
     });
   }
 
   //userData from snapshot
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
-    return UserData(userId: userId, name: snapshot.get('name'), email: snapshot.get('email'), profilePicUrl: snapshot.get('profilePic'));
+    return UserData(
+      userId: userId, 
+      name: snapshot.get('name'), 
+      email: snapshot.get('email'), 
+      profilePicUrl: snapshot.get('profilePic'),
+      favourites: snapshot.get('favourites'),
+    );
   }
 
   //get user doc stream
@@ -31,7 +38,7 @@ class DatabaseService {
     return userCollection.doc(userId).snapshots().map(_userDataFromSnapshot);
   }
 
-  //update user name
+  //update user data
   Future updateUserName(String name, String profilePicUrl) async {
     try{
       await userCollection.doc(userId).update({
@@ -75,11 +82,145 @@ class DatabaseService {
         'description': recipe.description,
         'photoUrl': recipe.photoUrl,
         'createAt': FieldValue.serverTimestamp(),
+        'comments': [],
       });
       return true;
     }catch (e) {
       print(e.toString());
       return false;
+    }
+  }
+
+  static Future<bool> updateRecipe(Recipe recipe) async {
+    try{
+      await recipeCollection.doc(recipe.recipeId).update({
+        'userId': recipe.userId,
+        'recipe': recipe.recipe,
+        'ingredients': recipe.ingredients,
+        'time': recipe.time,
+        'serving': recipe.servings,
+        'category': recipe.category,
+        'description': recipe.description,
+        'photoUrl': recipe.photoUrl,
+      });
+      return true;
+    }catch(e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
+  static Future<bool> deleteRecipe(String recipeId) async {
+    try{
+      await recipeCollection.doc(recipeId).delete();
+      return true;
+    }catch(e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
+  static Future<bool> addComment(String recipeId, String comment, String name) async {
+    try{
+      await recipeCollection.doc(recipeId).update({
+        'comments': FieldValue.arrayUnion([{
+          'comment': comment, 
+          'name': name,
+        }]),
+      });
+      return true;
+    }catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
+  static Future<bool> addToFavourite(String userId, String recipeId) async {
+    try{
+      DatabaseService db = DatabaseService(userId: userId);
+      await db.userCollection.doc(userId).update({
+        'favourites': FieldValue.arrayUnion([recipeId]),
+      });
+      return true;
+    }catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
+  static Future<bool> deleteFromFav(String userId, String recipeId) async {
+    try{
+      DatabaseService db = DatabaseService(userId: userId);
+      await db.userCollection.doc(userId).update({
+        'favourites': FieldValue.arrayRemove([recipeId]),
+      });
+      return true;
+    }catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
+  static Future<List<dynamic>> getFavRecipeIds(String userId) async {
+    try{
+      DatabaseService db = DatabaseService(userId: userId);
+      DocumentSnapshot userSnapshot = await db.userCollection.doc(userId).get();
+
+      List<dynamic> favRecipeIds = userSnapshot.get('favourites');
+      return favRecipeIds;
+    }catch (e) {
+      print(e.toString());
+      return [];
+    }
+  }
+
+  static Future<List<Recipe>> getFavouriteRecipes(String userId) async {
+    try{
+      DatabaseService db = DatabaseService(userId: userId);
+      DocumentSnapshot userSnapshot = await db.userCollection.doc(userId).get();
+
+      List<dynamic>? favouriteRecipeIds = userSnapshot.get('favourites');
+
+      if(favouriteRecipeIds != null && favouriteRecipeIds.isNotEmpty){
+        List<Recipe> favouritesRecipes = [];
+        
+        for(String recipeId in favouriteRecipeIds){
+          DocumentSnapshot recipeSnapshot = await recipeCollection.doc(recipeId).get();
+          
+          if(recipeSnapshot.exists){
+            List<dynamic>? commentData = recipeSnapshot.get('comments');
+            List<dynamic> comments = [];
+
+            if(commentData != null){
+              comments = commentData.map((comment) => {           
+                'comment': comment['comment'],
+                'name': comment['name'],          
+              }).toList();
+            }
+
+            Recipe recipe = Recipe(
+              userId: recipeSnapshot.get('userId'), 
+              recipeId: recipeSnapshot.id, 
+              recipe: recipeSnapshot.get('recipe'), 
+              ingredients: recipeSnapshot.get('ingredients'), 
+              time: recipeSnapshot.get('time'), 
+              servings: recipeSnapshot.get('serving'), 
+              category: recipeSnapshot.get('category'), 
+              description: recipeSnapshot.get('description'), 
+              photoUrl: recipeSnapshot.get('photoUrl'),
+              comments: comments,
+            );
+
+            favouritesRecipes.add(recipe);
+          }
+        }
+        return favouritesRecipes;
+      }else{
+        return [];
+      }
+    }catch (e) {
+      print(e.toString());
+      return [];
     }
   }
 
@@ -100,9 +241,26 @@ class DatabaseService {
       .snapshots().map(_recipeListFromSnapshot);
   }
 
+  //filtered recipe - dish type
+  static Stream<List<Recipe>> getFilteredRecipes(String type, String dish) {
+    return recipeCollection
+    .where(type, isEqualTo: dish)
+    .snapshots().map(_recipeListFromSnapshot);
+  }
+
   //recipe list from snapshot
   static List<Recipe> _recipeListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
+      List<dynamic>? commentData = doc.get('comments');
+      List<dynamic> comments = [];
+
+      if(commentData != null){
+        comments = commentData.map((comment) => {           
+          'comment': comment['comment'],
+          'name': comment['name'],          
+        }).toList();
+      }
+
       return Recipe(
         userId: doc.get('userId'),
         recipeId: doc.id,
@@ -112,7 +270,8 @@ class DatabaseService {
         servings: doc.get('serving'), 
         category: doc.get('category'), 
         description: doc.get('description'), 
-        photoUrl: doc.get('photoUrl')
+        photoUrl: doc.get('photoUrl'),
+        comments: comments,
       );
     }).toList();
   }
@@ -120,6 +279,16 @@ class DatabaseService {
   static Future getRecipeDetails(String id) async {
     DocumentSnapshot snapshot = await recipeCollection.doc(id).get();
     if (snapshot.exists) {
+      List<dynamic>? commentData = snapshot.get('comments');
+      List<dynamic> comments = [];
+
+      if(commentData != null){
+        comments = commentData.map((comment) => {           
+          'comment': comment['comment'],
+          'name': comment['name'],          
+        }).toList();
+      }
+
       return Recipe(
         userId: snapshot.get('userId'),
         recipeId: snapshot.id,
@@ -130,6 +299,8 @@ class DatabaseService {
         category: snapshot.get('category'),
         description: snapshot.get('description'),
         photoUrl: snapshot.get('photoUrl'),
+        // comments: snapshot.get('comments'),
+        comments: comments,
       );
     } else {
       return null;

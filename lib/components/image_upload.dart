@@ -6,9 +6,10 @@ import 'package:image_picker/image_picker.dart';
 class ImageUpload extends StatefulWidget {
 
   final Function(String) onImageUrlChange;
+  final String type;
 
   // const ImageUpload({super.key});
-  const ImageUpload({required this.onImageUrlChange, Key? key}) : super(key: key);
+  const ImageUpload({required this.type, required this.onImageUrlChange, Key? key}) : super(key: key);
 
   @override
   State<ImageUpload> createState() => _ImageUploadState();
@@ -20,10 +21,16 @@ class _ImageUploadState extends State<ImageUpload> {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: const Icon(Icons.camera_alt_outlined),
+      icon: (widget.type == 'camera')? const Icon(Icons.camera_alt_outlined) : const Icon(Icons.photo) ,
       onPressed: () async {
         ImagePicker imagePicker = ImagePicker();
-        XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
+
+        XFile? file;
+        if(widget.type == 'camera'){
+          file = await imagePicker.pickImage(source: ImageSource.camera);
+        }else{
+          file = await imagePicker.pickImage(source: ImageSource.gallery);
+        }
         print(file?.path);        
 
         if(file == null) return;

@@ -20,8 +20,8 @@ class _TestAddRecipeState extends State<TestAddRecipe> {
   final _descriptionController = TextEditingController();
 
   final List<String> times = ['15min', '30min', '45min', '60min'];
-  final List<String> servings = ['1', '2', '3', '4',];
-  final List<String> categories = ['breakfast', 'lunch', 'dinner', 'snack', 'dessert', 'soup'];
+  final List<String> servings = ['1', '2', '3'];
+  final List<String> categories = ['breakfast', 'lunch', 'brunch', 'dinner', 'snack', 'dessert', 'soup'];
 
   String selectedTime = '15min';
   String selectedServing = '1';
@@ -133,10 +133,16 @@ class _TestAddRecipeState extends State<TestAddRecipe> {
                       backgroundImage: imageUrl.isEmpty ? const AssetImage('assets/recipe_1.png') as ImageProvider<Object>? : NetworkImage(imageUrl),
                     ),
                   ),
-                  Center(
-                    child: ImageUpload(onImageUrlChange: (newUrl) {
-                      updateImageUrl(newUrl);
-                    }),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ImageUpload(type: 'camera', onImageUrlChange: (newUrl) {
+                        updateImageUrl(newUrl);
+                      }),
+                      ImageUpload(type: 'gallery', onImageUrlChange: (newUrl) {
+                        updateImageUrl(newUrl);
+                      }),
+                    ]
                   ),
                   const SizedBox(
                       height: 20), // Add spacing between CircleAvatar and TextField

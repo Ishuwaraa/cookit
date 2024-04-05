@@ -95,10 +95,16 @@ class _EditProfileState extends State<EditProfile> {
                       backgroundImage: (imageUrl.isEmpty)? NetworkImage(userData.profilePicUrl) : NetworkImage(imageUrl),
                     ),
                   ),
-                  Center(
-                    child: ImageUpload(onImageUrlChange: (newUrl) {
-                      updateImageUrl(newUrl);
-                    }),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ImageUpload(type: 'camera', onImageUrlChange: (newUrl) {
+                        updateImageUrl(newUrl);
+                      }),
+                      ImageUpload(type: 'gallery', onImageUrlChange: (newUrl) {
+                        updateImageUrl(newUrl);
+                      }),
+                    ]
                   ),
                   const SizedBox(
                       height: 20), // Add spacing between CircleAvatar and TextField
@@ -129,7 +135,7 @@ class _EditProfileState extends State<EditProfile> {
                     padding: const EdgeInsets.symmetric(horizontal: 50.0),
                     child: SubmitButton(
                       onTap: () {
-                        updateName(userData.userId, _editNameController.text.trim(), imageUrl);
+                        updateName(userData.userId, _editNameController.text.trim(), (imageUrl.isEmpty)? userData.profilePicUrl : imageUrl);
                         // print('name: ${editNameController.text}');
                       },
                       text: 'Save Changes',

@@ -11,6 +11,7 @@ class UserData {
   final String name;
   final String email;
   final String profilePicUrl;
+  List? favourites;
 
-  UserData({required this.userId, required this.name, required this.email, required this.profilePicUrl});
+  UserData({required this.userId, required this.name, required this.email, required this.profilePicUrl, this.favourites});
 }
