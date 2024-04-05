@@ -2,6 +2,7 @@ import 'package:cookit/components/appbar_title.dart';
 import 'package:cookit/components/loading.dart';
 import 'package:cookit/models/recipe_model.dart';
 import 'package:cookit/models/user_model.dart';
+import 'package:cookit/screens/test_comment.dart';
 import 'package:cookit/services/database.dart';
 import 'package:cookit/services/recipe_store.dart';
 import 'package:flutter/material.dart';
@@ -239,7 +240,8 @@ class _TestRecipeDetailsState extends State<TestRecipeDetails> {
                 const SizedBox(height: 20.0,),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: _recipe.comments!.length,
+                    // itemCount: _recipe.comments!.length,
+                    itemCount: (_recipe.comments!.isEmpty)? _recipe.comments!.length : 1 ,
                     itemBuilder: (context, index) {
                       List<String> comment = [];
                       List<String> name = [];
@@ -253,6 +255,15 @@ class _TestRecipeDetailsState extends State<TestRecipeDetails> {
                     }
                   ),
                 ),
+                const SizedBox(height: 20.0,),
+                if (_recipe.comments!.isNotEmpty)
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => TestComment(recipeId: _recipe.recipeId)));
+                      print(_recipe.comments!.length);
+                    }, 
+                    child: const Text('view all comments'),
+                  ),
                 const SizedBox(height: 20.0,),
                 TextField(
                   controller: _commentController,                      
