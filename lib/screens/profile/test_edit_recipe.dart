@@ -28,8 +28,8 @@ class _TestEditRecipeState extends State<TestEditRecipe> {
   TextEditingController _descriptionController = TextEditingController();
   
   final List<String> times = ['15min', '30min', '45min', '60min'];
-  final List<String> servings = ['1', '2', '3', '4',];
-  final List<String> categories = ['breakfast', 'lunch', 'dinner', 'snack', 'dessert', 'soup'];
+  final List<String> servings = ['1', '2', '3'];
+  final List<String> categories = ['breakfast', 'lunch', 'brunch', 'dinner', 'snack', 'dessert', 'soup'];
 
   String selectedTime = '15min';
   String selectedServing = '1';
