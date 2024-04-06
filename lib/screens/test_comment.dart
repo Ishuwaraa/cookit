@@ -36,9 +36,9 @@ class _TestCommentState extends State<TestComment> {
     }
   }
 
-  void addComment (String recipeId, String comment, String name) async {
+  void addComment (String recipeId, String comment, String name, String image) async {
     if(_commentController.text.isNotEmpty){
-      bool isSuccess = await Provider.of<RecipeStore>(context, listen: false).addComment(recipeId, comment, name);
+      bool isSuccess = await Provider.of<RecipeStore>(context, listen: false).addComment(recipeId, comment, name, image);
 
       if(isSuccess) {
         getRecipeDetails(recipeId);
@@ -96,13 +96,26 @@ class _TestCommentState extends State<TestComment> {
                     itemBuilder: (context, index) {
                       List<String> comment = [];
                       List<String> name = [];
+                      List<String> image = [];
+
                       if(_recipe.comments != null){
                         _recipe.comments!.forEach((data) => {
                           comment.add(data['comment']),
                           name.add(data['name']),
+                          image.add(data['image']),
                         });
                       }
-                      return Text('${comment[index]}: ${name[index]}');
+                      return Row(
+                        children: [
+                          // if(image.isNotEmpty)
+                            Image.network(
+                              image[index],
+                              width: 50.0,
+                              height: 50.0,
+                            ),
+                          Text('${name[index]}: ${comment[index]}'),
+                        ],
+                      );
                     }
                   ),
                 ),
@@ -115,7 +128,7 @@ class _TestCommentState extends State<TestComment> {
                 ElevatedButton(
                   onPressed: () {
                     print(_commentController.text.trim());
-                    addComment(_recipe.recipeId, _commentController.text.trim(), userData.name);
+                    addComment(_recipe.recipeId, _commentController.text.trim(), userData.name, userData.profilePicUrl);
                   }, 
                   child: const Text('add comment'),
                 )
