@@ -15,77 +15,83 @@ class UserFavourites extends StatefulWidget {
 }
 
 class _UserFavouritesState extends State<UserFavourites> {
-
   bool loading = false;
 
   Future<List<Recipe>> getFavouriteRecip(String userId) async {
-    List<Recipe> favouriteRecipes = await DatabaseService.getFavouriteRecipes(userId);
+    List<Recipe> favouriteRecipes =
+        await DatabaseService.getFavouriteRecipes(userId);
     return favouriteRecipes;
   }
 
   @override
   Widget build(BuildContext context) {
-
     final user = Provider.of<UserModel>(context);
 
     return FutureBuilder(
-      future: getFavouriteRecip(user.userId), 
-      builder: (context, AsyncSnapshot<List<Recipe>> snapshot){
-        if(snapshot.connectionState == ConnectionState.waiting){
-          return const Loading();
-        }
+        future: getFavouriteRecip(user.userId),
+        builder: (context, AsyncSnapshot<List<Recipe>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Loading();
+          }
 
-        if(snapshot.hasData){
-          List<Recipe> favouriteRecipes = snapshot.data ?? [];
+          if (snapshot.hasData) {
+            List<Recipe> favouriteRecipes = snapshot.data ?? [];
 
-          return Scaffold(
-            appBar: AppBar(
-              title: const AppbarTitle(title: 'Favourites'),
-            ),
-            body: Container(
-              padding: const EdgeInsets.all(16.0),
-              child:
-                Expanded(
+            return Scaffold(
+              appBar: AppBar(
+                title: const AppbarTitle(title: 'Favourites'),
+              ),
+              body: Container(
+                padding: const EdgeInsets.all(16.0),
+                child: Expanded(
                   child: ListView.builder(
-                    itemCount: (favouriteRecipes.isEmpty)? 1 : favouriteRecipes.length,
-                    itemBuilder: (_, index) {
-                      if(favouriteRecipes.isNotEmpty){
-                        // return Column(
-                        //   children: [
-                        //     Text('recipe id: ${userData.favourites![index]}'),
-                        //   ],
-                        // );
-                        return Column(
-                          children: [
+                      itemCount: (favouriteRecipes.isEmpty)
+                          ? 1
+                          : favouriteRecipes.length,
+                      itemBuilder: (_, index) {
+                        if (favouriteRecipes.isNotEmpty) {
+                          // return Column(
+                          //   children: [
+                          //     Text('recipe id: ${userData.favourites![index]}'),
+                          //   ],
+                          // );
+                          return Column(children: [
                             FoodCard(favouriteRecipes[index], type: 'fav'),
-                            const SizedBox(height: 30.0,),
-                          ] 
-                        );
-                      }else{
-                        return const Center(
-                          child: Text('Add your favourite recipes here for easy access', 
-                            style: TextStyle(fontSize: 18.0),
-                          )
-                        );
-                      }
-                    }
-                  ),
+                            const SizedBox(
+                              height: 30.0,
+                            ),
+                          ]);
+                        } else {
+                          return const Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Add your favourite recipes here for easy access',
+                                    style: TextStyle(fontSize: 18.0),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }
+                      }),
                 ),
-            ),
-          );
-        }else{
-          return const Column(
-            children: [
-              Text('no data')
-            ],
-          );
-        }
-
-      }
-    );
+              ),
+            );
+          } else {
+            return const Column(
+              children: [Text('no data')],
+            );
+          }
+        });
 
     // return StreamBuilder(
-    //   stream: DatabaseService(userId: user.userId).userData, 
+    //   stream: DatabaseService(userId: user.userId).userData,
     //   builder: (context, AsyncSnapshot<UserData> snapshot) {
     //     if(snapshot.connectionState == ConnectionState.waiting){
     //       return const Loading();
@@ -97,7 +103,7 @@ class _UserFavouritesState extends State<UserFavourites> {
     //       UserData userData = snapshot.data!;
 
     //       return FutureBuilder(
-    //         future: getFavouriteRecip(user.userId), 
+    //         future: getFavouriteRecip(user.userId),
     //         builder: (context, AsyncSnapshot<List<Recipe>> snapshot){
     //           if(snapshot.connectionState == ConnectionState.waiting){
     //             return const Loading();
@@ -126,7 +132,7 @@ class _UserFavouritesState extends State<UserFavourites> {
     //                         return Container(
     //                           height: MediaQuery.of(context).size.height,
     //                           child: const Center(
-    //                             child: Text('Add your favourite recipes here for easy access', 
+    //                             child: Text('Add your favourite recipes here for easy access',
     //                               style: TextStyle(fontSize: 18.0),
     //                             )
     //                           ),
@@ -139,7 +145,7 @@ class _UserFavouritesState extends State<UserFavourites> {
     //             ),
     //           );
     //         }
-    //       );          
+    //       );
     //     }else{
     //       return Scaffold(
     //         appBar: AppBar(
