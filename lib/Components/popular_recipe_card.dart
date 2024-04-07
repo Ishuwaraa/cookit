@@ -1,5 +1,5 @@
 import 'package:cookit/models/recipe_model.dart';
-import 'package:cookit/screens/test_recipe_details.dart';
+import 'package:cookit/screens/recipe_details.dart';
 import 'package:flutter/material.dart';
 
 class PopularRecipeCard extends StatelessWidget {
@@ -10,7 +10,7 @@ class PopularRecipeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TestRecipeDetails(recipeId: recipe.recipeId, addToFav: true,))),
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => RecipeDetailsPage(recipeId: recipe.recipeId, addToFav: true,))),
       child: Container(
         width: 200.0,
         margin: const EdgeInsets.symmetric(horizontal: 8.0),

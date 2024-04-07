@@ -38,9 +38,9 @@ class _TestRecipeDetailsState extends State<TestRecipeDetails> {
     }    
   }
 
-  void addComment (String recipeId, String comment, String name) async {
+  void addComment (String recipeId, String comment, String name, String image) async {
     if(_commentController.text.isNotEmpty){
-      bool isSuccess = await Provider.of<RecipeStore>(context, listen: false).addComment(recipeId, comment, name);
+      bool isSuccess = await Provider.of<RecipeStore>(context, listen: false).addComment(recipeId, comment, name, image);
 
       if(isSuccess) {
         getRecipeDetails(recipeId);
@@ -210,7 +210,7 @@ class _TestRecipeDetailsState extends State<TestRecipeDetails> {
                           deleteFromFav(user.userId, _recipe.recipeId);
                         }
                       },
-                      child: (widget.addToFav)? const Icon(Icons.add_circle_outline) : const Icon(Icons.remove_circle_outline),
+                      child: (widget.addToFav)? const Icon(Icons.favorite_outline) : const Icon(Icons.favorite),
                     ),
                     // const SizedBox(width: 20.0,),
                     // GestureDetector(
@@ -273,7 +273,7 @@ class _TestRecipeDetailsState extends State<TestRecipeDetails> {
                 ElevatedButton(
                   onPressed: () {
                     print(_commentController.text.trim());
-                    addComment(_recipe.recipeId, _commentController.text.trim(), userData.name);
+                    addComment(_recipe.recipeId, _commentController.text.trim(), userData.name, userData.profilePicUrl);
                   }, 
                   child: const Text('add comment'),
                 )

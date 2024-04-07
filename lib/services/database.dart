@@ -120,12 +120,13 @@ class DatabaseService {
     }
   }
 
-  static Future<bool> addComment(String recipeId, String comment, String name) async {
+  static Future<bool> addComment(String recipeId, String comment, String name, String image) async {
     try{
       await recipeCollection.doc(recipeId).update({
         'comments': FieldValue.arrayUnion([{
           'comment': comment, 
           'name': name,
+          'image': image,
         }]),
       });
       return true;
@@ -194,7 +195,8 @@ class DatabaseService {
             if(commentData != null){
               comments = commentData.map((comment) => {           
                 'comment': comment['comment'],
-                'name': comment['name'],          
+                'name': comment['name'],   
+                'image': comment['image'],    
               }).toList();
             }
 
@@ -257,7 +259,8 @@ class DatabaseService {
       if(commentData != null){
         comments = commentData.map((comment) => {           
           'comment': comment['comment'],
-          'name': comment['name'],          
+          'name': comment['name'],
+          'image': comment['image'],        
         }).toList();
       }
 
@@ -285,7 +288,8 @@ class DatabaseService {
       if(commentData != null){
         comments = commentData.map((comment) => {           
           'comment': comment['comment'],
-          'name': comment['name'],          
+          'name': comment['name'], 
+          'image': comment['image'],         
         }).toList();
       }
 

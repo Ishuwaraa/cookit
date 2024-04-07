@@ -1,6 +1,6 @@
 import 'package:cookit/models/recipe_model.dart';
 import 'package:cookit/screens/profile/test_edit_recipe.dart';
-import 'package:cookit/screens/test_recipe_details.dart';
+import 'package:cookit/screens/recipe_details.dart';
 import 'package:flutter/material.dart';
 
 // ignore: use_key_in_widget_constructors
@@ -25,9 +25,11 @@ class _FoodCardState extends State<FoodCard> {
     return GestureDetector(
       onTap: () {
         if(widget.type == 'detail'){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => TestRecipeDetails(recipeId: widget.recipe.recipeId, addToFav: true,)));
+          // Navigator.push(context, MaterialPageRoute(builder: (context) => TestRecipeDetails(recipeId: widget.recipe.recipeId, addToFav: true,)));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => RecipeDetailsPage(recipeId: widget.recipe.recipeId, addToFav: true,)));
         }else if(widget.type == 'fav'){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => TestRecipeDetails(recipeId: widget.recipe.recipeId, addToFav: false,)));
+          // Navigator.push(context, MaterialPageRoute(builder: (context) => TestRecipeDetails(recipeId: widget.recipe.recipeId, addToFav: false,)));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => RecipeDetailsPage(recipeId: widget.recipe.recipeId, addToFav: false,)));
         }else {
           Navigator.push(context, MaterialPageRoute(builder: (context) => TestEditRecipe(recipeId: widget.recipe.recipeId)));
         }

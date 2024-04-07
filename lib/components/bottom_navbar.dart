@@ -51,6 +51,10 @@ class _HomePageState extends State<BottomNavBar> {
               child: Icon(Icons.home_outlined),
             ),
             label: '',
+            activeIcon: Padding(
+              padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
+              child: Icon(Icons.home),
+            ),
           ),
           BottomNavigationBarItem(
             icon: Padding(
@@ -58,6 +62,10 @@ class _HomePageState extends State<BottomNavBar> {
               child: Icon(Icons.search),
             ),
             label: '',
+            activeIcon: Padding(
+              padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
+              child: Icon(Icons.search),
+            ),
           ),
           BottomNavigationBarItem(
             icon: Padding(
@@ -72,6 +80,10 @@ class _HomePageState extends State<BottomNavBar> {
               child: Icon(Icons.favorite_border),
             ),
             label: '',
+            activeIcon: Padding(
+              padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
+              child: Icon(Icons.favorite),
+            ),
           ),
           BottomNavigationBarItem(
             icon: Padding(
@@ -79,6 +91,10 @@ class _HomePageState extends State<BottomNavBar> {
               child: Icon(Icons.person_outline),
             ),
             label: '',
+            activeIcon: Padding(
+              padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
+              child: Icon(Icons.person),
+            ),
           ),
         ],
       ),
