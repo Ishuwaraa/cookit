@@ -1,3 +1,4 @@
+import 'package:cookit/Screens/profile/profile_settings.dart';
 import 'package:cookit/components/appbar_title.dart';
 import 'package:cookit/components/card.dart';
 import 'package:cookit/components/loading.dart';
@@ -17,44 +18,58 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-
   final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
-
     final user = Provider.of<UserModel>(context);
 
     return StreamBuilder<UserData>(
       stream: DatabaseService(userId: user.userId).userData,
       builder: (context, AsyncSnapshot<UserData> snapshot) {
-        if(snapshot.connectionState == ConnectionState.waiting){
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return const Loading();
         }
-        if(snapshot.hasError){
-          return Center(child: Text('Sorry, an error occured, ${snapshot.error}',));
+        if (snapshot.hasError) {
+          return Center(
+              child: Text(
+            'Sorry, an error occured, ${snapshot.error}',
+          ));
         }
-        if(snapshot.hasData){
+        if (snapshot.hasData) {
           UserData userData = snapshot.data!;
 
-          return StreamBuilder<List<Recipe>> (
+          return StreamBuilder<List<Recipe>>(
             stream: DatabaseService.getuserRecipes(user.userId),
             builder: (context, snapshot) {
-              if(snapshot.hasError){
-                return Center(child: Text('Error: ${snapshot.hasError}'),);
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text('Error: ${snapshot.hasError}'),
+                );
               }
 
-              final List<Recipe> recipes = snapshot.data ?? []; //empty list if data is null
+              final List<Recipe> recipes =
+                  snapshot.data ?? []; //empty list if data is null
 
-              if(recipes.isNotEmpty){
+              if (recipes.isNotEmpty) {
                 return Scaffold(
                   appBar: AppBar(
-                    title: const AppbarTitle(title: 'Profile'),
-                    actions: const [
+                    title: const Text(
+                        'Profile'), // Changed 'AppbarTitle' to 'Text'
+                    actions: [
                       IconButton(
-                        onPressed: null, 
-                        icon: Icon(Icons.settings, color: Color(0xFF86BF3E),)
-                      )
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SettingsPage()),
+                          );
+                        },
+                        icon: Icon(
+                          Icons.settings,
+                          color: Color(0xFF86BF3E),
+                        ),
+                      ),
                     ],
                   ),
                   body: Container(
@@ -65,28 +80,32 @@ class _ProfileState extends State<Profile> {
                           children: [
                             ClipOval(
                               child: FadeInImage(
-                                placeholder: const AssetImage('assets/avatar.png'),
+                                placeholder:
+                                    const AssetImage('assets/avatar.png'),
                                 image: NetworkImage(userData.profilePicUrl),
                                 width: 120.0,
                                 height: 120.0,
                                 fit: BoxFit.cover,
                                 alignment: Alignment.center,
-                                imageErrorBuilder: (context, error, stackTrace) {
+                                imageErrorBuilder:
+                                    (context, error, stackTrace) {
                                   return Container(
                                     width: 120.0,
                                     height: 120.0,
                                     color: Colors.grey,
-                                    child: const Center(child: Icon(Icons.error)),
+                                    child:
+                                        const Center(child: Icon(Icons.error)),
                                   );
                                 },
                               ),
                             ),
-                            const SizedBox(width: 20), 
+                            const SizedBox(width: 20),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(userData.name,
+                                  Text(
+                                    userData.name,
                                     style: const TextStyle(
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold,
@@ -94,8 +113,9 @@ class _ProfileState extends State<Profile> {
                                     overflow: TextOverflow.fade,
                                     maxLines: 2,
                                   ),
-                                  const SizedBox(height: 5), 
-                                  Text(userData.email,
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    userData.email,
                                     style: const TextStyle(
                                       fontSize: 16,
                                       color: Colors.grey,
@@ -103,17 +123,24 @@ class _ProfileState extends State<Profile> {
                                     overflow: TextOverflow.fade,
                                     maxLines: 2,
                                   ),
-                                  const SizedBox(height: 5.0,),
+                                  const SizedBox(
+                                    height: 5.0,
+                                  ),
                                   GestureDetector(
                                     onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfile()));
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const EditProfile()));
                                     },
                                     child: Container(
                                       width: 100,
                                       padding: const EdgeInsets.all(5),
                                       decoration: BoxDecoration(
                                           color: const Color(0xFF86BF3E),
-                                          borderRadius: BorderRadius.circular(50)),
+                                          borderRadius:
+                                              BorderRadius.circular(50)),
                                       child: const Center(
                                         child: Text(
                                           'Edit Profile',
@@ -122,45 +149,49 @@ class _ProfileState extends State<Profile> {
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(height: 5.0,),
-                                  ElevatedButton(
-                                    onPressed: () async {
-                                      await _auth.signOutUser();
-                                    }, 
-                                    child: const Text('Log out')
+                                  const SizedBox(
+                                    height: 5.0,
                                   ),
+                                  ElevatedButton(
+                                      onPressed: () async {
+                                        await _auth.signOutUser();
+                                      },
+                                      child: const Text('Log out')),
                                 ],
                               ),
                             ),
                           ],
                         ),
                         Expanded(
-                          child: ListView.builder(
-                            itemCount: recipes.length,
-                            itemBuilder: (_, index) {
-                              return Column(
-                                children: [
-                                  const SizedBox(height: 30,),
-                                  FoodCard(recipes[index], type: 'profile'),
-                                ],
-                              );
-                            },
-                          )
-                        ),
+                            child: ListView.builder(
+                          itemCount: recipes.length,
+                          itemBuilder: (_, index) {
+                            return Column(
+                              children: [
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                FoodCard(recipes[index], type: 'profile'),
+                              ],
+                            );
+                          },
+                        )),
                       ],
                     ),
                   ),
                 );
-              }else{
+              } else {
                 // return const Center(child: Text('Sorry we have trouble getting data'),);
                 return Scaffold(
                   appBar: AppBar(
                     title: const AppbarTitle(title: 'Profile'),
                     actions: const [
                       IconButton(
-                        onPressed: null, 
-                        icon: Icon(Icons.settings, color: Color(0xFF86BF3E),)
-                      )
+                          onPressed: null,
+                          icon: Icon(
+                            Icons.settings,
+                            color: Color(0xFF86BF3E),
+                          ))
                     ],
                   ),
                   body: Container(
@@ -171,52 +202,64 @@ class _ProfileState extends State<Profile> {
                           children: [
                             ClipOval(
                               child: FadeInImage(
-                                placeholder: const AssetImage('assets/cookit-logo.png'),
+                                placeholder:
+                                    const AssetImage('assets/cookit-logo.png'),
                                 image: NetworkImage(userData.profilePicUrl),
                                 width: 120.0,
                                 height: 120.0,
                                 fit: BoxFit.cover,
                                 alignment: Alignment.center,
-                                imageErrorBuilder: (context, error, stackTrace) {
+                                imageErrorBuilder:
+                                    (context, error, stackTrace) {
                                   return Container(
                                     width: 120.0,
                                     height: 120.0,
                                     color: Colors.grey,
-                                    child: const Center(child: Icon(Icons.error)),
+                                    child:
+                                        const Center(child: Icon(Icons.error)),
                                   );
                                 },
                               ),
                             ),
-                            const SizedBox(width: 20), 
+                            const SizedBox(width: 20),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(userData.name,
+                                  Text(
+                                    userData.name,
                                     style: const TextStyle(
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold,
                                     ),
                                     maxLines: null,
                                   ),
-                                  const SizedBox(height: 5), 
-                                  Text(userData.email,
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    userData.email,
                                     style: const TextStyle(
                                       fontSize: 16,
                                       color: Colors.grey,
                                     ),
                                   ),
-                                  const SizedBox(height: 5.0,),
+                                  const SizedBox(
+                                    height: 5.0,
+                                  ),
                                   GestureDetector(
                                     onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfile()));
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const EditProfile()));
                                     },
                                     child: Container(
                                       width: 100,
                                       padding: const EdgeInsets.all(5),
                                       decoration: BoxDecoration(
                                           color: const Color(0xFF86BF3E),
-                                          borderRadius: BorderRadius.circular(50)),
+                                          borderRadius:
+                                              BorderRadius.circular(50)),
                                       child: const Center(
                                         child: Text(
                                           'Edit Profile',
@@ -225,13 +268,14 @@ class _ProfileState extends State<Profile> {
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(height: 5.0,),
-                                  ElevatedButton(
-                                    onPressed: () async {
-                                      await _auth.signOutUser();
-                                    }, 
-                                    child: const Text('Log out')
+                                  const SizedBox(
+                                    height: 5.0,
                                   ),
+                                  ElevatedButton(
+                                      onPressed: () async {
+                                        await _auth.signOutUser();
+                                      },
+                                      child: const Text('Log out')),
                                 ],
                               ),
                             ),
@@ -242,8 +286,14 @@ class _ProfileState extends State<Profile> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text('Hmm such emptyness... ', style: TextStyle(fontSize: 20.0),),
-                              Text('Add your special recipes to share with others.', style: TextStyle(fontSize: 18.0),),
+                              Text(
+                                'Hmm such emptyness... ',
+                                style: TextStyle(fontSize: 20.0),
+                              ),
+                              Text(
+                                'Add your special recipes to share with others.',
+                                style: TextStyle(fontSize: 18.0),
+                              ),
                             ],
                           ),
                         )
@@ -254,7 +304,7 @@ class _ProfileState extends State<Profile> {
               }
             },
           );
-        }else{
+        } else {
           return const Loading();
         }
       },

@@ -1,3 +1,4 @@
+import 'package:cookit/Screens/add_recipe.dart';
 import 'package:cookit/screens/add_post.dart';
 import 'package:cookit/screens/home.dart';
 import 'package:cookit/screens/profile/profile.dart';
@@ -28,7 +29,8 @@ class _HomePageState extends State<BottomNavBar> {
     // const SearchPage(),
     const TestSearchPage(),
     // const AddPostPage(),
-    const TestAddRecipe(),
+    const AddRecipe(),
+    // const TestAddRecipe(),
     const UserFavourites(),
     const Profile(),
   ];
@@ -69,7 +71,7 @@ class _HomePageState extends State<BottomNavBar> {
           ),
           BottomNavigationBarItem(
             icon: Padding(
-              padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0), 
+              padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
               child: Icon(Icons.add),
             ),
             label: '',
@@ -87,7 +89,7 @@ class _HomePageState extends State<BottomNavBar> {
           ),
           BottomNavigationBarItem(
             icon: Padding(
-              padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0), 
+              padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
               child: Icon(Icons.person_outline),
             ),
             label: '',
