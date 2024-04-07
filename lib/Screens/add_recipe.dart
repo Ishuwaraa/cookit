@@ -1,4 +1,3 @@
-
 import 'package:cookit/components/appbar_title.dart';
 import 'package:cookit/components/image_upload.dart';
 import 'package:cookit/models/recipe_model.dart';
@@ -7,14 +6,14 @@ import 'package:cookit/services/recipe_store.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class TestAddRecipe extends StatefulWidget {
-  const TestAddRecipe({super.key});
+class AddRecipe extends StatefulWidget {
+  const AddRecipe({super.key});
 
   @override
-  State<TestAddRecipe> createState() => _TestAddRecipeState();
+  State<AddRecipe> createState() => _TestAddRecipeState();
 }
 
-class _TestAddRecipeState extends State<TestAddRecipe> {
+class _TestAddRecipeState extends State<AddRecipe> {
   final _recipeNameController = TextEditingController();
   final _ingredientsController = TextEditingController();
   final _descriptionController = TextEditingController();
@@ -213,7 +212,7 @@ class _TestAddRecipeState extends State<TestAddRecipe> {
                 value: selectedTime,
                 icon: const Icon(
                   Icons.keyboard_arrow_down,
-                  color: Colors.green, // Change dropdown icon color to green
+                  color: const Color(0xFF86BF3E),
                   size: 30,
                 ),
                 underline: const SizedBox(), // Hides the default underline
@@ -241,12 +240,44 @@ class _TestAddRecipeState extends State<TestAddRecipe> {
                 color: Colors.grey[200], // Set your desired background color
               ),
               child: DropdownButton<String>(
+                isExpanded: true,
+                value: selectedServing,
+                icon: const Icon(
+                  Icons.keyboard_arrow_down,
+                  color: const Color(0xFF86BF3E),
+                  size: 30,
+                ),
+                items: servings
+                    .map((serving) => DropdownMenuItem(
+                          value: serving,
+                          child: Center(
+                            child: Text(
+                              serving,
+                              textAlign: TextAlign.center, // Center the text
+                            ),
+                          ),
+                        ))
+                    .toList(),
+                onChanged: (serving) =>
+                    setState(() => selectedServing = serving!),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+              width: 380, // Adjust the width as needed
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: Colors.grey[200], // Set your desired background color
+              ),
+              child: DropdownButton<String>(
                 isExpanded:
                     true, // Expands the dropdown button to fill its container width
                 value: selectedCategory,
                 icon: const Icon(
                   Icons.keyboard_arrow_down,
-                  color: Colors.green, // Change dropdown icon color to green
+                  color: const Color(0xFF86BF3E),
                   size: 30,
                 ),
                 underline: const SizedBox(), // Hides the default underline
@@ -275,17 +306,18 @@ class _TestAddRecipeState extends State<TestAddRecipe> {
                 controller: _descriptionController,
                 obscureText: false,
                 decoration: InputDecoration(
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey.shade400),
-                    ),
-                    fillColor: Colors.grey.shade200,
-                    filled: true,
-                    hintText:
-                        'Descrption', // Text displayed inside the border when the TextField is empty
-                    hintStyle: TextStyle(color: Colors.grey[500])),
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey.shade400),
+                  ),
+                  fillColor: Colors.grey.shade200,
+                  filled: true,
+                  hintText:
+                      'Descrption', // Text displayed inside the border when the TextField is empty
+                  hintStyle: TextStyle(color: Colors.grey[500]),
+                ),
               ),
             ),
             const SizedBox(
@@ -328,4 +360,3 @@ class _TestAddRecipeState extends State<TestAddRecipe> {
     );
   }
 }
-
