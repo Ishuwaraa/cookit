@@ -151,7 +151,7 @@ class _TestAddRecipeState extends State<TestAddRecipe> {
             Center(
               child: ImageUpload(onImageUrlChange: (newUrl) {
                 updateImageUrl(newUrl);
-              }),
+              }, type: '',),
             ),
             const SizedBox(
                 height: 20), // Add spacing between CircleAvatar and TextField
