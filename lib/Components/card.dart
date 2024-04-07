@@ -1,3 +1,4 @@
+import 'package:cookit/Screens/profile/edit_post.dart';
 import 'package:cookit/models/recipe_model.dart';
 import 'package:cookit/screens/profile/test_edit_recipe.dart';
 import 'package:cookit/screens/recipe_details.dart';
@@ -5,7 +6,6 @@ import 'package:flutter/material.dart';
 
 // ignore: use_key_in_widget_constructors
 class FoodCard extends StatefulWidget {
-
   // final Function()? onTap;
   final String type;
   const FoodCard(this.recipe, {required this.type, super.key});
@@ -17,21 +17,37 @@ class FoodCard extends StatefulWidget {
 }
 
 class _FoodCardState extends State<FoodCard> {
-
   bool addedToFav = false;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if(widget.type == 'detail'){
+        if (widget.type == 'detail') {
           // Navigator.push(context, MaterialPageRoute(builder: (context) => TestRecipeDetails(recipeId: widget.recipe.recipeId, addToFav: true,)));
-          Navigator.push(context, MaterialPageRoute(builder: (context) => RecipeDetailsPage(recipeId: widget.recipe.recipeId, addToFav: true,)));
-        }else if(widget.type == 'fav'){
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => RecipeDetailsPage(
+                        recipeId: widget.recipe.recipeId,
+                        addToFav: true,
+                      )));
+        } else if (widget.type == 'fav') {
           // Navigator.push(context, MaterialPageRoute(builder: (context) => TestRecipeDetails(recipeId: widget.recipe.recipeId, addToFav: false,)));
-          Navigator.push(context, MaterialPageRoute(builder: (context) => RecipeDetailsPage(recipeId: widget.recipe.recipeId, addToFav: false,)));
-        }else {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => TestEditRecipe(recipeId: widget.recipe.recipeId)));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => RecipeDetailsPage(
+                        recipeId: widget.recipe.recipeId,
+                        addToFav: false,
+                      )));
+        } else {
+          // Navigator.push(context, MaterialPageRoute(builder: (context) => TestEditRecipe(recipeId: widget.recipe.recipeId)));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      EditRecipe(recipeId: widget.recipe.recipeId)));
         }
       },
       child: Container(
