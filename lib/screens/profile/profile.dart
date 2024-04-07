@@ -1,17 +1,17 @@
-import 'package:cookit/Screens/profile/profile_settings.dart';
-import 'package:cookit/components/appbar_title.dart';
-import 'package:cookit/components/card.dart';
-import 'package:cookit/components/loading.dart';
-import 'package:cookit/models/recipe_model.dart';
-import 'package:cookit/models/user_model.dart';
-import 'package:cookit/screens/profile/edit_profile.dart';
-import 'package:cookit/services/auth.dart';
-import 'package:cookit/services/database.dart';
+import 'package:cookit/Screens/add_recipe.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:cookit/models/user_model.dart';
+import 'package:cookit/models/recipe_model.dart';
+import 'package:cookit/services/database.dart';
+import 'package:cookit/services/auth.dart';
+import 'package:cookit/Screens/profile/profile_settings.dart';
+import 'package:cookit/Screens/profile/edit_profile.dart';
+import 'package:cookit/components/loading.dart';
+import 'package:cookit/components/card.dart';
 
 class Profile extends StatefulWidget {
-  const Profile({super.key});
+  const Profile({Key? key}) : super(key: key);
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -32,194 +32,56 @@ class _ProfileState extends State<Profile> {
         }
         if (snapshot.hasError) {
           return Center(
-              child: Text(
-            'Sorry, an error occured, ${snapshot.error}',
-          ));
+            child: Text(
+              'Sorry, an error occurred: ${snapshot.error}',
+            ),
+          );
         }
         if (snapshot.hasData) {
           UserData userData = snapshot.data!;
 
           return StreamBuilder<List<Recipe>>(
             stream: DatabaseService.getuserRecipes(user.userId),
-            builder: (context, snapshot) {
+            builder: (context, AsyncSnapshot<List<Recipe>> snapshot) {
               if (snapshot.hasError) {
                 return Center(
-                  child: Text('Error: ${snapshot.hasError}'),
+                  child: Text('Error: ${snapshot.error}'),
                 );
               }
 
-              final List<Recipe> recipes =
-                  snapshot.data ?? []; //empty list if data is null
+              final List<Recipe> recipes = snapshot.data ?? [];
 
-              if (recipes.isNotEmpty) {
-                return Scaffold(
-                  appBar: AppBar(
-                    title: const Text(
-                        'Profile'), // Changed 'AppbarTitle' to 'Text'
-                    actions: [
-                      IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SettingsPage()),
-                          );
-                        },
-                        icon: Icon(
-                          Icons.settings,
-                          color: Color(0xFF86BF3E),
-                        ),
+              return Scaffold(
+                appBar: AppBar(
+                  title: const Text('Profile'),
+                  actions: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SettingsPage()),
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.settings,
+                        color: Color(0xFF86BF3E),
                       ),
-                    ],
-                  ),
-                  body: Container(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            ClipOval(
-                              child: FadeInImage(
-                                placeholder:
-                                    const AssetImage('assets/avatar.png'),
-                                image: NetworkImage(userData.profilePicUrl),
-                                width: 120.0,
-                                height: 120.0,
-                                fit: BoxFit.cover,
-                                alignment: Alignment.center,
-                                imageErrorBuilder:
-                                    (context, error, stackTrace) {
-                                  return Container(
-                                    width: 120.0,
-                                    height: 120.0,
-                                    color: Colors.grey,
-                                    child:
-                                        const Center(child: Icon(Icons.error)),
-                                  );
-                                },
-                              ),
-                            ),
-                            const SizedBox(width: 20),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    userData.name,
-                                    style: const TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    overflow: TextOverflow.fade,
-                                    maxLines: 2,
-                                  ),
-                                  const SizedBox(height: 5),
-                                  Text(
-                                    userData.email,
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.grey,
-                                    ),
-                                    overflow: TextOverflow.fade,
-                                    maxLines: 2,
-                                  ),
-                                  const SizedBox(
-                                    height: 5.0,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const EditProfile()));
-                                    },
-                                    child: Container(
-                                      width: 100,
-                                      padding: const EdgeInsets.all(5),
-                                      decoration: BoxDecoration(
-                                          color: const Color(0xFF86BF3E),
-                                          borderRadius:
-                                              BorderRadius.circular(50)),
-                                      child: const Center(
-                                        child: Text(
-                                          'Edit Profile',
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 5.0,
-                                  ),
-                                  ElevatedButton(
-                                      onPressed: () async {
-                                        await _auth.signOutUser();
-                                      },
-                                      child: const Text('Log out')),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Expanded(
-                            child: ListView.builder(
-                          itemCount: recipes.length,
-                          itemBuilder: (_, index) {
-                            return Column(
-                              children: [
-                                const SizedBox(
-                                  height: 30,
-                                ),
-                                FoodCard(recipes[index], type: 'profile'),
-                              ],
-                            );
-                          },
-                        )),
-                      ],
                     ),
-                  ),
-                );
-              } else {
-                // return const Center(child: Text('Sorry we have trouble getting data'),);
-                return Scaffold(
-                  appBar: AppBar(
-                    title: const AppbarTitle(title: 'Profile'),
-                    actions: const [
-                      IconButton(
-                          onPressed: null,
-                          icon: Icon(
-                            Icons.settings,
-                            color: Color(0xFF86BF3E),
-                          ))
-                    ],
-                  ),
-                  body: Container(
+                  ],
+                ),
+                body: SingleChildScrollView(
+                  child: Container(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
-                            ClipOval(
-                              child: FadeInImage(
-                                placeholder:
-                                    const AssetImage('assets/cookit-logo.png'),
-                                image: NetworkImage(userData.profilePicUrl),
-                                width: 120.0,
-                                height: 120.0,
-                                fit: BoxFit.cover,
-                                alignment: Alignment.center,
-                                imageErrorBuilder:
-                                    (context, error, stackTrace) {
-                                  return Container(
-                                    width: 120.0,
-                                    height: 120.0,
-                                    color: Colors.grey,
-                                    child:
-                                        const Center(child: Icon(Icons.error)),
-                                  );
-                                },
-                              ),
+                            CircleAvatar(
+                              backgroundImage:
+                                  NetworkImage(userData.profilePicUrl),
+                              radius: 60.0,
                             ),
                             const SizedBox(width: 20),
                             Expanded(
@@ -232,7 +94,6 @@ class _ProfileState extends State<Profile> {
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold,
                                     ),
-                                    maxLines: null,
                                   ),
                                   const SizedBox(height: 5),
                                   Text(
@@ -242,66 +103,101 @@ class _ProfileState extends State<Profile> {
                                       color: Colors.grey,
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 5.0,
-                                  ),
+                                  const SizedBox(height: 10),
                                   GestureDetector(
                                     onTap: () {
                                       Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const EditProfile()));
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const EditProfile()),
+                                      );
                                     },
                                     child: Container(
-                                      width: 100,
-                                      padding: const EdgeInsets.all(5),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10, horizontal: 20),
                                       decoration: BoxDecoration(
-                                          color: const Color(0xFF86BF3E),
-                                          borderRadius:
-                                              BorderRadius.circular(50)),
-                                      child: const Center(
-                                        child: Text(
-                                          'Edit Profile',
-                                          style: TextStyle(color: Colors.white),
+                                        color: const Color(0xFF86BF3E),
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                      child: const Text(
+                                        'Edit Profile',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
                                         ),
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 5.0,
-                                  ),
+                                  const SizedBox(height: 20),
                                   ElevatedButton(
-                                      onPressed: () async {
-                                        await _auth.signOutUser();
-                                      },
-                                      child: const Text('Log out')),
+                                    onPressed: () async {
+                                      await _auth.signOutUser();
+                                    },
+                                    child: const Text('Log out'),
+                                  ),
                                 ],
                               ),
                             ),
                           ],
                         ),
-                        const Expanded(
-                          child: Column(
+                        const SizedBox(height: 30),
+                        const Text(
+                          'My Recipes',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        if (recipes.isNotEmpty)
+                          Column(
+                            children: recipes.map((recipe) {
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                child: FoodCard(recipe, type: 'profile'),
+                              );
+                            }).toList(),
+                          )
+                        else
+                          Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text(
-                                'Hmm such emptyness... ',
-                                style: TextStyle(fontSize: 20.0),
+                              const Center(
+                                child: Text(
+                                  'No recipes added yet.',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.grey,
+                                  ),
+                                ),
                               ),
-                              Text(
-                                'Add your special recipes to share with others.',
-                                style: TextStyle(fontSize: 18.0),
+                              const SizedBox(height: 10),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AddRecipe()),
+                                  );
+                                },
+                                child: const Text(
+                                  'Add Recipe',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: const Color(0xFF86BF3E),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
-                        )
                       ],
                     ),
                   ),
-                );
-              }
+                ),
+              );
             },
           );
         } else {
