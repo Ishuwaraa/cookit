@@ -1,4 +1,5 @@
 import 'package:cookit/Screens/add_recipe.dart';
+import 'package:cookit/components/appbar_title.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cookit/models/user_model.dart';
@@ -49,11 +50,11 @@ class _ProfileState extends State<Profile> {
                 );
               }
 
-              final List<Recipe> recipes = snapshot.data ?? [];
+              final List<Recipe> recipes = snapshot.data ?? []; //empty list if data is null
 
               return Scaffold(
                 appBar: AppBar(
-                  title: const Text('Profile'),
+                  title: const AppbarTitle(title: 'Profile'),
                   actions: [
                     IconButton(
                       onPressed: () {
@@ -78,10 +79,23 @@ class _ProfileState extends State<Profile> {
                       children: [
                         Row(
                           children: [
-                            CircleAvatar(
-                              backgroundImage:
-                                  NetworkImage(userData.profilePicUrl),
-                              radius: 60.0,
+                            ClipOval(
+                              child: FadeInImage(
+                                placeholder: const AssetImage('assets/avatar.png'),
+                                image: NetworkImage(userData.profilePicUrl),
+                                width: 120.0,
+                                height: 120.0,
+                                fit: BoxFit.cover,
+                                alignment: Alignment.center,
+                                imageErrorBuilder: (context, error, stackTrace) {
+                                  return Container(
+                                    width: 120.0,
+                                    height: 120.0,
+                                    color: Colors.grey,
+                                    child: const Center(child: Icon(Icons.error)),
+                                  );
+                                },
+                              ),
                             ),
                             const SizedBox(width: 20),
                             Expanded(
@@ -94,6 +108,8 @@ class _ProfileState extends State<Profile> {
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold,
                                     ),
+                                    overflow: TextOverflow.fade,
+                                    maxLines: 2,
                                   ),
                                   const SizedBox(height: 5),
                                   Text(
@@ -102,6 +118,8 @@ class _ProfileState extends State<Profile> {
                                       fontSize: 16,
                                       color: Colors.grey,
                                     ),
+                                    overflow: TextOverflow.fade,
+                                    maxLines: 2,
                                   ),
                                   const SizedBox(height: 10),
                                   GestureDetector(

@@ -1,3 +1,4 @@
+import 'package:cookit/services/database.dart';
 import 'package:flutter/material.dart';
 
 class FeedbackPage extends StatefulWidget {
@@ -8,9 +9,36 @@ class FeedbackPage extends StatefulWidget {
 }
 
 class _FeedbackPageState extends State<FeedbackPage> {
-  TextEditingController _feedbackController = TextEditingController();
 
-  String selectedEmoji = ''; // Variable to hold the selected emoji
+  TextEditingController _feedbackController = TextEditingController();
+  String rating = ''; // Variable to hold the selected emoji
+
+  void addFeedback() async {
+    if(_feedbackController.text.isNotEmpty && rating != ''){
+      bool isSuccess = await DatabaseService.addFeedback(rating, _feedbackController.text.trim());
+      if(isSuccess){
+        Navigator.pop(context);
+
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Thank you! Your feedback has been added.'),
+          duration: Duration(seconds: 2),
+          backgroundColor: Color(0xFF86BF3E),
+        ));
+      }else{
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Sorry an error occurred.'),
+          duration: Duration(seconds: 2),
+          backgroundColor: Color(0xFF86BF3E),
+        ));
+      }     
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Please add your feedback.'),
+        duration: Duration(seconds: 2),
+        backgroundColor: Color(0xFF86BF3E),
+      ));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +64,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 children: [
                   IconButton(
                     onPressed: () {
-                      setState(() {
-                        selectedEmoji = '😡';
-                        print('Selected Emoji 1:');
-                      });
+                      setState(() => rating = '1');
                     },
                     icon: const Text(
                       '😡',
@@ -48,9 +73,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                   ),
                   IconButton(
                     onPressed: () {
-                      setState(() {
-                        selectedEmoji = '😕';
-                      });
+                      setState(() => rating = '2');
                     },
                     icon: const Text(
                       '😕',
@@ -59,9 +82,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                   ),
                   IconButton(
                     onPressed: () {
-                      setState(() {
-                        selectedEmoji = '🙂';
-                      });
+                      setState(() => rating = '3');
                     },
                     icon: const Text(
                       '🙂',
@@ -70,9 +91,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                   ),
                   IconButton(
                     onPressed: () {
-                      setState(() {
-                        selectedEmoji = '😊';
-                      });
+                      setState(() => rating = '4');
                     },
                     icon: const Text(
                       '😊',
@@ -81,10 +100,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                   ),
                   IconButton(
                     onPressed: () {
-                      setState(() {
-                        selectedEmoji = '😄';
-                        print('Selected Emoji 5:');
-                      });
+                      setState(() => rating = '5');
                     },
                     icon: const Text(
                       '😄',
@@ -119,7 +135,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
             ),
             const SizedBox(height: 16.0),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: addFeedback,
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF86BF3E),
               ),

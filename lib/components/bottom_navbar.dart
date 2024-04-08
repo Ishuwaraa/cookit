@@ -1,9 +1,7 @@
 import 'package:cookit/Screens/add_recipe.dart';
-import 'package:cookit/screens/add_post.dart';
 import 'package:cookit/screens/home.dart';
 import 'package:cookit/screens/profile/profile.dart';
 import 'package:cookit/screens/search/search.dart';
-import 'package:cookit/screens/test_addpost.dart';
 import 'package:cookit/screens/search/test_search.dart';
 import 'package:cookit/screens/user_favorite.dart';
 import 'package:flutter/material.dart';
@@ -28,9 +26,7 @@ class _HomePageState extends State<BottomNavBar> {
     const Home(),
     // const SearchPage(),
     const TestSearchPage(),
-    // const AddPostPage(),
     const AddRecipe(),
-    // const TestAddRecipe(),
     const UserFavourites(),
     const Profile(),
   ];

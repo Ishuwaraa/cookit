@@ -92,9 +92,9 @@ class _HomeState extends State<Home> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'category', filter: 'soup', title: 'Soup')));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'category', filter: 'breakfast', title: 'Breakfast')));
                             },
-                            child: const SizedBoxListView(title: "🍲 Soup"),
+                            child: const SizedBoxListView(title: "🥪 Breakfast"),
                           ),
                           GestureDetector(
                             onTap: () {
@@ -102,8 +102,18 @@ class _HomeState extends State<Home> {
                             },
                             child: const SizedBoxListView(title: "🍿 Snacks"),
                           ),
-                          const SizedBoxListView(title: "🥦 Healthy"),
-                          const SizedBoxListView(title: "🔥 Popular"),                          
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'category', filter: 'soup', title: 'Soup')));
+                            },
+                            child: const SizedBoxListView(title: "🍲 Soup"),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'category', filter: 'dessert', title: 'Dessert')));
+                            },
+                            child: const SizedBoxListView(title: "🍧 Dessert"),
+                          ),                                                                              
                         ],
                       ),
                     ),
