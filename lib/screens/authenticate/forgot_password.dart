@@ -12,7 +12,6 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
-
   final AuthService _auth = AuthService();
   bool loading = false;
   final _emailController = TextEditingController();
@@ -24,27 +23,26 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   }
 
   void resetPassword() async {
-    if(_emailController.text.isNotEmpty){
+    if (_emailController.text.isNotEmpty) {
       setState(() => loading = true);
       bool result = await _auth.forgotPassword(_emailController.text.trim());
 
-      if(result){
+      if (result) {
         setState(() => loading = false);
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('Password reset email sent.'),
           duration: Duration(seconds: 2),
           backgroundColor: Color(0xFF86BF3E),
         ));
-      }else{
+      } else {
         //doesnt work cuz firebase doesnt throw an error if the email not registered
         setState(() => loading = false);
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Please enter a valid email.'),
-          duration: Duration(seconds: 2),
-          backgroundColor: Color(0xFF86BF3E)
-        ));
+            content: Text('Please enter a valid email.'),
+            duration: Duration(seconds: 2),
+            backgroundColor: Color(0xFF86BF3E)));
       }
-    }else{
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Please enter a valid email.'),
         duration: Duration(seconds: 2),
@@ -55,46 +53,54 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
   @override
   Widget build(BuildContext context) {
-    return loading? const Loading() : Scaffold(
-      appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 100.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Forgot Your Password?',
-                style: TextStyle(
-                  fontSize: 36,
-                  color: Color(0xFF86BF3E),
-                  fontWeight: FontWeight.bold,
+    return loading
+        ? const Loading()
+        : Scaffold(
+            appBar: AppBar(),
+            body: Padding(
+              padding: const EdgeInsets.all(0.0),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 100.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(left: 20.0, right: 20),
+                      child: Text(
+                        'Forgot Your Password?',
+                        style: TextStyle(
+                          fontSize: 26,
+                          color: Color(0xFF86BF3E),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 30.0),
+                      child: Text(
+                        'Don\'t worry! We\'ve got you covered.',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey[700],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    StyledTextfield(
+                      controller: _emailController,
+                      hintText: 'Enter your email',
+                      obscureText: false,
+                    ),
+                    const SizedBox(height: 25),
+                    SubmitButton(
+                      onTap: resetPassword,
+                      text: 'Reset Password',
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(height: 10),
-              Text(
-                'Don\'t worry! We\'ve got you covered.',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.grey[700],
-                ),
-              ),
-              const SizedBox(height: 40),
-              StyledTextfield(
-                controller: _emailController,
-                hintText: 'Enter your email',
-                obscureText: false,
-              ),
-              const SizedBox(height: 25),
-              SubmitButton(
-                onTap: resetPassword,
-                text: 'Reset Password',
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          );
   }
 }

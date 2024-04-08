@@ -1,4 +1,5 @@
 import 'package:cookit/Screens/profile/feedback.dart';
+import 'package:cookit/Screens/profile/privacy.dart';
 import 'package:cookit/components/appbar_title.dart';
 import 'package:cookit/screens/authenticate/authenticate.dart';
 import 'package:cookit/screens/authenticate/login.dart';
@@ -10,7 +11,6 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final AuthService _auth = AuthService();
 
     return Scaffold(
@@ -33,10 +33,10 @@ class SettingsPage extends StatelessWidget {
             leading: const Icon(Icons.privacy_tip),
             title: const Text('Privacy Policy'),
             onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => PrivacyPolicyPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PrivacyPolicyPage()),
+              );
             },
           ),
           // ListTile(
