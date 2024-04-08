@@ -19,20 +19,8 @@ class _TestAddRecipeState extends State<AddRecipe> {
   final _descriptionController = TextEditingController();
 
   final List<String> times = ['15min', '30min', '45min', '60min'];
-  final List<String> servings = [
-    '1',
-    '2',
-    '3',
-    '4',
-  ];
-  final List<String> categories = [
-    'breakfast',
-    'lunch',
-    'dinner',
-    'snack',
-    'dessert',
-    'soup'
-  ];
+  final List<String> servings = ['1', '2', '3'];
+  final List<String> categories = ['breakfast', 'lunch', 'brunch', 'dinner', 'snack', 'dessert', 'soup'];
 
   String selectedTime = '15min';
   String selectedServing = '1';
@@ -63,21 +51,20 @@ class _TestAddRecipeState extends State<AddRecipe> {
     if (_recipeNameController.text.isNotEmpty &&
         _ingredientsController.text.isNotEmpty &&
         _descriptionController.text.isNotEmpty) {
-      print(
-          '${_recipeNameController.text.trim()}, ${_ingredientsController.text.trim()}, $selectedTime, $selectedServing, $selectedCategory, ${_descriptionController.text.trim()}');
+      print('${_recipeNameController.text.trim()}, ${_ingredientsController.text.trim()}, $selectedTime, $selectedServing, $selectedCategory, ${_descriptionController.text.trim()}');
 
       if (imageUrl.isNotEmpty) {
-        bool isSuccess = await Provider.of<RecipeStore>(context, listen: false)
-            .addRecipe(Recipe(
-          userId: userId,
-          recipeId: '',
-          recipe: _recipeNameController.text.trim(),
-          ingredients: _ingredientsController.text.trim(),
-          time: selectedTime,
-          servings: selectedServing,
-          category: selectedCategory,
-          description: _descriptionController.text.trim(),
-          photoUrl: imageUrl,
+        bool isSuccess = await Provider.of<RecipeStore>(context, listen: false).addRecipe(
+          Recipe(
+            userId: userId,
+            recipeId: '',
+            recipe: _recipeNameController.text.trim(),
+            ingredients: _ingredientsController.text.trim(),
+            time: selectedTime,
+            servings: selectedServing,
+            category: selectedCategory,
+            description: _descriptionController.text.trim(),
+            photoUrl: imageUrl,
         ));
         if (isSuccess) {
           print('recipe added');
@@ -95,8 +82,7 @@ class _TestAddRecipeState extends State<AddRecipe> {
           setState(() => imageUrl = '');
         } else {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text(
-                'Sorry we had trouble uploading your recipe. Try again later.'),
+            content: Text('Sorry we had trouble uploading your recipe. Try again later.'),
             duration: Duration(seconds: 2),
             backgroundColor: Color(0xFF86BF3E),
           ));
@@ -121,13 +107,6 @@ class _TestAddRecipeState extends State<AddRecipe> {
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
 
-    // return StreamBuilder<UserData>(
-    //   stream: DatabaseService(userId: user.userId).,
-    //   builder: (context, AsyncSnapshot<Recipe> snapshot) {
-
-    //   },
-    // )
-
     return Scaffold(
       appBar: AppBar(
         title: const AppbarTitle(title: 'Add Recipe'),
@@ -139,21 +118,23 @@ class _TestAddRecipeState extends State<AddRecipe> {
             const SizedBox(height: 20), // Adjust the height as needed
             Center(
               child: CircleAvatar(
-                radius: 90, // Adjust the size as needed
-                // backgroundImage: NetworkImage(userData.profilePicUrl),
-                backgroundImage: imageUrl.isEmpty
-                    ? const AssetImage('assets/recipe_1.png')
-                        as ImageProvider<Object>?
-                    : NetworkImage(imageUrl),
+                radius: 90, 
+                backgroundColor: Colors.white,
+                backgroundImage: imageUrl.isEmpty ? const AssetImage('assets/foodplate.png') as ImageProvider<Object>? : NetworkImage(imageUrl),
               ),
             ),
-            Center(
-              child: ImageUpload(onImageUrlChange: (newUrl) {
-                updateImageUrl(newUrl);
-              }, type: '',),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ImageUpload(type: 'camera', onImageUrlChange: (newUrl) {
+                  updateImageUrl(newUrl);
+                }),
+                ImageUpload(type: 'gallery', onImageUrlChange: (newUrl) {
+                  updateImageUrl(newUrl);
+                }),
+              ]
             ),
-            const SizedBox(
-                height: 20), // Add spacing between CircleAvatar and TextField
+            const SizedBox(height: 20), 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: TextField(
@@ -175,9 +156,7 @@ class _TestAddRecipeState extends State<AddRecipe> {
               ),
             ),
 
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10,),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: TextField(
@@ -192,98 +171,95 @@ class _TestAddRecipeState extends State<AddRecipe> {
                     ),
                     fillColor: Colors.grey.shade200,
                     filled: true,
-                    hintText:
-                        'Ingredients', // Text displayed inside the border when the TextField is empty
+                    hintText:'Ingredients', 
                     hintStyle: TextStyle(color: Colors.grey[500])),
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              width: 380, // Adjust the width as needed
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: Colors.grey[200], // Set your desired background color
-              ),
-              child: DropdownButton<String>(
-                isExpanded:
-                    true, // Expands the dropdown button to fill its container width
-                value: selectedTime,
-                icon: const Icon(
-                  Icons.keyboard_arrow_down,
-                  color: const Color(0xFF86BF3E),
-                  size: 30,
+            const SizedBox(height: 10,),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: Container(
+                width: 380, // Adjust the width as needed
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(3),
+                  color: Colors.grey[200], // Set your desired background color
                 ),
-                underline: const SizedBox(), // Hides the default underline
-                onChanged: (time) => setState(() => selectedTime = time!),
-                items: times
-                    .map((time) => DropdownMenuItem(
-                          value: time,
-                          child: Center(
-                            child: Text(
-                              'under $time',
-                              textAlign: TextAlign.center, // Center the text
-                            ),
+                child: DropdownButton<String>(
+                  isExpanded:
+                      true, // Expands the dropdown button to fill its container width
+                  value: selectedTime,
+                  icon: const Icon(
+                    Icons.keyboard_arrow_down,
+                    color: Color(0xFF86BF3E),
+                    size: 30,
+                  ),
+                  underline: const SizedBox(), // Hides the default underline
+                  onChanged: (time) => setState(() => selectedTime = time!),
+                  items: times.map((time) => DropdownMenuItem(
+                        value: time,
+                        child: Center(
+                          child: Text(
+                            'under $time',
+                            textAlign: TextAlign.center, // Center the text
                           ),
-                        ))
-                    .toList(),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              width: 380, // Adjust the width as needed
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: Colors.grey[200], // Set your desired background color
-              ),
-              child: DropdownButton<String>(
-                isExpanded: true,
-                value: selectedServing,
-                icon: const Icon(
-                  Icons.keyboard_arrow_down,
-                  color: const Color(0xFF86BF3E),
-                  size: 30,
+                        ),
+                      ))
+                  .toList(),
                 ),
-                items: servings
-                    .map((serving) => DropdownMenuItem(
-                          value: serving,
-                          child: Center(
-                            child: Text(
-                              serving,
-                              textAlign: TextAlign.center, // Center the text
-                            ),
+              ),
+            ),
+            const SizedBox(height: 10,),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: Container(
+                width: 380, // Adjust the width as needed
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(3),
+                  color: Colors.grey[200], // Set your desired background color
+                ),
+                child: DropdownButton<String>(
+                  isExpanded: true,
+                  value: selectedServing,
+                  icon: const Icon(
+                    Icons.keyboard_arrow_down,
+                    color: const Color(0xFF86BF3E),
+                    size: 30,
+                  ),
+                  underline: const SizedBox(), // Hides the default underline
+                  items: servings.map((serving) => DropdownMenuItem(
+                        value: serving,
+                        child: Center(
+                          child: Text(
+                            'serving $serving',
+                            textAlign: TextAlign.center, // Center the text
                           ),
-                        ))
-                    .toList(),
-                onChanged: (serving) =>
-                    setState(() => selectedServing = serving!),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              width: 380, // Adjust the width as needed
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: Colors.grey[200], // Set your desired background color
-              ),
-              child: DropdownButton<String>(
-                isExpanded:
-                    true, // Expands the dropdown button to fill its container width
-                value: selectedCategory,
-                icon: const Icon(
-                  Icons.keyboard_arrow_down,
-                  color: const Color(0xFF86BF3E),
-                  size: 30,
+                        ),
+                      ))
+                  .toList(),
+                  onChanged: (serving) => setState(() => selectedServing = serving!),
                 ),
-                underline: const SizedBox(), // Hides the default underline
-                onChanged: (category) =>
-                    setState(() => selectedCategory = category!),
-                items: categories
+              ),
+            ),
+            const SizedBox(height: 10,),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: Container(
+                width: 380, // Adjust the width as needed
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(3),
+                  color: Colors.grey[200], // Set your desired background color
+                ),
+                child: DropdownButton<String>(
+                  isExpanded:true, // Expands the dropdown button to fill its container width
+                  value: selectedCategory,
+                  icon: const Icon(
+                    Icons.keyboard_arrow_down,
+                    color: Color(0xFF86BF3E),
+                    size: 30,
+                  ),
+                  underline: const SizedBox(), // Hides the default underline
+                  onChanged: (category) => setState(() => selectedCategory = category!),
+                  items: categories
                     .map((category) => DropdownMenuItem(
                           value: category,
                           child: Center(
@@ -294,11 +270,10 @@ class _TestAddRecipeState extends State<AddRecipe> {
                           ),
                         ))
                     .toList(),
+                ),
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10,),
 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -314,8 +289,7 @@ class _TestAddRecipeState extends State<AddRecipe> {
                   ),
                   fillColor: Colors.grey.shade200,
                   filled: true,
-                  hintText:
-                      'Descrption', // Text displayed inside the border when the TextField is empty
+                  hintText:'Descrption', 
                   hintStyle: TextStyle(color: Colors.grey[500]),
                 ),
               ),
@@ -342,8 +316,7 @@ class _TestAddRecipeState extends State<AddRecipe> {
                     borderRadius: BorderRadius.circular(50),
                   ),
                   child: const Center(
-                    child: Text(
-                      'Add recipe',
+                    child: Text('Add recipe',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -354,6 +327,7 @@ class _TestAddRecipeState extends State<AddRecipe> {
                 ),
               ),
             ),
+            const SizedBox(height: 10.0,),
           ],
         ),
       ),

@@ -11,6 +11,7 @@ class DatabaseService {
   //db collection ref
   final CollectionReference userCollection = FirebaseFirestore.instance.collection('users');
   static final CollectionReference recipeCollection = FirebaseFirestore.instance.collection('recipes');
+  static final CollectionReference feedbackCollection = FirebaseFirestore.instance.collection('feedback');
 
   //create user document when registering
   Future updateUserData(String name, String email, String profilePicUrl) async {
@@ -223,6 +224,20 @@ class DatabaseService {
     }catch (e) {
       print(e.toString());
       return [];
+    }
+  }
+
+  static Future<bool> addFeedback(String rate, String feedback)async {
+    try{
+      await feedbackCollection.add({
+        'rating': rate,
+        'feedback': feedback,
+        'addedAt': FieldValue.serverTimestamp(),
+      });
+      return true;
+    }catch(e) {
+      print(e.toString());
+      return false;
     }
   }
 

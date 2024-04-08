@@ -2,7 +2,7 @@ import 'package:cookit/components/appbar_title.dart';
 import 'package:cookit/components/loading.dart';
 import 'package:cookit/models/recipe_model.dart';
 import 'package:cookit/models/user_model.dart';
-import 'package:cookit/screens/test_comment.dart';
+import 'package:cookit/screens/comments.dart';
 import 'package:cookit/services/database.dart';
 import 'package:cookit/services/recipe_store.dart';
 import 'package:flutter/material.dart';
@@ -373,7 +373,8 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
             if(_recipe.comments!.isNotEmpty)
             GestureDetector(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => TestComment(recipeId: _recipe.recipeId)));
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => TestComment(recipeId: _recipe.recipeId)));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CommentPage(recipeId: _recipe.recipeId)));
                 print(_recipe.comments!.length);
               },
               child: Container(
