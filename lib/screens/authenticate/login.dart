@@ -71,13 +71,11 @@ class _LoginState extends State<Login> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SizedBox(
-                        width:
-                            10), // Adjust the spacing between the icon and the image
+                    const SizedBox(width:10), 
                     Image.asset(
                       'assets/cookit-logo.png',
-                      width: 200, // Adjust the width of the image as needed
-                      height: 200, // Adjust the height of the image as needed
+                      width: 200, 
+                      height: 200, 
                     ),
                   ],
                 ),
@@ -126,7 +124,6 @@ class _LoginState extends State<Login> {
                 
 
                 const SizedBox(height: 50),
-                //not a member? register now
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

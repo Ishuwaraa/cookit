@@ -1,172 +1,144 @@
+import 'package:cookit/components/appbar_title.dart';
+import 'package:cookit/components/search_title.dart';
+import 'package:cookit/components/styled_chip_button.dart';
+import 'package:cookit/screens/search/filtered_results.dart';
 import 'package:flutter/material.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
 
   @override
-  _SearchPageState createState() => _SearchPageState();
+  State<SearchPage> createState() => _SearchPageState();
 }
 
 class _SearchPageState extends State<SearchPage> {
-  List<bool> _isSelectedList = [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Filter'),
+        title: const AppbarTitle(title: 'Filter'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 20.0, top: 20, bottom: 30),
-              child: Text(
-                'Dish type',
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
+            const SearchTitle(title: 'Dish Type'),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 18.0),
               child: Wrap(
                 spacing: 8.0,
                 runSpacing: 15.0,
                 children: [
-                  _buildChip('Breakfast', 0),
-                  _buildChip('Brunch', 1),
-                  _buildChip('Lunch', 2),
-                  _buildChip('Snack', 3),
-                  _buildChip('Dessert', 4),
-                  _buildChip('Dinner', 5),
-                  _buildChip('Soup', 6),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'category', filter: 'breakfast', title: 'Breakfast',)));
+                    },
+                    child: const StyledChipButton(text: 'Breakfast'),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'category', filter: 'lunch', title: 'Lunch')));
+                    },
+                    child: const StyledChipButton(text: 'Lunch'),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'category', filter: 'brunch', title: 'Brunch')));
+                    },
+                    child: const StyledChipButton(text: 'Brunch'),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'category', filter: 'dinner', title: 'Dinner')));
+                    },
+                    child: const StyledChipButton(text: 'Dinner'),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'category', filter: 'dessert', title: 'Dessert')));
+                    },
+                    child: const StyledChipButton(text: 'Dessert'),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'category', filter: 'snack', title: 'Snack')));
+                    },
+                    child: const StyledChipButton(text: 'Snack'),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'category', filter: 'soup', title: 'Soup')));
+                    },
+                    child: const StyledChipButton(text: 'Soup'),
+                  ),
                 ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(left: 20.0, top: 20, bottom: 30),
-              child: Text(
-                'Cook time',
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
+            const SearchTitle(title: 'Servings Size'),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 18.0),
               child: Wrap(
                 spacing: 8.0,
                 runSpacing: 15.0,
                 children: [
-                  _buildChip('1 Servings', 10),
-                  _buildChip('2 Servings', 11),
-                  _buildChip('3 Servings', 12),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'serving', filter: '1', title: '1 Servings')));
+                    },
+                    child: const StyledChipButton(text: '1 Servings'),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'serving', filter: '2', title: '2 Servings')));
+                    },
+                    child: const StyledChipButton(text: '2 Servings'),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'serving', filter: '3', title: '3 Servings')));
+                    },
+                    child: const StyledChipButton(text: '3 Servings'),
+                  ),
                 ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(left: 20.0, top: 20, bottom: 30),
-              child: Text(
-                ' Serving size',
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
+            const SearchTitle(title: 'Cook Time'),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 12.0),
               child: Wrap(
                 spacing: 8.0,
                 runSpacing: 15.0,
                 children: [
-                  _buildChip('Under 15 mins', 7),
-                  _buildChip('Under 30 mins', 8),
-                  _buildChip('Under 60 mins', 9),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'time', filter: '15min', title: 'Under 15min')));
+                    },
+                    child: const StyledChipButton(text: 'Under 15 mins'),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'time', filter: '30min', title: 'Under 30min')));
+                    },
+                    child: const StyledChipButton(text: 'Under 30 mins'),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'time', filter: '45min', title: 'Under 45min')));
+                    },
+                    child: const StyledChipButton(text: 'Under 45 mins'),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'time', filter: '60min', title: 'Under 60min')));
+                    },
+                    child: const StyledChipButton(text: 'Under 60 mins'),
+                  ),
                 ],
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildChip(String label, int index) {
-    return Focus(
-      autofocus: false, // Prevent the chip from receiving focus
-      child: GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  SecondPage(label), // Pass label to the second page
-            ),
-          );
-        },
-        child: Chip(
-          label: Padding(
-            padding: const EdgeInsets.all(3.0), // Increase padding
-            child: Text(
-              label,
-              style: TextStyle(fontSize: 18), // Increase font size
-            ),
-          ),
-          backgroundColor: _isSelectedList[index]
-              ? const Color(0xFF86BF3E)
-              : const Color(0xFF86BF3E),
-          labelStyle: const TextStyle(color: Colors.white),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0), // Increase border radius
-            side:
-                BorderSide(color: const Color(0xFF86BF3E)), // Set border color
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class SecondPage extends StatelessWidget {
-  final String dishType;
-
-  SecondPage(this.dishType);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(dishType),
-      ),
-      body: Column(
-        children: [
-          Center(
-            child: Text(
-              'You selected $dishType',
-              style: const TextStyle(fontSize: 24),
-            ),
-          ),
-        ],
       ),
     );
   }

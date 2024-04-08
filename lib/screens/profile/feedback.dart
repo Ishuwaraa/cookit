@@ -1,3 +1,4 @@
+import 'package:cookit/components/appbar_title.dart';
 import 'package:cookit/services/database.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ class FeedbackPage extends StatefulWidget {
 class _FeedbackPageState extends State<FeedbackPage> {
 
   TextEditingController _feedbackController = TextEditingController();
-  String rating = ''; // Variable to hold the selected emoji
+  String rating = ''; 
 
   void addFeedback() async {
     if(_feedbackController.text.isNotEmpty && rating != ''){
@@ -44,7 +45,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Feedback'),
+        title: const AppbarTitle(title: 'Feedback'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

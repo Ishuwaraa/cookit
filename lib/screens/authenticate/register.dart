@@ -77,19 +77,16 @@ class _RegisterState extends State<Register> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SizedBox(
-                        width:
-                            10), // Adjust the spacing between the icon and the image
+                    const SizedBox(width:10), 
                     Image.asset(
                       'assets/cookit-logo.png',
-                      width: 200, // Adjust the width of the image as needed
-                      height: 200, // Adjust the height of the image as needed
+                      width: 200, 
+                      height: 200,
                     ),
                   ],
                 ),
                 const SizedBox(height: 25),
-
-                //Let\'s create an account for you!
+                
                 Text(
                   'Let\'s create an account for you!',
                   style: TextStyle(

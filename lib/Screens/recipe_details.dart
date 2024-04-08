@@ -11,16 +11,17 @@ import 'package:share_plus/share_plus.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class RecipeDetailsPage extends StatefulWidget {
+
   final String recipeId;
   final bool addToFav;
-  const RecipeDetailsPage(
-      {required this.recipeId, required this.addToFav, super.key});
+  const RecipeDetailsPage({required this.recipeId, required this.addToFav, super.key});
 
   @override
   State<RecipeDetailsPage> createState() => _RecipeDetailsPageState();
 }
 
 class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
+
   late Recipe _recipe;
   bool loading = false;
   final _commentController = TextEditingController();
@@ -38,11 +39,9 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
     }
   }
 
-  void addComment(
-      String recipeId, String comment, String name, String image) async {
+  void addComment(String recipeId, String comment, String name, String image) async {
     if (_commentController.text.isNotEmpty) {
-      bool isSuccess = await Provider.of<RecipeStore>(context, listen: false)
-          .addComment(recipeId, comment, name, image);
+      bool isSuccess = await Provider.of<RecipeStore>(context, listen: false).addComment(recipeId, comment, name, image);
 
       if (isSuccess) {
         getRecipeDetails(recipeId);
@@ -135,8 +134,7 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
     }
   }
 
-  void shareRecipe(String recipe, String ingredients, String time, String desc,
-      String serving) {
+  void shareRecipe(String recipe, String ingredients, String time, String desc, String serving) {
     String msg = '''$recipe \n\n
       ingredients: $ingredients 
       time: $time 
@@ -167,44 +165,37 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
         if (snapshot.hasData) {
           UserData userData = snapshot.data!;
 
-          return loading
-              ? const Loading()
-              : Scaffold(
-                  appBar: AppBar(
-                    title: const AppbarTitle(title: 'Recipe'),
-                    actions: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 20.0),
-                        child: GestureDetector(
-                            onTap: () {
-                              shareRecipe(
-                                  _recipe.recipe,
-                                  _recipe.ingredients,
-                                  _recipe.time,
-                                  _recipe.description,
-                                  _recipe.servings);
-                            },
-                            child: const Icon(Icons.share)),
-                      ),
-                    ],
-                  ),
-                  body: SlidingUpPanel(
-                    minHeight: 400,
-                    maxHeight: MediaQuery.of(context).size.height * 0.85,
-                    panel: _buildPanel(user, userData),
-                    body: _buildBody(),
-                    borderRadius:
-                        const BorderRadius.vertical(top: Radius.circular(50)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                );
+          return loading? const Loading() : Scaffold(
+            appBar: AppBar(
+              title: const AppbarTitle(title: 'Recipe'),
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 20.0),
+                  child: GestureDetector(
+                      onTap: () {
+                        shareRecipe(_recipe.recipe, _recipe.ingredients, _recipe.time, _recipe.description, _recipe.servings);
+                      },
+                      child: const Icon(Icons.share)),
+                ),
+              ],
+            ),
+            body: SlidingUpPanel(
+              minHeight: 400,
+              maxHeight: MediaQuery.of(context).size.height * 0.85,
+              panel: _buildPanel(user, userData),
+              body: _buildBody(),
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(50)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+          );
         } else {
           return const Loading();
         }
@@ -219,7 +210,7 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildDivider(), // Add the custom horizontal line
+            _buildDivider(), //  custom horizontal line
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -235,17 +226,7 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
                   ),
                 ),
                 IconButton(
-                  icon: (widget.addToFav)
-                      ? const Icon(
-                          Icons.favorite_outline,
-                          color: Color(0xFF86BF3E),
-                          size: 40,
-                        )
-                      : const Icon(
-                          Icons.favorite,
-                          color: Color(0xFF86BF3E),
-                          size: 40,
-                        ),
+                  icon: (widget.addToFav)? const Icon(Icons.favorite_outline, color: Color(0xFF86BF3E), size: 40,) : const Icon(Icons.favorite, color: Color(0xFF86BF3E), size: 40,),
                   onPressed: () {
                     if (widget.addToFav) {
                       addToFavourite(user.userId, _recipe.recipeId);
@@ -268,7 +249,7 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
             const SizedBox(height: 20),
             const Text(
               "Ingredients",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
             Column(
@@ -278,7 +259,7 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
                     children: [
                       const Icon(
                         Icons.circle,
-                        size: 15,
+                        size: 8,
                         color: Color(0xFF86BF3E),
                       ),
                       const SizedBox(width: 5),
@@ -290,36 +271,12 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
                   ),
                 );
               }).toList(),
-
-              // [
-              //   Center(
-              //     child: Row(
-              //       children: [
-              //         Icon(
-              //           Icons.circle,
-              //           size: 15,
-              //           color: Color(0xFF86BF3E),
-              //         ),
-              //         SizedBox(
-              //           width: 5,
-              //         ),
-              //         Text(
-              //           'Ingredients 1',
-              //           style: TextStyle(fontSize: 18),
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              //   SizedBox(
-              //     height: 10,
-              //   ),
-              // ],
             ),
             const SizedBox(height: 20),
             const Text(
               "Description",
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -329,14 +286,14 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
               style: const TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 20),
-            const Text(
-              "Comments",
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 10),
+            // const Text(
+            //   "Comments",
+            //   style: TextStyle(
+            //     fontSize: 24,
+            //     fontWeight: FontWeight.bold,
+            //   ),
+            // ),
+            // const SizedBox(height: 10),
             // ListView.builder(
             //   itemCount: (_recipe.comments!.isEmpty)? _recipe.comments!.length : 1 ,
             //   itemBuilder: (context, index) {
@@ -352,8 +309,41 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
             //   }
             // ),
             const SizedBox(height: 10),
+            (_recipe.comments!.isNotEmpty)?
+              GestureDetector(
+                onTap: () {
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) => TestComment(recipeId: _recipe.recipeId)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => CommentPage(recipeId: _recipe.recipeId)));
+                  print(_recipe.comments!.length);
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(12.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'View All Comments',
+                      style: TextStyle(
+                        color: Color(0xFF86BF3E),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            : const Center(
+              child: Text(
+                'No comments yet. Be the first by adding one',
+                style: TextStyle(
+                  color: Color(0xFF86BF3E),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
             Container(
-              width: 400, // Set container width as needed
+              width: 400, 
               padding: const EdgeInsets.all(12.0),
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey),
@@ -379,11 +369,7 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
                     ),
                     child: IconButton(
                       onPressed: () {
-                        addComment(
-                            _recipe.recipeId,
-                            _commentController.text.trim(),
-                            userData.name,
-                            userData.profilePicUrl);
+                        addComment(_recipe.recipeId, _commentController.text.trim(), userData.name, userData.profilePicUrl);
                         print(_commentController.text.trim());
                       },
                       icon: const Icon(
@@ -395,34 +381,8 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
                 ],
               ),
             ),
-            const SizedBox(height: 5),
-            if (_recipe.comments!.isNotEmpty)
-              GestureDetector(
-                onTap: () {
-                  // Navigator.push(context, MaterialPageRoute(builder: (context) => TestComment(recipeId: _recipe.recipeId)));
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              CommentPage(recipeId: _recipe.recipeId)));
-                  print(_recipe.comments!.length);
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(12.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      'View All Comments',
-                      style: TextStyle(
-                        color: Color(0xFF86BF3E),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+            // const SizedBox(height: 5),
+            
           ],
         ),
       ),
@@ -436,8 +396,7 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
         Container(
           padding: const EdgeInsets.all(16.0),
           child: Image.network(
-            _recipe
-                .photoUrl, // Replace 'assets/r1.png' with your local image path
+            _recipe.photoUrl, 
             width: double.infinity,
             fit: BoxFit.cover,
           ),

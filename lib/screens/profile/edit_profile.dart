@@ -88,10 +88,10 @@ class _EditProfileState extends State<EditProfile> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 20), // Adjust the height as needed
+                  const SizedBox(height: 20), 
                   Center(
                     child: CircleAvatar(
-                      radius: 90, // Adjust the size as needed
+                      radius: 90, 
                       backgroundColor: Colors.white,
                       backgroundImage: (imageUrl.isEmpty)? NetworkImage(userData.profilePicUrl) : NetworkImage(imageUrl),
                     ),
@@ -108,7 +108,7 @@ class _EditProfileState extends State<EditProfile> {
                     ]
                   ),
                   const SizedBox(
-                      height: 20), // Add spacing between CircleAvatar and TextField
+                      height: 20), 
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
                     child: TextField(

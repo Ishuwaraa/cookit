@@ -114,9 +114,27 @@ class _CommentPageState extends State<CommentPage> {
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                CircleAvatar(
-                                  radius: 40,
-                                  backgroundImage: NetworkImage(image[index]),
+                                // CircleAvatar(
+                                //   radius: 40,
+                                //   backgroundImage: NetworkImage(image[index]),
+                                // ),
+                                ClipOval(
+                                  child: FadeInImage(
+                                    placeholder: const AssetImage('assets/avatar.png'),
+                                    image: NetworkImage(image[index]),
+                                    width: 60.0,
+                                    height: 60.0,
+                                    fit: BoxFit.cover,
+                                    alignment: Alignment.center,
+                                    imageErrorBuilder: (context, error, stackTrace) {
+                                      return Container(
+                                        width: 60.0,
+                                        height: 60.0,
+                                        color: Colors.grey,
+                                        child: const Center(child: Icon(Icons.error)),
+                                      );
+                                    },
+                                  ),
                                 ),
                                 const SizedBox(width: 20),
                                 Expanded(

@@ -340,13 +340,12 @@ class _TestEditRecipeState extends State<EditRecipe> {
                       updateRecipeDetails(_recipe.recipeId);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(
-                          0xFF86BF3E), // Set the button's background color to specific green
+                      backgroundColor: const Color(0xFF86BF3E), 
                     ),
                     child: const Text(
                       'Edit recipe',
                       style: TextStyle(
-                          color: Colors.white), // Set text color to white
+                          color: Colors.white), 
                     ),
                   ),
                   const SizedBox(width: 20.0,),
@@ -354,10 +353,10 @@ class _TestEditRecipeState extends State<EditRecipe> {
                     onPressed: deleteRecipe,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(
-                          0xFF86BF3E), // Set the button's background color to specific green
+                          0xFF86BF3E), 
                     ),
                     child: const Text('Delete recipe',
-                      style: TextStyle(color: Colors.white), // Set text color to white
+                      style: TextStyle(color: Colors.white), 
                     ),
                   ),
                 ],
