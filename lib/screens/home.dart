@@ -9,6 +9,7 @@ import 'package:cookit/screens/search/filtered_results.dart';
 import 'package:cookit/services/database.dart';
 import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -18,30 +19,49 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   @override
   Widget build(BuildContext context) {
-
     // final user = Provider.of<UserModel>(context);
 
-    return StreamBuilder<List<Recipe>> (
+    return StreamBuilder<List<Recipe>>(
       stream: DatabaseService.recipes,
       builder: (context, snapshot) {
-        if(snapshot.connectionState == ConnectionState.waiting){
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return const Loading();
         }
-        if(snapshot.hasError){
-          return Center(child: Text('Error: ${snapshot.hasError}'),);
+        if (snapshot.hasError) {
+          return Center(
+            child: Text('Error: ${snapshot.hasError}'),
+          );
         }
 
         final List<Recipe> recipes = snapshot.data ?? [];
-        final List<Recipe> popularRecipes = List<Recipe>.from(recipes); //creating a copy of recipes list to shuffy independenlty
+        final List<Recipe> popularRecipes = List<Recipe>.from(
+            recipes); //creating a copy of recipes list to shuffy independenlty
         popularRecipes.shuffle();
 
-        if(recipes.isNotEmpty){
+        if (recipes.isNotEmpty) {
           return Scaffold(
             appBar: AppBar(
-              title: const AppbarTitle(title: 'COOKIT'),
+              title: Row(
+                children: [
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 20.0, left: 20),
+                  //   child: Image.asset(
+                  //     'assets/COOKIT-Home.png', // Path to your image asset
+                  //     height: 100, // Adjust the height as needed
+                  //   ),
+                  // ),
+                  Text(
+                    'COOKIT',
+                    style: GoogleFonts.berkshireSwash(
+                      fontSize: 45,
+                      fontWeight: FontWeight.bold,
+                      color: const Color(0xFF86BF3E),
+                    ),
+                  ),
+                ],
+              ),
             ),
             body: SingleChildScrollView(
               child: Container(
@@ -55,23 +75,29 @@ class _HomeState extends State<Home> {
                           padding: EdgeInsets.only(left: 10.0),
                           child: Text(
                             "Popular Recipes",
-                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w600),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 10,),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     SizedBox(
                       height: 270.0,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: 4,
                         itemBuilder: (_, index) {
-                          return PopularRecipeCard(recipe: popularRecipes[index]);
+                          return PopularRecipeCard(
+                              recipe: popularRecipes[index]);
                         },
                       ),
                     ),
-                    const SizedBox(height: 30,),
+                    const SizedBox(
+                      height: 30,
+                    ),
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -79,12 +105,15 @@ class _HomeState extends State<Home> {
                           padding: EdgeInsets.only(left: 10.0),
                           child: Text(
                             "Categories",
-                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w600),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 10,),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     SizedBox(
                       height: 50.0,
                       child: ListView(
@@ -92,32 +121,63 @@ class _HomeState extends State<Home> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'category', filter: 'breakfast', title: 'Breakfast')));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const FilteredResult(
+                                              type: 'category',
+                                              filter: 'breakfast',
+                                              title: 'Breakfast')));
                             },
-                            child: const SizedBoxListView(title: "🥪 Breakfast"),
+                            child:
+                                const SizedBoxListView(title: "🥪 Breakfast"),
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'category', filter: 'snack', title: 'Snack')));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const FilteredResult(
+                                              type: 'category',
+                                              filter: 'snack',
+                                              title: 'Snack')));
                             },
                             child: const SizedBoxListView(title: "🍿 Snacks"),
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'category', filter: 'soup', title: 'Soup')));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const FilteredResult(
+                                              type: 'category',
+                                              filter: 'soup',
+                                              title: 'Soup')));
                             },
                             child: const SizedBoxListView(title: "🍲 Soup"),
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const FilteredResult(type: 'category', filter: 'dessert', title: 'Dessert')));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const FilteredResult(
+                                              type: 'category',
+                                              filter: 'dessert',
+                                              title: 'Dessert')));
                             },
                             child: const SizedBoxListView(title: "🍧 Dessert"),
-                          ),                                                                              
+                          ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 30,),
+                    const SizedBox(
+                      height: 30,
+                    ),
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -125,7 +185,8 @@ class _HomeState extends State<Home> {
                           padding: EdgeInsets.only(left: 10.0),
                           child: Text(
                             "Recipes",
-                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w600),
                           ),
                         ),
                       ],
@@ -150,12 +211,14 @@ class _HomeState extends State<Home> {
               ),
             ),
           );
-        }else{
+        } else {
           return Scaffold(
             appBar: AppBar(
               title: const AppbarTitle(title: 'COOKIT'),
             ),
-            body: const Center(child: Text('Sorry we have trouble loading content'),),
+            body: const Center(
+              child: Text('Sorry we have trouble loading content'),
+            ),
           );
         }
       },
