@@ -45,6 +45,7 @@ dependencies:
   path_provider: ^2.1.2
   share_plus: ^7.2.2
   sliding_up_panel: ^2.0.0+1
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
@@ -93,7 +94,7 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   # fonts:
-  #   - family: Schyler
+  # - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
