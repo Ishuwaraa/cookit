@@ -1,8 +1,8 @@
-import 'package:cookit/Screens/add_recipe.dart';
 import 'package:cookit/screens/home.dart';
 import 'package:cookit/screens/profile/profile.dart';
 import 'package:cookit/screens/search/search.dart';
 import 'package:cookit/screens/user_favorite.dart';
+import 'package:cookit/screens/recipe/add_recipe.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavBar extends StatefulWidget {

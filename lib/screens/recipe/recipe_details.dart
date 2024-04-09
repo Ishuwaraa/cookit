@@ -2,7 +2,7 @@ import 'package:cookit/components/appbar_title.dart';
 import 'package:cookit/components/loading.dart';
 import 'package:cookit/models/recipe_model.dart';
 import 'package:cookit/models/user_model.dart';
-import 'package:cookit/screens/comments.dart';
+import 'package:cookit/screens/recipe/comments.dart';
 import 'package:cookit/services/database.dart';
 import 'package:cookit/services/recipe_store.dart';
 import 'package:flutter/material.dart';
@@ -432,7 +432,7 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 170.0),
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 20),
+        margin: const EdgeInsets.symmetric(vertical: 20),
         height: 3,
         decoration: BoxDecoration(
           color: Colors.black.withOpacity(0.3),

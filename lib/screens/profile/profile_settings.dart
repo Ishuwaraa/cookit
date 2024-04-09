@@ -1,8 +1,7 @@
 import 'package:cookit/Screens/profile/feedback.dart';
 import 'package:cookit/Screens/profile/privacy.dart';
 import 'package:cookit/components/appbar_title.dart';
-import 'package:cookit/screens/authenticate/authenticate.dart';
-import 'package:cookit/screens/authenticate/login.dart';
+import 'package:cookit/screens/wrapper.dart';
 import 'package:cookit/services/auth.dart';
 import 'package:flutter/material.dart';
 
@@ -39,42 +38,46 @@ class SettingsPage extends StatelessWidget {
               );
             },
           ),
-          // ListTile(
-          //   leading: const Icon(Icons.logout),
-          //   title: const Text('Logout'),
-          //   onTap: () {
-          //     showDialog(
-          //       context: context,
-          //       builder: (context) => AlertDialog(
-          //         title: const Text('Logout'),
-          //         content: const Text('Are you sure you want to logout?'),
-          //         actions: [
-          //           TextButton(
-          //             onPressed: () async {
-          //               await _auth.signOutUser();
-          //               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Authenticate()), (route) => false);
-          //             },
-          //             style: ButtonStyle(
-          //               foregroundColor:
-          //                   MaterialStateProperty.all<Color>(Colors.red),
-          //             ),
-          //             child: const Text('Logout'),
-          //           ),
-          //           TextButton(
-          //             onPressed: () {
-          //               Navigator.pop(context);
-          //             },
-          //             style: ButtonStyle(
-          //               foregroundColor:
-          //                   MaterialStateProperty.all<Color>(Colors.grey),
-          //             ),
-          //             child: const Text('Cancel'),
-          //           ),
-          //         ],
-          //       ),
-          //     );
-          //   },
-          // ),
+          ListTile(
+            leading: const Icon(Icons.logout),
+            title: const Text('Logout'),
+            onTap: () async {
+              await _auth.signOutUser();
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Wrapper()), (route) => false);
+            },
+            // onTap: () {
+            //   showDialog(
+            //     context: context,
+            //     builder: (context) => AlertDialog(
+            //       title: const Text('Logout'),
+            //       content: const Text('Are you sure you want to logout?'),
+            //       actions: [
+            //         TextButton(
+            //           onPressed: () async {
+            //             await _auth.signOutUser();
+            //             Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Authenticate()), (route) => false);
+            //           },
+            //           style: ButtonStyle(
+            //             foregroundColor:
+            //                 MaterialStateProperty.all<Color>(Colors.red),
+            //           ),
+            //           child: const Text('Logout'),
+            //         ),
+            //         TextButton(
+            //           onPressed: () {
+            //             Navigator.pop(context);
+            //           },
+            //           style: ButtonStyle(
+            //             foregroundColor:
+            //                 MaterialStateProperty.all<Color>(Colors.grey),
+            //           ),
+            //           child: const Text('Cancel'),
+            //         ),
+            //       ],
+            //     ),
+            //   );
+            // },
+          ),
         ],
       ),
     );

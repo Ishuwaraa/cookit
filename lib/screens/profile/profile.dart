@@ -1,11 +1,11 @@
-import 'package:cookit/Screens/add_recipe.dart';
+import 'package:cookit/screens/recipe/add_recipe.dart';
 import 'package:cookit/components/appbar_title.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cookit/models/user_model.dart';
 import 'package:cookit/models/recipe_model.dart';
 import 'package:cookit/services/database.dart';
-import 'package:cookit/services/auth.dart';
+// import 'package:cookit/services/auth.dart';
 import 'package:cookit/Screens/profile/profile_settings.dart';
 import 'package:cookit/Screens/profile/edit_profile.dart';
 import 'package:cookit/components/loading.dart';
@@ -19,7 +19,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  final AuthService _auth = AuthService();
+  // final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -58,11 +58,7 @@ class _ProfileState extends State<Profile> {
                   actions: [
                     IconButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const SettingsPage()),
-                        );
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage()),);
                       },
                       icon: const Icon(
                         Icons.settings,
@@ -147,13 +143,13 @@ class _ProfileState extends State<Profile> {
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(height: 20),
-                                  ElevatedButton(
-                                    onPressed: () async {
-                                      await _auth.signOutUser();
-                                    },
-                                    child: const Text('Log out'),
-                                  ),
+                                  // const SizedBox(height: 20),
+                                  // ElevatedButton(
+                                  //   onPressed: () async {
+                                  //     await _auth.signOutUser();
+                                  //   },
+                                  //   child: const Text('Log out'),
+                                  // ),
                                 ],
                               ),
                             ),
@@ -183,12 +179,15 @@ class _ProfileState extends State<Profile> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              const Center(
-                                child: Text(
-                                  'No recipes added yet.',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.grey,
+                              const Padding(
+                                padding: EdgeInsets.only(top: 50.0),
+                                child: Center(
+                                  child: Text(
+                                    'Share your special recipes with others',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.grey,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -205,7 +204,7 @@ class _ProfileState extends State<Profile> {
                                   'Add Recipe',
                                   style: TextStyle(
                                     fontSize: 16,
-                                    color: const Color(0xFF86BF3E),
+                                    color: Color(0xFF86BF3E),
                                   ),
                                 ),
                               ),

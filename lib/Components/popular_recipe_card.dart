@@ -1,5 +1,5 @@
 import 'package:cookit/models/recipe_model.dart';
-import 'package:cookit/screens/recipe_details.dart';
+import 'package:cookit/screens/recipe/recipe_details.dart';
 import 'package:flutter/material.dart';
 
 class PopularRecipeCard extends StatelessWidget {

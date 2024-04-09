@@ -1,6 +1,6 @@
 import 'package:cookit/Screens/profile/edit_post.dart';
 import 'package:cookit/models/recipe_model.dart';
-import 'package:cookit/screens/recipe_details.dart';
+import 'package:cookit/screens/recipe/recipe_details.dart';
 import 'package:flutter/material.dart';
 
 // ignore: use_key_in_widget_constructors

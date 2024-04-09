@@ -116,7 +116,7 @@ class _TestAddRecipeState extends State<AddRecipe> {
             const SizedBox(height: 20),
             Center(
               child: Container(
-                padding: EdgeInsets.all(2),
+                padding: const EdgeInsets.all(2),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   shape: BoxShape.circle,
@@ -234,7 +234,7 @@ class _TestAddRecipeState extends State<AddRecipe> {
                   value: selectedServing,
                   icon: const Icon(
                     Icons.keyboard_arrow_down,
-                    color: const Color(0xFF86BF3E),
+                    color: Color(0xFF86BF3E),
                     size: 30,
                   ),
                   underline: const SizedBox(), // Hides the default underline
