@@ -1,11 +1,14 @@
+import 'package:cookit/components/appbar_title.dart';
 import 'package:flutter/material.dart';
 
 class PrivacyPolicyPage extends StatelessWidget {
+  const PrivacyPolicyPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Privacy Policy'),
+        title: const AppbarTitle(title: 'Privacy Policy'),
       ),
       body: const SingleChildScrollView(
         padding: EdgeInsets.all(20.0),
@@ -18,7 +21,7 @@ class PrivacyPolicyPage extends StatelessWidget {
             ),
             SizedBox(height: 20.0),
             Text(
-              'Thank you for choosing CookIt, our Recipes Application developed with Flutter. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application.',
+              'Thank you for choosing CookIt, our Recipe Application developed with Flutter. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application.',
             ),
             SizedBox(height: 20.0),
             Text(

@@ -131,8 +131,18 @@ class _FilteredResultState extends State<FilteredResult> {
               title: const AppbarTitle(title: 'Filtered results'),
             ),
             body: const Center(
-              child: Text('Sorry no results were found for that category'),
-            ),
+              child: Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Text(
+                  'Sorry no results were found for that category',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.grey,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            )
           );
         }
       },
